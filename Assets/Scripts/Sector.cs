@@ -14,13 +14,12 @@ public class Sector : MonoBehaviour
     {
         transform.position = mvTo.position;
 
+        /*
+        int cc = gameObject.transform.childCount;
+        for(int i = 0; i<cc; i++)
+        {
+            GameObject go = gameObject.transform.GetChild(i).gameObject;
+        }
+        */
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        Debug.Log(collision);
-    }
-
-    // 이동시 바로 반대 방향 섹터 접촉 오류 -> 이동 위치를 플레이어의 위치로?
-    // 좌표 오류 -> 거리 계산 필요
 }

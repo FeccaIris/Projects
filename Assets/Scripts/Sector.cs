@@ -2,21 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sector : Map
+public class Sector : MonoBehaviour
 {
-    public GameObject _sector;
+    public static Sector _self;
 
-    void Start()
+    private void Start()
     {
-        _sector = gameObject;
+        _self = this;
+    }
+    public void TransPosition(Transform mvTo)
+    {
+        transform.position = mvTo.position;
+
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
-        {
-            Debug.Log(_sector);
-        }
+        Debug.Log(collision);
     }
 
     // 이동시 바로 반대 방향 섹터 접촉 오류 -> 이동 위치를 플레이어의 위치로?

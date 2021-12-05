@@ -13,7 +13,7 @@ public class Sector_Center : Sector_Area
         Transform parent = gameObject.transform.parent;             // 나머지 개체 불러오기
         int cc = parent.childCount;
 
-        List<GameObject> list = new List<GameObject>();
+        List<GameObject> list = new List<GameObject>();             // 섹터 모듈 리스트 작성
         for (int i = 0; i < cc; i++)
         {
             list.Add(parent.GetChild(i).gameObject);
@@ -23,7 +23,7 @@ public class Sector_Center : Sector_Area
         }
     }
 
-    public void TurnOnOthers()          // 나머지 개체 활성화 -> 충돌체크
+    public void TurnOnOthers()                                      // 나머지 개체 활성화 -> 충돌체크
     {
         foreach (Sector_Area x in _saList)
         {
@@ -32,17 +32,9 @@ public class Sector_Center : Sector_Area
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    protected override void OnTriggerEnter2D(Collider2D col)
     {
-        Map map = col.gameObject.GetComponent<Map>();
-        if(map != null)
-        {
-            string name = col.gameObject.name;
-            _map = int.Parse(name);                     // 할당된 맵 모듈 넘버 저장
-        }
-
-        BoxCollider2D bCol = gameObject.GetComponent<BoxCollider2D>();
-        bCol.enabled = false;
-
+        base.OnTriggerEnter2D(col);
+        // 충돌체크 완료, 빈 공간에 맵 모듈 이동
     }
 }

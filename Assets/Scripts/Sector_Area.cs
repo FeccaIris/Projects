@@ -12,7 +12,7 @@ public class Sector_Area : MonoBehaviour
         bCol.enabled = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    protected virtual void OnTriggerEnter2D(Collider2D col)
     {
         Map map = col.GetComponent<Map>();              // 맵 모듈만 걸러내기
         if (map != null)
@@ -20,8 +20,7 @@ public class Sector_Area : MonoBehaviour
             string name = col.gameObject.name;
             _map = int.Parse(name);                     // 할당된 맵 모듈 넘버 저장
         }
-
-        BoxCollider2D bCol = gameObject.GetComponent<BoxCollider2D>();
+        BoxCollider2D bCol = gameObject.GetComponent<BoxCollider2D>();      // 충돌체크 종료
         bCol.enabled = false;
     }
 }

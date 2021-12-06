@@ -4,23 +4,37 @@ using UnityEngine;
 
 public class Sector_Area : MonoBehaviour
 {
-    public int? _map = null;
+    public int _map;
 
-    protected virtual void Start()
+    void Start()
     {
         BoxCollider2D bCol = gameObject.GetComponent<BoxCollider2D>();
         bCol.enabled = false;
+
+        _map = int.Parse(gameObject.name);
     }
 
-    protected virtual void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        Map map = col.GetComponent<Map>();              // 맵 모듈만 걸러내기
-        if (map != null)
+        Map_Module mm = col.gameObject.GetComponent<Map_Module>();
+        if(mm != null)
         {
-            string name = col.gameObject.name;
-            _map = int.Parse(name);                     // 할당된 맵 모듈 넘버 저장
+            int map = int.Parse(col.gameObject.name);
+            if(_map == map)
+            {
+                return;
+            }
+            Sector._self.Compare(mm, this);
+
+            _map = map;
         }
+        
         BoxCollider2D bCol = gameObject.GetComponent<BoxCollider2D>();      // 충돌체크 종료
-        bCol.enabled = false;
+        if(bCol != null)
+        {
+            bCol.enabled = false;
+        }
     }
+
+
 }

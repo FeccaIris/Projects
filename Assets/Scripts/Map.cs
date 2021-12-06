@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
+    public static Map _self;
+
+    void Start()
     {
-        if(collision.name.Equals("Player"))
-        {
-            Transform trans = transform;
-            Sector._self.TransPosition(trans);
-        }
+        _self = this;
     }
 
-    public void MapCheck()
+    public void MoveModule(List<Sector_Area> SA, List<Map_Module> MM)
     {
 
     }

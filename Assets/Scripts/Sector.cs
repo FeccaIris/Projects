@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Sector : MonoBehaviour
 {
+    public GameObject _map;
     public GameObject _center;
     public static Sector _self;
 

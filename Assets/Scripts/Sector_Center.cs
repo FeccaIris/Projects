@@ -35,6 +35,15 @@ public class Sector_Center : Sector_Area
     protected override void OnTriggerEnter2D(Collider2D col)
     {
         base.OnTriggerEnter2D(col);
+
+        GameObject map = Sector._self._map;
+        Transform parent = map.transform.parent;
+        int cc = parent.childCount;
+
+        
+
+
+
         // 충돌체크 완료, 빈 공간에 맵 모듈 이동
     }
 }

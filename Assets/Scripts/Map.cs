@@ -12,4 +12,9 @@ public class Map : MonoBehaviour
             Sector._self.TransPosition(trans);
         }
     }
+
+    public void MapCheck()
+    {
+
+    }
 }

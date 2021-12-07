@@ -71,6 +71,11 @@ public class Sector : MonoBehaviour
         {
             _movingModule.Remove(mm);
         }
+
+        switch (_selected)
+        {
+
+        }
     }
 
     public void TransPosition(Transform mvTo)                        // 플레이어가 맵 모듈에 충돌할 때 호출

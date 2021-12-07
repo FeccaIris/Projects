@@ -1666,10 +1666,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b9ece27499fbe4d8e31efc11a8d401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _center: {fileID: 918845312}
   _mapTrans: {fileID: 1379931695}
   _sectorList: []
   _moduleList: []
+  _emptySector: []
+  _movingModule: []
 --- !u!1 &918845310
 GameObject:
   m_ObjectHideFlags: 0

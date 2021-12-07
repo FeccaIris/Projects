@@ -9,12 +9,8 @@ public class Map_Module : MonoBehaviour
         if(collision.name.Equals("Player"))
         {
             Transform trans = transform;
-            Sector._self.TransPosition(trans);      // 이동
+            Sector._self.ToSelect();                // 배열 초기화
+            Sector._self.TransPosition(trans);      // 이동 함수 호출
         }
-    }
-
-    public void MoveMapModule()
-    {
-        // 비할당 맵모듈 할당 이동
     }
 }

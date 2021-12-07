@@ -16,17 +16,10 @@ public class Sector_Area : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        Map_Module mm = col.gameObject.GetComponent<Map_Module>();
+        Map_Module mm = col.gameObject.GetComponent<Map_Module>();          // 맵 모듈 체크
         if(mm != null)
         {
-            int map = int.Parse(col.gameObject.name);
-            if(_map == map)
-            {
-                return;
-            }
-            Sector._self.Compare(mm, this);
-
-            _map = map;
+            Sector._self.Select(this, mm);
         }
         
         BoxCollider2D bCol = gameObject.GetComponent<BoxCollider2D>();      // 충돌체크 종료

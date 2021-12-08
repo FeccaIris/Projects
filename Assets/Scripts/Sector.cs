@@ -4,91 +4,86 @@ using UnityEngine;
 
 public class Sector : MonoBehaviour
 {
+    public int _counter = 9;
+
     public static Sector _self;
     public Transform _mapTrans;
+
+    public Sector_Area[] _sectorArr;
+    public Map_Module[] _moduleArr;
 
     public List<Sector_Area> _sectorList = new List<Sector_Area>();
     public List<Map_Module> _moduleList = new List<Map_Module>();
 
-    public List<Sector_Area> _emptySector = new List<Sector_Area>();
-    public List<Map_Module> _movingModule = new List<Map_Module>();
-
-    public int _selected;
-
-
+    public List<Sector_Area> _checkSector = new List<Sector_Area>();
+    public List<Map_Module> _checkModule = new List<Map_Module>();
 
     void Start()
     {
         _self = this;
-
-        int cc = transform.childCount;                                      // 섹터 리스트 작성
-        for (int i = 0; i < cc; i++)
-        {
-            GameObject Member = transform.GetChild(i).gameObject;
-            _sectorList.Add(Member.GetComponent<Sector_Area>());
-            _emptySector.Add(Member.GetComponent<Sector_Area>());
-        }
-        int cc2 = _mapTrans.childCount;                                     // 모듈 리스트 작성
-        for (int i = 0; i < cc2; i++)
-        {
-            GameObject Member = _mapTrans.GetChild(i).gameObject;
-            _moduleList.Add(Member.GetComponent<Map_Module>());
-            _movingModule.Add(Member.GetComponent<Map_Module>());
-        }
-
-
+        _sectorArr = GetComponentsInChildren<Sector_Area>();
+        _moduleArr = _mapTrans.GetComponentsInChildren<Map_Module>();
     }
 
-    public void ToSelect()
+    public void WriteList()
     {
-        _selected = 0;
-        _emptySector.Clear();
-        _movingModule.Clear();
+        _sectorList = new List<Sector_Area>(_sectorArr);
+        _moduleList = new List<Map_Module>(_moduleArr);
+
+        /*
+        _sectorList.Clear();
+        _moduleList.Clear();
 
         int cc = transform.childCount;                                      
         for (int i = 0; i < cc; i++)
         {
             GameObject Member = transform.GetChild(i).gameObject;
-            _emptySector.Add(Member.GetComponent<Sector_Area>());
+            _sectorList.Add(Member.GetComponent<Sector_Area>());
         }
+
         int cc2 = _mapTrans.childCount;                                     
         for (int i = 0; i < cc2; i++)
         {
             GameObject Member = _mapTrans.GetChild(i).gameObject;
-            _movingModule.Add(Member.GetComponent<Map_Module>());
+            _moduleList.Add(Member.GetComponent<Map_Module>());
         }
-        Debug.Log("ToSelect");
-    }
-
-    public void Select(Sector_Area sa, Map_Module mm)
-    {
-        _selected += 1;
-        if (_emptySector.Contains(sa))
-        {
-            _emptySector.Remove(sa);
-        }
-        if (_movingModule.Contains(mm))
-        {
-            _movingModule.Remove(mm);
-        }
-
-        switch (_selected)
-        {
-
-        }
+        */
     }
 
     public void TransPosition(Transform mvTo)                        // 플레이어가 맵 모듈에 충돌할 때 호출
     {
         transform.position = mvTo.position;
 
-        foreach (Sector_Area sa in _sectorList)
+        Collider();
+    }
+
+    public void Collider()
+    {
+        WriteList();
+        _checkSector.Clear();
+        _checkModule.Clear();
+
+        for (int i = 0; i<_sectorArr.Length; i++)                     // 충돌체
         {
-            BoxCollider2D col = sa.gameObject.GetComponent<BoxCollider2D>();
+            BoxCollider2D col = _sectorArr[i].gameObject.GetComponent<BoxCollider2D>();
             if (col.enabled == false)
             {
                 col.enabled = true;
             }
         }
     }
+
+    public void Count()
+    {
+        Debug.Log("c");
+    }
+
+    public void Arrange()
+    {
+        Debug.Log(_checkSector.Count);
+        
+        Map._self.MoveMapModule(_sectorList, _moduleList);
+    }
+
+
 }

@@ -19,9 +19,20 @@ public class Sector_Area : MonoBehaviour
         Map_Module mm = col.gameObject.GetComponent<Map_Module>();          // 맵 모듈 체크
         if(mm != null)
         {
-            Sector._self.Select(this, mm);
+            if (!( Sector._self._checkModule.Contains(mm) ))
+            {
+                Sector._self._checkModule.Add(mm);
+            }
+            if (!( Sector._self._checkSector.Contains(this) ))
+            {
+                Sector._self._checkSector.Add(this);
+
+                Sector._self.Count();
+            }
         }
         
+
+
         BoxCollider2D bCol = gameObject.GetComponent<BoxCollider2D>();      // 충돌체크 종료
         if(bCol != null)
         {

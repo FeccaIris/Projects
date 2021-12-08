@@ -11,8 +11,8 @@ public class Map : MonoBehaviour
         _self = this;
     }
 
-    public void MoveMapModule()
+    public void MoveMapModule(List<Sector_Area> sa, List<Map_Module> mm)
     {
-        Debug.Log("MMM");
+
     }
 }

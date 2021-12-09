@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Sector : MonoBehaviour
 {
-    public int _counter = 9;
+    public int _counter;
 
     public static Sector _self;
     public Transform _mapTrans;
@@ -25,29 +25,15 @@ public class Sector : MonoBehaviour
         _moduleArr = _mapTrans.GetComponentsInChildren<Map_Module>();
     }
 
+    void Update()
+    {
+        
+    }
+
     public void WriteList()
     {
         _sectorList = new List<Sector_Area>(_sectorArr);
         _moduleList = new List<Map_Module>(_moduleArr);
-
-        /*
-        _sectorList.Clear();
-        _moduleList.Clear();
-
-        int cc = transform.childCount;                                      
-        for (int i = 0; i < cc; i++)
-        {
-            GameObject Member = transform.GetChild(i).gameObject;
-            _sectorList.Add(Member.GetComponent<Sector_Area>());
-        }
-
-        int cc2 = _mapTrans.childCount;                                     
-        for (int i = 0; i < cc2; i++)
-        {
-            GameObject Member = _mapTrans.GetChild(i).gameObject;
-            _moduleList.Add(Member.GetComponent<Map_Module>());
-        }
-        */
     }
 
     public void TransPosition(Transform mvTo)                        // 플레이어가 맵 모듈에 충돌할 때 호출
@@ -62,6 +48,7 @@ public class Sector : MonoBehaviour
         WriteList();
         _checkSector.Clear();
         _checkModule.Clear();
+        _counter = 9;
 
         for (int i = 0; i<_sectorArr.Length; i++)                     // 충돌체
         {
@@ -75,7 +62,7 @@ public class Sector : MonoBehaviour
 
     public void Count()
     {
-        Debug.Log("c");
+        _counter -= 1;
     }
 
     public void Arrange()

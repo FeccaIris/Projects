@@ -51,6 +51,7 @@ public class DoubleClick : MonoBehaviour
             _clickCount += 1;
         }
     }//업데이트
+
     protected virtual void DoubleClicked()
     {
 

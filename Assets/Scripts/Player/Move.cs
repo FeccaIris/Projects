@@ -6,15 +6,16 @@ public class Move : DoubleClick
 {
     public Transform _trans;
     public Rigidbody2D _rigid;
-    public float _maxSpeed = 30.0f;
-    public float _maxDash = 10.0f;
+    public float _accel = 2.0f;
+    public float _maxSpeed = 40.0f;
+    public float _maxDash = 15.0f;
     
     protected override void Start()
     {
         _rigid = gameObject.GetComponent<Rigidbody2D>();
         _trans = _rigid.transform;
     }
-
+    
     protected override void Update()
     {
         base.Update();
@@ -44,7 +45,7 @@ public class Move : DoubleClick
             Vector2 move = mouse - pos;
             
 
-            _rigid.AddForce(move);
+            _rigid.AddForce(move * _accel);
         }
     }
 
@@ -61,17 +62,17 @@ public class Move : DoubleClick
         {
             move.x = _maxDash;
         }
-        else if(move.x <= -_maxDash)
+        else if(move.x <= -(_maxDash))
         {
-            move.x = -_maxDash;
+            move.x = -(_maxDash);
         }
         if (move.y >= _maxDash)
         {
             move.y = _maxDash;
         }
-        else if (move.y <= -_maxDash)
+        else if (move.y <= -(_maxDash))
         {
-            move.y = -_maxDash;
+            move.y = -(_maxDash);
         }
 
         _trans.Translate(move);

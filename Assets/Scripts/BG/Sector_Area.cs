@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class Sector_Area : MonoBehaviour
 {
-    public int _map;
-
     void Start()
     {
         BoxCollider2D bCol = gameObject.GetComponent<BoxCollider2D>();
         bCol.enabled = false;
-
-        _map = int.Parse(gameObject.name);
     }
 
     private void OnTriggerEnter2D(Collider2D col)

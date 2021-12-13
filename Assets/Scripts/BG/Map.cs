@@ -16,10 +16,13 @@ public class Map : MonoBehaviour
         int cc = toMove.Count;
         for(int i = 0; i < cc; i++)
         {
-            Sector_Area sa = toAssi[i];
-            Map_Module mm = toMove[i];
+            if (toAssi[i] != null && toMove[i] != null)
+            {
+                Sector_Area sa = toAssi[i];
+                Map_Module mm = toMove[i];
 
-            mm.Move(sa);
+                mm?.Move(sa);
+            }
         }
     }
 }

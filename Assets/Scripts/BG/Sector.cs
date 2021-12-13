@@ -5,6 +5,7 @@ using UnityEngine;
 public class Sector : MonoBehaviour
 {
     public static Sector _self;
+
     public Transform _mapTrans;
 
     public Sector_Area[] _sectorArr;
@@ -16,6 +17,7 @@ public class Sector : MonoBehaviour
     void Start()
     {
         _self = this;
+
         _sectorArr = GetComponentsInChildren<Sector_Area>();
         _moduleArr = _mapTrans.GetComponentsInChildren<Map_Module>();
     }
@@ -46,7 +48,7 @@ public class Sector : MonoBehaviour
             }
         }
 
-        Invoke("Waiting", 0.15f);
+        Invoke("Waiting", 0.11f);
     }
 
     public void Waiting()                                               // 행동 리스트

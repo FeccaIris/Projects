@@ -13,8 +13,9 @@ public class Map_Module : MonoBehaviour
         }
     }
 
-    public void Move()
+    public void Move(Sector_Area sa)
     {
-
+        Transform saTrans = sa.gameObject.GetComponent<Transform>();
+        transform.position = saTrans.position;
     }
 }

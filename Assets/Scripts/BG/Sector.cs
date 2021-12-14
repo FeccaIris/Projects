@@ -48,7 +48,7 @@ public class Sector : MonoBehaviour
             }
         }
 
-        Invoke("Waiting", 0.11f);
+        Invoke("Waiting", 0.1f);
     }
 
     public void Waiting()                                               // 행동 리스트

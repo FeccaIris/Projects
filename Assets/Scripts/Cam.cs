@@ -5,7 +5,10 @@ using UnityEngine;
 public class Cam : MonoBehaviour
 {
     public GameObject _player;
-
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
     void Update()
     {
         gameObject.transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y, gameObject.transform.position.z);

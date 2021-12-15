@@ -6,6 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public GameObject _player;
 
+    IEnumerator SpawnEnemy()
+    {
+        yield return null;  // 1프레임 대기
+    }
+
+
     void Start()
     {
         
@@ -13,6 +19,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
+
         
     }
 }

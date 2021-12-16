@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject _player;
+    public Sector _sector;
 
     IEnumerator SpawnEnemy()
     {
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
 
             GameObject pref =  Resources.Load("Enemy1") as GameObject;
             GameObject go = Instantiate(pref);
+
+            Transform trans = _sector.gameObject.transform.transform.Find("1"); // sector area 1
 
             float start = 0f;
             float end = 10f;
@@ -25,9 +28,9 @@ public class GameManager : MonoBehaviour
 
     }
 
-
     void Start()
     {
+        _sector = Sector._self;
         StartCoroutine("SpawnEnemy");
     }
 

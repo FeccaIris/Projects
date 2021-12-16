@@ -2977,6 +2977,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1724126919}
+  _sector: {fileID: 0}
 --- !u!1 &1724126919
 GameObject:
   m_ObjectHideFlags: 0

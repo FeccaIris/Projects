@@ -13,7 +13,7 @@ public class Move : DoubleClick
     protected override void Start()
     {
         _rigid = gameObject.GetComponent<Rigidbody2D>();
-        _trans = _rigid.transform;
+        _trans = transform;
     }
     
     protected override void Update()

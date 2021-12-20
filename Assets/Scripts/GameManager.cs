@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameManager _inst;
     public GameObject _player;
     public Sector _sector;
 
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
             GameObject pref =  Resources.Load("Enemy1") as GameObject;
             GameObject go = Instantiate(pref);
 
-            Transform trans = _sector.gameObject.transform.transform.Find("1"); // sector area 1
+            Transform trans = _sector.gameObject.transform.Find("1"); // sector area 1
 
             float start = 0f;
             float end = 10f;
@@ -26,6 +27,11 @@ public class GameManager : MonoBehaviour
             go.transform.position = new Vector3(x, y, 0);
         }
 
+    }
+
+    void Awake()
+    {
+        _inst = this;
     }
 
     void Start()

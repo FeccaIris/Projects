@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour
 
             go.transform.position = new Vector3(x, y, 0);
         }
-
     }
 
     void Awake()

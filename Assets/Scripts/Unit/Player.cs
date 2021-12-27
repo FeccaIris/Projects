@@ -5,6 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player _inst;
+    public GameObject _atk;
+
+    public GameObject _dealt;
+    public GameObject _explo;
 
     void Awake()
     {
@@ -13,11 +17,37 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        
+        _dealt.SetActive(false);
+        _explo.SetActive(false);
     }
 
     void Update()
     {
         
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Enemy")
+        {
+            Dealt();
+        }
+    }
+
+    public void Dealt()
+    {
+        _dealt.SetActive(true);
+        Invoke("Explosion", 0.5f);
+        Invoke("Del", 0.7f);
+    }
+
+    public void Explosion()
+    {
+        _explo.SetActive(true);
+    }
+
+    public void Del()
+    {
+        Destroy(gameObject);
     }
 }

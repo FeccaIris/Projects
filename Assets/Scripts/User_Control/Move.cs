@@ -44,7 +44,6 @@ public class Move : DoubleClick
             mouse = Camera.main.ScreenToWorldPoint(mouse);
             Vector2 move = mouse - pos;
             
-
             _rigid.AddForce(move * _accel);
         }
     }

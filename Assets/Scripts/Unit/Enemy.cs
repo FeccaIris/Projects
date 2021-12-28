@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public float _maxSpeed = 10.0f;
     public GameObject _dealt;
     public GameObject _explo;
+    public bool _alive = true;
 
 
     void Start()
@@ -27,7 +28,7 @@ public class Enemy : MonoBehaviour
     {
         if(_player != null)
         {
-            if(Vector2.Distance(_player.transform.position, transform.position) > 2.0f)
+            if (Vector2.Distance(_player.transform.position, transform.position) > 2.0f)
             {
                 if (_rigid.velocity.x >= _maxSpeed)
                 {
@@ -47,7 +48,6 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-        
         StartCoroutine("Trace");
     }
 
@@ -55,10 +55,13 @@ public class Enemy : MonoBehaviour
     {
         if(_player != null)
         {
-            Vector2 player = _player.transform.position;
-            Vector2 pos = transform.position;
-            Vector2 move = player - pos;
-            _rigid.AddForce(move);
+            if(_alive == true)
+            {
+                Vector2 player = _player.transform.position;
+                Vector2 pos = transform.position;
+                Vector2 move = player - pos;
+                _rigid.AddForce(move);
+            }
         }
         yield return new WaitForSeconds(0.5f);
     }
@@ -74,8 +77,10 @@ public class Enemy : MonoBehaviour
 
     public void Dealt()
     {
+        _alive = false;
+        Collider2D c = GetComponent<Collider2D>();
+        c.enabled = false;
         _dealt.SetActive(true);
-        _rigid.simulated = false;
         Invoke("Explosion", 0.5f);
         Invoke("Del", 0.7f);
     }

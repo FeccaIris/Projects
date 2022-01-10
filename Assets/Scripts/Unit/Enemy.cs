@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
                 _rigid.AddForce(move);
             }
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
     }
 
     IEnumerator Faster()

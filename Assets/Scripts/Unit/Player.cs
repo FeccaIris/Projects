@@ -23,7 +23,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
+        /*
+        Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouse.z = transform.position.z;
+        Vector3 pos = transform.position;
+        Vector3 dir = pos - mouse;
+        float angle = Mathf.Atan2(dir.y, dir.x);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+        */
     }
 
     void OnCollisionEnter2D(Collision2D col)

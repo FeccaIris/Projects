@@ -19,18 +19,12 @@ public class Player : MonoBehaviour
     {
         _dealt.SetActive(false);
         _explo.SetActive(false);
+        //StartCoroutine(Cursor());
     }
 
     void Update()
     {
-        /*
-        Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouse.z = transform.position.z;
-        Vector3 pos = transform.position;
-        Vector3 dir = pos - mouse;
-        float angle = Mathf.Atan2(dir.y, dir.x);
-        transform.rotation = Quaternion.Euler(0, 0, angle);
-        */
+        
     }
 
     void OnCollisionEnter2D(Collision2D col)
@@ -38,6 +32,20 @@ public class Player : MonoBehaviour
         if(col.gameObject.tag == "Enemy")
         {
             Dealt();
+        }
+    }
+
+    IEnumerator Cursor()
+    {
+        while (true)
+        {
+            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mouse.z = transform.position.z;
+            Vector3 pos = transform.position;
+            Vector3 dir = pos - mouse;
+            float angle = Mathf.Atan2(dir.y, dir.x) * 180 / Mathf.PI;
+            transform.Rotate(0, 0, angle);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

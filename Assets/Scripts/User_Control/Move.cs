@@ -19,8 +19,9 @@ public class Move : DoubleClick
     protected override void Update()
     {
         base.Update();
-        
-        if(_rigid.velocity.x >= _maxSpeed)
+
+        #region Limit Speed
+        if (_rigid.velocity.x >= _maxSpeed)
         {
             _rigid.velocity = new Vector2(_maxSpeed, _rigid.velocity.y);
         }
@@ -36,6 +37,7 @@ public class Move : DoubleClick
         {
             _rigid.velocity = new Vector2(_rigid.velocity.x, -_maxSpeed);
         }
+        #endregion
 
         if (Input.GetMouseButton(0))
         {

@@ -5,10 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player _inst;
+
+    public Transform _firePos;
     public GameObject _atk;
 
     public GameObject _dealt;
     public GameObject _explo;
+
+    public Vector2 _dir;
 
     void Awake()
     {
@@ -19,7 +23,6 @@ public class Player : MonoBehaviour
     {
         _dealt.SetActive(false);
         _explo.SetActive(false);
-        //StartCoroutine(Cursor());
     }
 
     void Update()
@@ -27,25 +30,24 @@ public class Player : MonoBehaviour
         
     }
 
+    private void FixedUpdate()
+    {
+        _dir = _firePos.position - transform.position;
+
+        #region FollowMouseDir
+        Vector2 m = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 pos = transform.position;
+        Vector2 d = m - pos;
+        float z = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, z);
+        #endregion
+    }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if(col.gameObject.tag == "Enemy")
         {
             Dealt();
-        }
-    }
-
-    IEnumerator Cursor()
-    {
-        while (true)
-        {
-            Vector3 mouse = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouse.z = transform.position.z;
-            Vector3 pos = transform.position;
-            Vector3 dir = pos - mouse;
-            float angle = Mathf.Atan2(dir.y, dir.x) * 180 / Mathf.PI;
-            transform.Rotate(0, 0, angle);
-            yield return new WaitForSeconds(0.1f);
         }
     }
 

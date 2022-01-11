@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
+    Rigidbody2D _rb;
     void Start()
     {
+        _rb = GetComponent<Rigidbody2D>();
+        //_rb.AddForce( * 1000);
+
         Invoke("Disappear", 2.0f);
     }
 
@@ -25,7 +29,7 @@ public class bullet : MonoBehaviour
             }
         }
     }
-    
+   
     public void Disappear()
     {
         Destroy(gameObject);

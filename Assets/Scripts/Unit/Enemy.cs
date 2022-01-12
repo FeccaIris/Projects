@@ -5,7 +5,10 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     Rigidbody2D _rigid;
+    SpriteRenderer _sr;
+
     public GameObject _player;
+    
     public float _maxSpeed = 10.0f;
     public GameObject _dealt;
     public GameObject _explo;
@@ -14,6 +17,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        _sr = GetComponent<SpriteRenderer>();
         if(FindObjectOfType<Player>() != null)
         {
             _player = Player._inst.gameObject;
@@ -26,7 +30,11 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if(_player != null)
+        
+    }
+    private void FixedUpdate()
+    {
+        if (_player != null)
         {
             if (Vector2.Distance(_player.transform.position, transform.position) > 2.0f)
             {
@@ -50,7 +58,6 @@ public class Enemy : MonoBehaviour
         }
         StartCoroutine("Trace");
     }
-
     IEnumerator Trace()
     {
         if(_player != null)
@@ -81,6 +88,7 @@ public class Enemy : MonoBehaviour
         Collider2D c = GetComponent<Collider2D>();
         c.enabled = false;
         _dealt.SetActive(true);
+        _sr.enabled = false;
         Invoke("Explosion", 0.5f);
         Invoke("Del", 0.7f);
     }

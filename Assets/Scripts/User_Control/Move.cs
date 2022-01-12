@@ -55,9 +55,10 @@ public class Move : DoubleClick
         base.DoubleClicked();
         Vector2 mouse = Input.mousePosition;
         Vector2 pos = _trans.position;
+
         mouse = Camera.main.ScreenToWorldPoint(mouse);
         Vector2 move = mouse - pos;
-        _rigid.velocity = new Vector2(0, 0);
+        _rigid.velocity = Vector2.zero;
         
         if(move.x >= _maxDash)
         {
@@ -75,7 +76,7 @@ public class Move : DoubleClick
         {
             move.y = -(_maxDash);
         }
-
+        
         _trans.Translate(move);
     }
 }

@@ -8,21 +8,15 @@ public class bullet : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        //_rb.AddForce( * 1000);
+        _rb.AddForce(Attack.I._dir * 4500);
 
-        Invoke("Disappear", 2.0f);
+        Invoke("Disappear", 1.5f);
     }
-
-    void Update()
+    private void OnCollisionEnter2D(Collision2D col)
     {
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == "Enemy")
+        if (col.gameObject.tag == "Enemy")
         {
-            Enemy e = col.GetComponent<Enemy>();
+            Enemy e = col.gameObject.GetComponent<Enemy>();
             if (e != null)
             {
                 e.Dealt();

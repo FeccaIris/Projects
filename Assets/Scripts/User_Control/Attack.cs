@@ -6,7 +6,7 @@ public class Attack : MonoBehaviour
 {
     public static Attack I;
 
-    public Vector2 _dir2;
+    public Vector2 _dir;
 
     private void Awake()
     {
@@ -30,14 +30,14 @@ public class Attack : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                _dir2 = Player._inst._dir;
+                _dir = Player._inst._dir.normalized;
                 GameObject prefab = Resources.Load("Bullet") as GameObject;
                 GameObject go = Instantiate(prefab);
                 go.transform.position = Player._inst._firePos.position;
                 go.transform.rotation = transform.rotation;
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 }

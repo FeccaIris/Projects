@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour
     public GameObject _explo;
     public bool _alive = true;
 
-
     void Start()
     {
         _sr = GetComponent<SpriteRenderer>();

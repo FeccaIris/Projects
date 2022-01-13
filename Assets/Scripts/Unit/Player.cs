@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     public Transform _firePos;
     public GameObject _atk;
-
+    public GameObject _beam;
     public GameObject _dealt;
     public GameObject _explo;
 
@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     {
         _dealt.SetActive(false);
         _explo.SetActive(false);
+        _beam.SetActive(false);
     }
 
     void Update()
@@ -33,14 +34,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         _dir = _firePos.position - transform.position;
-
-        #region FollowMouseDir
-        Vector2 m = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 pos = transform.position;
-        Vector2 d = m - pos;
-        float z = Mathf.Atan2(d.y, d.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, z);
-        #endregion
     }
 
     void OnCollisionEnter2D(Collision2D col)

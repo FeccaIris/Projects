@@ -30,6 +30,24 @@ public class Attack : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
+                GameObject go = Instantiate(Player._inst._beam);
+                go.SetActive(true);
+                go.transform.position = Player._inst._beam.transform.position;
+                go.transform.rotation = Player._inst._beam.transform.rotation;
+                beam b = go.GetComponent<beam>();
+                b.Delete(); 
+            }
+
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+
+    IEnumerator Shoot2()
+    {
+        while (true)
+        {
+            if (Input.GetKey(KeyCode.Space))
+            {
                 _dir = Player._inst._dir.normalized;
                 GameObject prefab = Resources.Load("Bullet") as GameObject;
                 GameObject go = Instantiate(prefab);
@@ -37,7 +55,7 @@ public class Attack : MonoBehaviour
                 go.transform.rotation = transform.rotation;
             }
 
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.2f);
         }
     }
 }

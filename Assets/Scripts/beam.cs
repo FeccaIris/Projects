@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bullet : MonoBehaviour
+public class beam : MonoBehaviour
 {
-    Rigidbody2D _rb;
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _rb.AddForce(Attack.I._dir * 6000);
 
-        Invoke("Disappear", 1.5f);
     }
-    private void OnCollisionEnter2D(Collision2D col)
+
+    private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Enemy")
         {
@@ -23,7 +20,12 @@ public class bullet : MonoBehaviour
             }
         }
     }
-   
+
+    public void Delete()
+    {
+        Invoke("Disappear", 0.1f);
+    }
+
     public void Disappear()
     {
         Destroy(gameObject);

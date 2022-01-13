@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
             GameObject pref =  Resources.Load("Enemy1") as GameObject;
             GameObject go = Instantiate(pref);
 
-            Transform trans = _sector.gameObject.transform.Find("1"); // sector area 1
-
             float start = 0f;
             float end = 10f;
             float x = Random.Range(start, end);
@@ -36,7 +34,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _sector = Sector._self;
-        StartCoroutine("SpawnEnemy");
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnEnemy());
+        StartCoroutine(SpawnEnemy());
     }
 
     void Update()

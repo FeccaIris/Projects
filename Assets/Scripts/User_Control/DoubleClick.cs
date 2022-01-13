@@ -54,6 +54,6 @@ public class DoubleClick : MonoBehaviour
 
     protected virtual void DoubleClicked()
     {
-
+        Debug.Log("dash");
     }
 }

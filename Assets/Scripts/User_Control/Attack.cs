@@ -30,19 +30,29 @@ public class Attack : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                GameObject go = Instantiate(Player._inst._beam);
-                go.SetActive(true);
-                go.transform.position = Player._inst._beam.transform.position;
-                go.transform.rotation = Player._inst._beam.transform.rotation;
-                beam b = go.GetComponent<beam>();
-                b.Delete(); 
+                Beam();
+                yield return new WaitForSeconds(0.02f);
+                Beam();
+                yield return new WaitForSeconds(0.02f);
+                Beam();
+                yield return new WaitForSeconds(1.0f);
             }
 
-            yield return new WaitForSeconds(0.02f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
-    IEnumerator Shoot2()
+    public void Beam()
+    {
+        GameObject go = Instantiate(Player._inst._beam);
+        go.SetActive(true);
+        go.transform.position = Player._inst._beam.transform.position;
+        go.transform.rotation = Player._inst._beam.transform.rotation;
+        beam b = go.GetComponent<beam>();
+        b.Delete();
+    }
+
+    IEnumerator Shoot0()
     {
         while (true)
         {

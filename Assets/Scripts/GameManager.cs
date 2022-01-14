@@ -12,17 +12,18 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(3.0f);
+            yield return new WaitForSeconds(1.0f);
 
-            GameObject pref =  Resources.Load("Enemy1") as GameObject;
-            GameObject go = Instantiate(pref);
-
-            float start = 0f;
-            float end = 10f;
-            float x = Random.Range(start, end);
-            float y = Random.Range(start, end);
-
-            go.transform.position = new Vector3(x, y, 0);
+            foreach (Sector_Area sa in _sector._sectorArr)
+            {
+                if (sa.name.Contains("5"))
+                {
+                    continue;
+                }
+                GameObject pref = Resources.Load("Enemy1") as GameObject;
+                GameObject go = Instantiate(pref);
+                go.transform.position = sa.transform.position;
+            }
         }
     }
 
@@ -34,13 +35,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _sector = Sector._self;
-        StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnEnemy());
     }
 

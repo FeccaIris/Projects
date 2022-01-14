@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
         StartCoroutine("Faster");
         _dealt.SetActive(false);
         _explo.SetActive(false);
+
+        StartCoroutine("Trace");
     }
 
     void Update()
@@ -55,21 +57,35 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
-        StartCoroutine("Trace");
     }
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.name.Contains("beam"))
+        {
+            Destroy(col.gameObject);
+        }
+    }
+
     IEnumerator Trace()
     {
-        if(_player != null)
+        float r = Random.Range(0, 1.0f);
+        yield return new WaitForSeconds(r);
+
+        while (true)
         {
-            if(_alive == true)
+            if (_player != null)
             {
-                Vector2 player = _player.transform.position;
-                Vector2 pos = transform.position;
-                Vector2 move = player - pos;
-                _rigid.AddForce(move);
+                if (_alive == true)
+                {
+                    Vector2 player = _player.transform.position;
+                    Vector2 pos = transform.position;
+                    Vector2 move = player - pos;
+                    _rigid.AddForce(move);
+                }
             }
+            yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(0.1f);
     }
 
     IEnumerator Faster()

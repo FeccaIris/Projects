@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
-  _maxSpeed: 10
+  _maxSpeed: 20
   _dealt: {fileID: 4167931531012615011}
   _explo: {fileID: 916882211486554505}
   _alive: 1

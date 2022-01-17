@@ -60,4 +60,15 @@ public class Player : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void ATKInvoke(float inv = 2.0f)
+    {
+        _atk.SetActive(true);
+        Invoke("ATKFalse", inv);
+    }
+
+    public void ATKFalse()
+    {
+        _atk.SetActive(false);
+    }
 }

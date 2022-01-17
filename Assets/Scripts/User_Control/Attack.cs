@@ -14,13 +14,25 @@ public class Attack : MonoBehaviour
     }
     private void Start()
     {
+        StartCoroutine(Melee());
         StartCoroutine(Shoot());
     }
     void Update()
     {
-        if (Input.GetMouseButton(1))
+
+    }
+
+    IEnumerator Melee()
+    {
+        while (true)
         {
-            Player._inst._atk.SetActive(true);
+            if (Input.GetMouseButton(1))
+            {
+                Debug.Log("m");
+                Player._inst.ATKInvoke(5.0f);
+                yield return new WaitForSeconds(0.5f);
+            }
+            yield return null;
         }
     }
 
@@ -31,14 +43,9 @@ public class Attack : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 Beam();
-                yield return new WaitForSeconds(0.02f);
-                Beam();
-                yield return new WaitForSeconds(0.02f);
-                Beam();
-                yield return new WaitForSeconds(1.0f);
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.02f);
         }
     }
 

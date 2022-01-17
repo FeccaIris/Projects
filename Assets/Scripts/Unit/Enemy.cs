@@ -93,7 +93,7 @@ public class Enemy : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1.0f);
-            _maxSpeed += 1.0f;
+            _maxSpeed += 5.0f;
         }
     }
 

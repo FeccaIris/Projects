@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameManager _inst;
+    public GameManager I;
     public GameObject _player;
     public Sector _sector;
     public float _spwanTime = 3.0f;
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        _inst = this;
+        I = this;
     }
 
     void Start()

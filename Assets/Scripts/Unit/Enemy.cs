@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MapObject
 {
     Rigidbody2D _rigid;
     SpriteRenderer _sr;
@@ -10,26 +10,27 @@ public class Enemy : MonoBehaviour
     public GameObject _player;
     
     public float _maxSpeed = 10.0f;
-    public GameObject _dealt;
-    public GameObject _explo;
     public bool _alive = true;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         _sr = GetComponent<SpriteRenderer>();
         if(FindObjectOfType<Player>() != null)
         {
             _player = Player._inst.gameObject;
         }
         _rigid = GetComponent<Rigidbody2D>();
+
         StartCoroutine("Faster");
+
         _dealt.SetActive(false);
         _explo.SetActive(false);
 
         StartCoroutine("Trace");
     }
 
-    void Update()
+    protected override void Update()
     {
         
     }
@@ -61,9 +62,9 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.name.Contains("beam"))
+        if (col.gameObject.tag.Equals("Player"))
         {
-            Destroy(col.gameObject);
+            Destroy(gameObject);
         }
     }
 

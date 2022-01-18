@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MapObject
 {
     public static Player _inst;
 
     public Transform _firePos;
     public GameObject _atk;
     public GameObject _beam;
-    public GameObject _dealt;
-    public GameObject _explo;
+
 
     public Vector2 _dir;
 
@@ -19,14 +18,15 @@ public class Player : MonoBehaviour
         _inst = this;
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         _dealt.SetActive(false);
         _explo.SetActive(false);
         _beam.SetActive(false);
     }
 
-    void Update()
+    protected override void Update()
     {
         
     }
@@ -40,11 +40,11 @@ public class Player : MonoBehaviour
     {
         if(col.gameObject.tag == "Enemy")
         {
-            Dealt();
+            Damaged();
         }
     }
 
-    public void Dealt()
+    protected override void Die()
     {
         _dealt.SetActive(true);
         Invoke("Explosion", 0.5f);

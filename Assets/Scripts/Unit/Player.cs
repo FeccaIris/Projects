@@ -38,9 +38,9 @@ public class Player : MapObject
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Enemy")
+        if(col.gameObject.name.Contains("1"))
         {
-            Damaged();
+            Damaged(2);
         }
     }
 

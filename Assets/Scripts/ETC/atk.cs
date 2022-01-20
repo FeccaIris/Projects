@@ -23,10 +23,10 @@ public class atk : MonoBehaviour
     {
         if(col.tag == "Enemy")
         {
-            Enemy e = col.GetComponent<Enemy>();
-            if(e != null)
+            MapObject mo = col.gameObject.GetComponent<MapObject>();
+            if (mo != null)
             {
-                e.Dealt();
+                mo.Damaged(1);
             }
         }
     }

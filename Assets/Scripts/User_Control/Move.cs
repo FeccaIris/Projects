@@ -52,7 +52,9 @@ public class Move : DoubleClick
 
     protected override void DoubleClicked()
     {
-        base.DoubleClicked();
+        Player.I._atk.SetActive(true);
+        Debug.Log("dash");
+
         Vector2 mouse = Input.mousePosition;
         Vector2 pos = _trans.position;
 

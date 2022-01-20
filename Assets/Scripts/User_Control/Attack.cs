@@ -7,7 +7,7 @@ public class Attack : MonoBehaviour
     public static Attack I;
 
     public Vector2 _dir;
-
+ 
     private void Awake()
     {
         I = this;
@@ -28,9 +28,7 @@ public class Attack : MonoBehaviour
         {
             if (Input.GetMouseButton(1))
             {
-                Debug.Log("m");
-                Player._inst.ATKInvoke(5.0f);
-                yield return new WaitForSeconds(0.5f);
+                Player.I._atk.SetActive(true);
             }
             yield return null;
         }
@@ -51,10 +49,10 @@ public class Attack : MonoBehaviour
 
     public void Beam()
     {
-        GameObject go = Instantiate(Player._inst._beam);
+        GameObject go = Instantiate(Player.I._beam);
         go.SetActive(true);
-        go.transform.position = Player._inst._beam.transform.position;
-        go.transform.rotation = Player._inst._beam.transform.rotation;
+        go.transform.position = Player.I._beam.transform.position;
+        go.transform.rotation = Player.I._beam.transform.rotation;
         beam b = go.GetComponent<beam>();
         b.Delete();
     }
@@ -65,10 +63,10 @@ public class Attack : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                _dir = Player._inst._dir.normalized;
+                _dir = Player.I._dir.normalized;
                 GameObject prefab = Resources.Load("Bullet") as GameObject;
                 GameObject go = Instantiate(prefab);
-                go.transform.position = Player._inst._firePos.position;
+                go.transform.position = Player.I._firePos.position;
                 go.transform.rotation = transform.rotation;
             }
 

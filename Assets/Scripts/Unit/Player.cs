@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MapObject
 {
-    public static Player _inst;
+    public static Player I;
 
     public Transform _firePos;
     public GameObject _atk;
@@ -15,7 +15,7 @@ public class Player : MapObject
 
     void Awake()
     {
-        _inst = this;
+        I = this;
     }
 
     protected override void Start()
@@ -38,7 +38,7 @@ public class Player : MapObject
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.name.Contains("1"))
+        if(col.gameObject.name.Contains("Suicider"))
         {
             Damaged(2);
         }

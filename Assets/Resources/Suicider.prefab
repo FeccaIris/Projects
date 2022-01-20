@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 9116141877409295943}
   - component: {fileID: 9116141877409295801}
   m_Layer: 0
-  m_Name: Enemy1
+  m_Name: Suicider
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,11 +297,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 9116141877409295942}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aac1f2c0e42e124d8c7a4a4404f7bee, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c984e45d3cf0b44ea643cc501aa60d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _maxSpeed: 20
+  _hpbar: {fileID: 0}
   _dealt: {fileID: 4167931531012615011}
   _explo: {fileID: 916882211486554505}
+  _hp: 0
+  _hpMax: 1
+  _player: {fileID: 0}
+  _maxSpeed: 10
   _alive: 1

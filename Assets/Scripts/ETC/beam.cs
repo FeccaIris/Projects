@@ -13,10 +13,10 @@ public class beam : MonoBehaviour
     {
         if (col.gameObject.tag == "Enemy")
         {
-            Enemy e = col.gameObject.GetComponent<Enemy>();
-            if (e != null)
+            MapObject mo = col.gameObject.GetComponent<MapObject>();
+            if(mo != null)
             {
-                e.Dealt();
+                mo.Damaged(1);
             }
         }
     }

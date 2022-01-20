@@ -44,6 +44,6 @@ public class MapObject : MonoBehaviour
 
     protected virtual void Die()
     {
-
+        Destroy(gameObject);
     }
 }

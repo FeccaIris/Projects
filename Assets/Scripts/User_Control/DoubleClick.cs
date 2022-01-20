@@ -54,7 +54,6 @@ public class DoubleClick : MonoBehaviour
 
     protected virtual void DoubleClicked()
     {
-        Player._inst.ATKInvoke();
-        Debug.Log("dash");
+
     }
 }

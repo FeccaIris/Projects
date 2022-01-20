@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MapObject
+public class Suicider : MapObject
 {
     Rigidbody2D _rigid;
     SpriteRenderer _sr;
@@ -14,11 +14,13 @@ public class Enemy : MapObject
 
     protected override void Start()
     {
+        _hpMax = 1;
         base.Start();
+
         _sr = GetComponent<SpriteRenderer>();
         if(FindObjectOfType<Player>() != null)
         {
-            _player = Player._inst.gameObject;
+            _player = Player.I.gameObject;
         }
         _rigid = GetComponent<Rigidbody2D>();
 
@@ -28,6 +30,8 @@ public class Enemy : MapObject
         _explo.SetActive(false);
 
         StartCoroutine("Trace");
+
+        Invoke("Del", 10.0f);
     }
 
     protected override void Update()
@@ -98,7 +102,7 @@ public class Enemy : MapObject
         }
     }
 
-    public void Dealt()
+    protected override void Die()
     {
         _alive = false;
         Collider2D c = GetComponent<Collider2D>();

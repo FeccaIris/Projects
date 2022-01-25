@@ -16,8 +16,14 @@ public class MapObject : MonoBehaviour
     {
         _hp = _hpMax;
         UpdateHPBar();
-        _dealt.SetActive(false);
-        _explo.SetActive(false);
+        if (_dealt != null)
+        {
+            _dealt.SetActive(false);
+        }
+        if(_explo != null)
+        {
+            _explo.SetActive(false);
+        }
     }
 
     protected virtual void Update()

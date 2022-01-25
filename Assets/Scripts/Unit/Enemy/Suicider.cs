@@ -81,7 +81,7 @@ public class Suicider : Enemy
                 {
                     Vector2 player = _player.transform.position;
                     Vector2 pos = transform.position;
-                    Vector2 move = player - pos;
+                    Vector2 move = (player - pos).normalized * _maxSpeed;
                     _rigid.AddForce(move);
                 }
             }

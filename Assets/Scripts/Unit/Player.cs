@@ -21,8 +21,6 @@ public class Player : MapObject
     protected override void Start()
     {
         base.Start();
-        _dealt.SetActive(false);
-        _explo.SetActive(false);
         _beam.SetActive(false);
     }
 

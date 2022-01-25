@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Suicider : MapObject
+public class Suicider : Enemy
 {
     Rigidbody2D _rigid;
     SpriteRenderer _sr;
@@ -25,10 +25,6 @@ public class Suicider : MapObject
         _rigid = GetComponent<Rigidbody2D>();
 
         StartCoroutine("Faster");
-
-        _dealt.SetActive(false);
-        _explo.SetActive(false);
-
         StartCoroutine("Trace");
 
         Invoke("Del", 10.0f);

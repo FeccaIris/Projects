@@ -16,6 +16,8 @@ public class MapObject : MonoBehaviour
     {
         _hp = _hpMax;
         UpdateHPBar();
+        _dealt.SetActive(false);
+        _explo.SetActive(false);
     }
 
     protected virtual void Update()
@@ -31,7 +33,7 @@ public class MapObject : MonoBehaviour
         }
     }
 
-    public void Damaged(int dmg = 1)
+    public virtual void Damaged(int dmg = 1)
     {
         _hp -= dmg;
         UpdateHPBar();

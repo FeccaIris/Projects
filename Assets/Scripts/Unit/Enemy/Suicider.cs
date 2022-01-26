@@ -16,7 +16,6 @@ public class Suicider : Enemy
     {
         _hpMax = 1;
         base.Start();
-
         _sr = GetComponent<SpriteRenderer>();
         if(FindObjectOfType<Player>() != null)
         {
@@ -36,7 +35,7 @@ public class Suicider : Enemy
     }
     private void FixedUpdate()
     {
-        if (_player != null)
+        if (_player != null)    // 속도제한
         {
             if (Vector2.Distance(_player.transform.position, transform.position) > 2.0f)
             {

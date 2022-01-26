@@ -36,7 +36,7 @@ public class Player : MapObject
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.name.Contains("Suicider"))
+        if(col.gameObject.tag.Equals("Enemy"))
         {
             Damaged(2);
         }

@@ -11,7 +11,8 @@ public class Spawner : Enemy
     {
         base.Start();
 
-        StartCoroutine(Spawn());
+        //StartCoroutine(Spawn());
+        StartCoroutine(Launch());
     }
 
     IEnumerator Spawn()
@@ -21,6 +22,18 @@ public class Spawner : Enemy
             yield return new WaitForSeconds(_spawnTime);
 
             GameObject pref = Resources.Load("Suicider") as GameObject;
+            GameObject go = Instantiate(pref);
+            go.transform.position = transform.position;
+        }
+    }
+
+    IEnumerator Launch()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5.0f);
+
+            GameObject pref = Resources.Load("Rocket") as GameObject;
             GameObject go = Instantiate(pref);
             go.transform.position = transform.position;
         }
@@ -42,12 +55,13 @@ public class Spawner : Enemy
     {
         Collider2D c = GetComponent<Collider2D>();
         c.enabled = false;
-        Invoke("Explosion", 0.5f);
+        Invoke("Explosion", 0.2f);
         Invoke("Del", 0.7f);
     }
 
     public void Explosion()
     {
+        _dealt.SetActive(false);
         _explo.SetActive(true);
     }
 

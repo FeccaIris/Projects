@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _sector = Sector._self;
-        //StartCoroutine(Spawner());
+        StartCoroutine(Spawner());
     }
 
     void Update()

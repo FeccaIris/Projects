@@ -109,9 +109,13 @@ public class Rocket : Enemy
         }
 
         _launched = false;
-        Vector2 player = _player.transform.position;
+        Vector2 player = new Vector2();
+        Vector2 move = new Vector2();
+        if (_player != null)
+            { player = _player.transform.position; }
         Vector2 pos = transform.position;
-        Vector2 move = (player - pos).normalized * 80.0f;
+        if(player != null) 
+            { move = (player - pos).normalized * 80.0f; }
         _rigid.AddForce(move);
 
         Invoke("Del", 3.0f);

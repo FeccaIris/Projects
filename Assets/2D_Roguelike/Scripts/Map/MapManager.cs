@@ -5,9 +5,9 @@ using UnityEngine;
 namespace RL
 {
 
-    public class Map : MonoBehaviour
+    public class MapManager : MonoBehaviour
     {
-        public static Map I;
+        public static MapManager I;
 
         private void Awake()
         {

@@ -7,7 +7,15 @@ namespace RL
 
     public class MapModule : MonoBehaviour
     {
-        public void Move()
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            if (col.tag.Equals("Player"))
+            {
+                SectorManager.I.MoveToCenter(transform);
+            }
+        }
+
+        public void FillEmpty()
         {
             //transform.position = ºó ±¸¿ª;
         }

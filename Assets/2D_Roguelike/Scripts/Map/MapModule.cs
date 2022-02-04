@@ -15,10 +15,9 @@ namespace RL
             }
         }
 
-        public void FillEmpty()
+        public void Move(Transform t)
         {
-            //transform.position = ºó ±¸¿ª;
+            transform.position = t.position;
         }
     }
-
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace RL
 {
-
     public class Player : MonoBehaviour
     {
         public static Player I;

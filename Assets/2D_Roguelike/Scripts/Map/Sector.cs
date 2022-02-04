@@ -9,29 +9,23 @@ namespace RL
     {
         BoxCollider2D _col;
         SectorManager _sm;
+        MapManager _mm;
 
         private void Start()
         {
             _col = GetComponent<BoxCollider2D>();
             TurnOffCol();
             _sm = SectorManager.I;
+            _mm = MapManager.I;
         }
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.tag.Equals("Map"))
             {
                 MapModule m = col.GetComponent<MapModule>();
-
-                _sm._emptyL = new List<Sector>(_sm._sectorL);
-                foreach(Sector s in _sm._emptyL)
-                {
-
-                }
+                _mm.ModifyList(m);
+                _sm.ModifyList(this);
             }
-        }
-        private void FixedUpdate()
-        {
-
         }
 
         public void TurnOnCol()

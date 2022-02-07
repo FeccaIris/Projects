@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Control : MonoBehaviour
+public class Test : MonoBehaviour
 {
     void Start()
     {
         
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        
+        transform.position += new Vector3(0.02f, 0, 0);
     }
 }

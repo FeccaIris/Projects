@@ -4,17 +4,30 @@ using UnityEngine;
 
 public class RadarArrow : MonoBehaviour
 {
-    public Transform _enemy;
+    public Transform _target;
     public Transform _player;
 
     void Update()
     {
-        Vector3 dir = _enemy.position - _player.position;
-        dir = dir.normalized;
+        if (_target == null || _target.gameObject.activeSelf == false)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            float dis = Vector3.Distance(_target.position, _player.position);
+            if (dis < 15.0f)
+            {
+                gameObject.SetActive(false);
+            }
 
-        float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        Quaternion q = Quaternion.AngleAxis(z - 90, Vector3.forward);
+            Vector3 dir = _target.position - _player.position;
+            dir = dir.normalized;
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, q, 0.5f);
+            float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            Quaternion q = Quaternion.AngleAxis(z - 90, Vector3.forward);       // Vector.forward = zÃà
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, q, 0.5f);
+        }
     }
 }

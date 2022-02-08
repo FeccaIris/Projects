@@ -10,13 +10,19 @@ namespace SV
 
         public GameObject _unit;
 
+        Rigidbody2D _rgd;
+
         private void Awake()
         {
             I = this;
         }
         private void Start()
         {
-
+            _rgd = GetComponent<Rigidbody2D>();
+        }
+        private void Update()
+        {
+            transform.position = _unit.transform.position;
         }
     }
 

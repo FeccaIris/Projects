@@ -19,7 +19,7 @@ namespace SV
         {
             base.Start();
 
-            _unit = transform.GetChild(0).gameObject;
+            _unit = transform.Find("Unit").gameObject;
         }
         protected override void Update()
         {

@@ -12,7 +12,6 @@ namespace SV
 
         Rigidbody2D _rgd;
         Player _player;
-
         bool _moveOn = true;
 
         Vector3 _direction;
@@ -20,19 +19,29 @@ namespace SV
 
         void Start()
         {
-            _rgd = transform.GetChild(0).GetComponent<Rigidbody2D>();
+            _rgd = GetComponent<Rigidbody2D>();
             _player = Player.I;
         }
 
         void FixedUpdate()
         {
-            float h = CrossPlatformInputManager.GetAxis("Horizontal");
-            float v = CrossPlatformInputManager.GetAxis("Vertical");
-            Move(h, v);
+            _rgd.velocity = Vector2.zero;
+
+            {
+                float h = CrossPlatformInputManager.GetAxis("Horizontal");
+                float v = CrossPlatformInputManager.GetAxis("Vertical");
+
+                if (h != 0 || v != 0)
+                {
+                    if (_moveOn == true)
+                        Move(h, v);
+                }
+            }   // Å°º¸µå
 
             _direction = _joystick.GetDirection();
             Vector3 look = _direction;
             _direction *= _moveSpeed * Time.timeScale;
+
             if (_moveOn == true)
             {
                 if (look != Vector3.zero)
@@ -49,11 +58,21 @@ namespace SV
                 }
             }
         }
-
+        
         void Move(float h, float v)
         {
             Vector3 dir = new Vector3(h, v, 0).normalized;
+            Vector3 look = dir;
+            dir *= _moveSpeed * Time.timeScale;
             transform.position += dir;
+
+            if (look != Vector3.zero)
+            {
+                look = (look.magnitude > 1.0f) ? look.normalized : look;
+                float z = Mathf.Atan2(look.y, look.x) * Mathf.Rad2Deg;
+                Quaternion q = Quaternion.AngleAxis(z - 90, Vector3.forward);
+                _player._unit.transform.rotation = Quaternion.Lerp(_player._unit.transform.rotation, q, 0.5f);
+            }
         }
     }
 }

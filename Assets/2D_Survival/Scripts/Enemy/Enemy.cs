@@ -5,24 +5,25 @@ using UnityEngine;
 namespace SV
 {
 
-    public class Enemy : MonoBehaviour
+    public class Enemy : Unit
     {
         protected Player _player;
-        protected Rigidbody2D _rgd;
 
-
-        protected virtual void Start()
+        protected override void Start()
         {
+            base.Start();
+
             _player = Player.I;
-            _rgd = GetComponent<Rigidbody2D>();
         }
-        protected virtual void Update()
+        protected override void Update()
         {
-
+            base.Update();
         }
-        protected virtual void FixedUpdate()
+        protected override void FixedUpdate()
         {
+            base.FixedUpdate();
 
+            transform.position += new Vector3(0.1f, 0, 0);
         }
     }
 }

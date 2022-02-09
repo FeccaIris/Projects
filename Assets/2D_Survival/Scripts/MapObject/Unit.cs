@@ -4,22 +4,18 @@ using UnityEngine;
 
 namespace SV
 {
-    public class Player : Unit
+
+    public class Unit : MapObject
     {
-        public static Player I;
+        protected Rigidbody2D _rgd;
+        protected float _hp = 0;
+        protected float _hpMax = 0;
 
-        public GameObject _unit;
-        public Enemy _nearest;
-
-        private void Awake()
-        {
-            I = this;
-        }
         protected override void Start()
         {
             base.Start();
-
-            _unit = transform.GetChild(0).gameObject;
+            _hp = _hpMax;
+            _rgd = GetComponent<Rigidbody2D>();
         }
         protected override void Update()
         {
@@ -30,5 +26,4 @@ namespace SV
             base.FixedUpdate();
         }
     }
-
 }

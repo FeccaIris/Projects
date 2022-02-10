@@ -12,7 +12,7 @@ namespace SV
 
         void Update()
         {
-            _target = Player.I._nearest.transform;
+            _target = Player.I._target;
     
         if (_target == null || _target.gameObject.activeSelf == false)
             {
@@ -26,11 +26,11 @@ namespace SV
                     gameObject.SetActive(false);
                 }
 
-                Vector3 dir = _target.position - _player.position;
+                Vector3 dir = _target.position - _player.position;                  // 방향 벡터
                 dir = dir.normalized;
 
-                float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                Quaternion q = Quaternion.AngleAxis(z - 90, Vector3.forward);       // Vector.forward = z축
+                float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;                // 회전 각도
+                Quaternion q = Quaternion.AngleAxis(z - 90, Vector3.forward);       // Vector.forward = z축 -> z축 기준으로 회전
 
                 transform.rotation = Quaternion.Lerp(transform.rotation, q, 0.5f);
             }

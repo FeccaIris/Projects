@@ -148,7 +148,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   _rgd: {fileID: 2171646386789609567}
   _ea: 0
-  _speed: 2000
+  _speed: 2500
   _cool: 0
   _size: 0
   _reach: 0

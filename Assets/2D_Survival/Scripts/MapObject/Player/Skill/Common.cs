@@ -12,7 +12,7 @@ namespace SV
         public Rigidbody2D _rgd;
 
         public float _ea;
-        public float _speed = 1000.0f;
+        public float _speed = 2500.0f;
         public float _cool;
         public float _size;
         public float _reach;

@@ -8,11 +8,55 @@ namespace SV
     {
         public static GameManager I;
 
-        [SerializeField] List<Enemy> _enemys;
+        public List<Enemy> _enemies;
+
+        bool _playing = true;
+        float _spawnCool = 3.0f;
+        float _gameTime = 0.0f;
 
         private void Awake()
         {
             I = this;
+        }
+        private void Start()
+        {
+            StartCoroutine(SpawnEnemy());
+        }
+        private void FixedUpdate()
+        {
+            _gameTime += Time.deltaTime * Time.timeScale;
+        }
+
+        IEnumerator SpawnEnemy()
+        {
+            while (_playing)
+            {
+                yield return new WaitForSeconds(_spawnCool);
+
+                if (Player.I != null)
+                {
+                    GameObject prefab = null;
+
+                    if (_gameTime <= 300.0f)
+                    {
+                        prefab = Resources.Load("Walker") as GameObject;
+                    }
+                    else if (_gameTime <= 600.0f)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                    GameObject go = Instantiate(prefab);
+                    Enemy e = go.GetComponent<Enemy>();
+                    _enemies.Add(e);
+                    Vector2 pos = Player.I.transform.position;
+
+                    go.transform.position = pos + Random.insideUnitCircle * 50.0f;
+                }
+            }
         }
     }
 }

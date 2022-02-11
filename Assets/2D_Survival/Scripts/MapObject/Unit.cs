@@ -7,9 +7,9 @@ namespace SV
 
     public class Unit : MapObject
     {
-        protected Rigidbody2D _rgd;
-        protected float _hp = 0;
-        protected float _hpMax = 0;
+        public Rigidbody2D _rgd;
+        public float _hp = 0;
+        public float _hpMax = 0;
 
         protected override void Start()
         {
@@ -24,6 +24,19 @@ namespace SV
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
+        }
+
+        protected virtual void Damaged(int dmg)
+        {
+            _hp -= dmg;
+            if(_hp <= 0)
+            {
+                Die();
+            }
+        }
+        protected virtual void Die()
+        {
+            Destroy(gameObject);
         }
     }
 }

@@ -8,7 +8,7 @@ public class Rocket : Enemy
     Rigidbody2D _rigid;
     SpriteRenderer _sr;
 
-    public float _maxSpeed = 15.0f;
+    float _maxSpeed = 90.0f;
 
     bool _launched = false;
 

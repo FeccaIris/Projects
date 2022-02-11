@@ -6,12 +6,13 @@ using UnityEngine;
 public class Spawner : Enemy
 {
     float _spawnTime = 1.0f;
+    float _launchTime = 5.0f;
 
     protected override void Start()
     {
         base.Start();
 
-        //StartCoroutine(Spawn());
+        StartCoroutine(Spawn());
         StartCoroutine(Launch());
     }
 
@@ -31,7 +32,7 @@ public class Spawner : Enemy
     {
         while (true)
         {
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(_launchTime);
 
             GameObject pref = Resources.Load("Rocket") as GameObject;
             GameObject go = Instantiate(pref);

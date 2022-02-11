@@ -28,9 +28,16 @@ namespace SV
                     copy.transform.localPosition = _arrow.transform.localPosition;
                     copy.transform.localScale = _arrow.transform.localScale;
                     RadarArrow ra = copy.GetComponent<RadarArrow>();
-                    ra._target = e.transform;
-                    ra._player = Player.I.transform;
-                    copy.SetActive(true);
+                    if (ra._target != null)
+                    {
+                        ra._target = e.transform;
+                        ra._player = Player.I.transform;
+                        copy.SetActive(true);
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
         }

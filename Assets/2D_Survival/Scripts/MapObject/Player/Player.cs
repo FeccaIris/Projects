@@ -12,7 +12,6 @@ namespace SV
         public GameObject _fireRot;
         public Transform _firePos;
         public Transform _target;
-        public Vector3 _targetDir;
 
         private void Awake()
         {
@@ -26,7 +25,7 @@ namespace SV
             _fireRot = transform.Find("FireRot").gameObject;
             _firePos = transform.Find("FireRot").Find("FirePos").transform;
 
-            StartCoroutine(Bullet());
+            //StartCoroutine(Bullet());
         }
         protected override void Update()
         {

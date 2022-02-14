@@ -9,9 +9,19 @@ namespace SV
     {
         public Vector3 _dir;
 
-        public int _pierce = 1;
-        public int _pierceCount = 0;
+        int _pierce = 1;
+        int _pierceCount = 0;
 
+        public int Pierce
+        {
+            get { return _pierce; }
+            set { _pierce = value; }
+        }
+        public int PierceCount
+        {
+            get { return _pierceCount; }
+            set { _pierceCount = value; }
+        }
 
         protected override void Start()
         {
@@ -23,9 +33,9 @@ namespace SV
 
             transform.rotation = Quaternion.Lerp(transform.rotation, q, 1.0f);
 
-            _rgd.AddForce(_dir * _speed);
+            _rgd.AddForce(_dir * Speed);
 
-            Invoke("Delete", _maintain);
+            Invoke("Delete", Maintain);
         }
         protected override void FixedUpdate()
         {
@@ -35,8 +45,8 @@ namespace SV
         {
             if (col.gameObject.tag.Equals("Enemy"))
             {
-                _pierceCount++;
-                if (_pierceCount >= _pierce)
+                PierceCount++;
+                if (PierceCount >= Pierce)
                 {
                     Delete();
                 }

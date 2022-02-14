@@ -53,8 +53,10 @@ namespace SV
                     Enemy e = go.GetComponent<Enemy>();
                     _enemies.Add(e);
                     Vector2 pos = Player.I.transform.position;
+                    Vector2 random = Random.insideUnitCircle;
+                    random = random.normalized;
 
-                    go.transform.position = pos + Random.insideUnitCircle * 50.0f;
+                    go.transform.position = pos + random * new Vector2(35, 35);
                 }
             }
         }

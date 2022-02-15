@@ -137,5 +137,5 @@ MonoBehaviour:
   _pause: 0
   _rgd: {fileID: 0}
   _hp: 0
-  _hpMax: 1
+  _hpMax: 3
   _player: {fileID: 0}

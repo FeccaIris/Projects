@@ -24,14 +24,14 @@ namespace SV
         }
         private void FixedUpdate()
         {
-            _gameTime += Time.deltaTime * Time.timeScale;
+            _gameTime += Time.fixedDeltaTime * Time.timeScale;
         }
 
         IEnumerator SpawnEnemy()
         {
             while (_playing)
             {
-                yield return new WaitForSeconds(_spawnCool);
+                yield return new WaitForSeconds(_spawnCool * Time.timeScale);
 
                 if (Player.I != null)
                 {

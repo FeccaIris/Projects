@@ -24,8 +24,6 @@ namespace SV
             _unit = transform.Find("Unit").gameObject;
             _fireRot = transform.Find("FireRot").gameObject;
             _firePos = transform.Find("FireRot").Find("FirePos").transform;
-
-            //StartCoroutine(Bullet());
         }
         protected override void Update()
         {
@@ -90,25 +88,6 @@ namespace SV
             }
 
             return 0;
-        }
-
-        IEnumerator Bullet()
-        {
-            GameObject prefab = Resources.Load("SV_Bullet") as GameObject;
-
-            while (true)
-            {
-                yield return new WaitForSeconds(1.0f);
-
-                if (_target != null)
-                {
-                    GameObject go = Instantiate(prefab);
-                    go.transform.position = _firePos.position;
-                    //go.transform.rotation = _firePos.rotation;
-                    Projectile p = go.GetComponent<Projectile>();
-                    p._target = _target;
-                }
-            }
         }
     }
 }

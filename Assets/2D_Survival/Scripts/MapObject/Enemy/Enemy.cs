@@ -10,7 +10,7 @@ namespace SV
         public Transform _player;
 
         float _speed = 0.3f;
-        int _size = 1;
+        float _size = 1;
 
         protected override void Start()
         {
@@ -18,10 +18,13 @@ namespace SV
 
             if(Player.I != null)
                 _player = Player.I.transform;
-            _size = Random.Range(1, 4);
-            if (_size < 3)
-                _size = 1;
+
+            _size = Random.Range(0.5f, 2.0f);
             transform.localScale *= _size;
+
+            float reverse = 1 / _size;
+            reverse = reverse < 0.7f ? 0.7f : reverse;
+            _speed *= reverse;
         }
         protected override void Update()
         {

@@ -5,17 +5,10 @@ using UnityEngine;
 namespace SV
 {
 
-    public class SkillManager : MonoBehaviour
+    public class Skill
     {
-        Player _player;
+        public bool _isProj;
 
-        IEnumerator _first;
-        IEnumerator _second;
-        IEnumerator _third;
-
-        bool _isProjectile = true;
-        float _distance;
-        
         float _cool = 0.5f;
         float _reach = 15.0f;
         int _ea = 1;
@@ -64,12 +57,32 @@ namespace SV
         }
         #endregion
 
+        public Skill(bool isProj = true)
+        {
+            _isProj = isProj;
+        }
+    }
+
+    public class SkillManager : MonoBehaviour
+    {
+        public static SkillManager I;
+
+        List<Skill> _list;
+
+        Player _player;
+
+        float _distance;
+
+        private void Awake()
+        {
+            I = this;
+        }
         private void Start()
         {
             _player = Player.I;
+            _list = new List<Skill>();
 
-            IEnumerator _first = NewSkill(true);
-            StartCoroutine(_first);
+            AcquireNew(true);
         }
         private void FixedUpdate()
         {
@@ -79,11 +92,18 @@ namespace SV
             }   
         }
 
-        IEnumerator NewSkill(bool isProjectile)
+        public void AcquireNew(bool isProj)
+        {
+            Skill n = new Skill(isProj);
+            _list.Add(n);
+            StartCoroutine(Activate(n));
+        }
+
+        IEnumerator Activate(Skill skill)
         {
             GameObject prefab = null;
 
-            if (isProjectile)
+            if (skill._isProj == true)
             {
                 prefab = Resources.Load("SV_Projectile") as GameObject;
             }
@@ -96,29 +116,25 @@ namespace SV
             {
                 if (_player._target != null)
                 {
-                    if (_distance <= Reach)
+                    if (_distance <= skill.Reach)
                     {
                         Vector3 dir = (_player._target.position - transform.position).normalized;
 
-                        for (int i = 0; i < EA; i++)
+                        for (int i = 0; i < skill.EA; i++)
                         {
                             GameObject go = Instantiate(prefab);
                             go.transform.position = _player._firePos.position;
-                            //go.transform.rotation = _player._fireRot.transform.rotation;
-                            /*
-                            if (_player._target != null)
-                                dir = (_player._target.position - transform.position).normalized;
-                            */
+
                             float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                             Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
                             go.transform.rotation = Quaternion.Lerp(transform.rotation, q, 1.0f);   // Àû ¹æÇâ
 
                             Projectile p = go.GetComponent<Projectile>();
-                            p.Activate(dir, size: Size, pierce: Pierce, maintain: Maintain, speed: Speed);
-                            yield return new WaitForSeconds(0.2f / EA);
+                            p.Activate(dir, size: skill.Size, pierce: skill.Pierce, maintain: skill.Maintain, speed: skill.Speed);
+                            yield return new WaitForSeconds(0.2f / skill.EA);
                         }
 
-                        yield return new WaitForSeconds(Cool * Time.timeScale);
+                        yield return new WaitForSeconds(skill.Cool * Time.timeScale);
                     }
                     else
                     {

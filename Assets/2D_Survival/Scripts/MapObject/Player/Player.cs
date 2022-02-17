@@ -13,10 +13,20 @@ namespace SV
         public Transform _firePos;
         public Transform _target;
 
+        Hpbar _hpB;
+
         private void Awake()
         {
             I = this;
         }
+
+        public void Init()
+        {
+            _hpB = UIManager.I._hpB;
+
+            UpdateHp();
+        }
+
         protected override void Start()
         {
             base.Start();
@@ -25,14 +35,8 @@ namespace SV
             _fireRot = transform.Find("FireRot").gameObject;
             _firePos = transform.Find("FireRot").Find("FirePos").transform;
         }
-        protected override void Update()
+        void FixedUpdate()
         {
-            base.Update();
-        }
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-
             // 타겟 지정 = 리스트 중 가장 가까운 적 = 거리비교
             ChangeTarget();
 
@@ -49,9 +53,19 @@ namespace SV
             if (col.gameObject.tag.Equals("Enemy"))
             {
                 Damaged(1);
+                UpdateHp();
             }
         }
+        protected override void Die()
+        {
+            Destroy(_hpB.gameObject);
+            base.Die();
+        }
 
+        void UpdateHp()
+        {
+            _hpB._fill.fillAmount = (float)_hp / _hpMax;
+        }
 
         public void ChangeTarget()
         {

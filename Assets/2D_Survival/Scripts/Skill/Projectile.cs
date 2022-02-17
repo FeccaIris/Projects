@@ -8,7 +8,7 @@ namespace SV
     public class Projectile : MonoBehaviour
     {
         Rigidbody2D _rgd;
-        GameObject _expolsion;
+        GameObject _explosion;
 
         int _pierce;
         int _pierceCount;
@@ -16,7 +16,8 @@ namespace SV
         public void Activate(Vector3 dir, float speed, float size, float maintain, int pierce)
         {
             _rgd = GetComponent<Rigidbody2D>();
-            _expolsion = transform.Find("Explosion").GetComponent<GameObject>();
+            _explosion = transform.Find("Explosion").gameObject;
+            _explosion.SetActive(false);
 
             _pierce = pierce;
 

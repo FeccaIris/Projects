@@ -17,14 +17,6 @@ namespace SV
             _hp = _hpMax;
             _rgd = GetComponent<Rigidbody2D>();
         }
-        protected override void Update()
-        {
-            base.Update();
-        }
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
 
         protected virtual void Damaged(int dmg)
         {

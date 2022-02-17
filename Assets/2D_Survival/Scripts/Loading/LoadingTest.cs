@@ -9,16 +9,20 @@ namespace SV
     public enum SceneNum
     {
         LOAD = 0,
-        PLAY = 1,
+        LOBBY = 1,
+        PLAY = 2,
     }
 
     public class LoadingTest : MonoBehaviour
     {
         Text _progress;
+        Image _bar;
 
         void Start()
         {
             _progress = transform.Find("Progress").GetComponent<Text>();
+            _bar = transform.Find("Bar").GetComponent<Image>();
+            _bar.fillAmount = 0;
 
             StartCoroutine(LoadScene());
         }
@@ -34,6 +38,7 @@ namespace SV
             while (!op.allowSceneActivation)
             {
                 _progress.text = $"Loading.. {op.progress * 100}%";
+                _bar.fillAmount = Mathf.Lerp(_bar.fillAmount, op.progress + 0.1f, Time.fixedDeltaTime);
 
                 if (op.progress >= 0.9f)
                 {

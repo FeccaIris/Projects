@@ -20,6 +20,10 @@ namespace SV
         }
         private void Start()
         {
+            UIManager.I.Init();
+            LevelManager.I.Init();
+            Player.I.Init();
+
             StartCoroutine(SpawnEnemy());
         }
         private void FixedUpdate()
@@ -56,7 +60,7 @@ namespace SV
                     Vector2 random = Random.insideUnitCircle;
                     random = random.normalized;
 
-                    go.transform.position = pos + random * new Vector2(35, 35);
+                    go.transform.position = pos + random * new Vector2(50, 50);
                 }
             }
         }

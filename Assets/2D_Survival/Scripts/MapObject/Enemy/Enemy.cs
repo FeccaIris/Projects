@@ -26,13 +26,8 @@ namespace SV
             reverse = reverse < 0.7f ? 0.7f : reverse;
             _speed *= reverse;
         }
-        protected override void Update()
+        void FixedUpdate()
         {
-            base.Update();
-        }
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
             if(_player != null)
                 transform.position += (_player.position - transform.position).normalized * _speed;
         }

@@ -13,13 +13,5 @@ namespace SV
         {
 
         }
-        protected virtual void Update()
-        {
-
-        }
-        protected virtual void FixedUpdate()
-        {
-
-        }
     }
 }

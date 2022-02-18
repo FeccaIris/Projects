@@ -11,6 +11,8 @@ namespace SV
 
         public Hpbar _hpB;
 
+        List<PopUp> _puList;
+
         void Awake()
         {
             I = this;
@@ -18,8 +20,12 @@ namespace SV
 
         public void Init()
         {
-            _hpB = transform.Find("Playing").Find("Hpbar").GetComponent<Hpbar>();
-
+            _hpB = transform.Find("Playing").Find("UI").Find("Hpbar").GetComponent<Hpbar>();
+            _puList = new List<PopUp>(transform.Find("Playing").Find("PopUp").GetComponentsInChildren<PopUp>());
+            foreach(PopUp pu in _puList)
+            {
+                pu.Show(false);
+            }
 
             _hpB.Init();
         }

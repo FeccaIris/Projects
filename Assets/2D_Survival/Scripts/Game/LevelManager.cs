@@ -9,8 +9,11 @@ namespace SV
     {
         public static LevelManager I;
 
-        int _lv;
-        int _exp;
+        public Expbar _expB;
+
+        [SerializeField]int _lv = 1;
+        [SerializeField] int _exp;
+        [SerializeField] int _expNeed;
 
         public AnimationCurve _curve;
         int _lvMax = 200;
@@ -23,33 +26,63 @@ namespace SV
 
         public void Init()
         {
+            _expB = UIManager.I._expB;
+            UpdateExpbar();
+
             _lv = 1;
             _exp = 0;
+        }
+
+        public void UpdateExpbar()
+        {
+            _expNeed = Calc(_lv);
+            _expB._fill.fillAmount = (float)_exp / _expNeed;
         }
 
         public void GetExp(int exp)
         {
             _exp += exp;
+            UpdateExpbar();
 
-            int cE, nE, need;
-            Calc(out cE, out nE, out need);
-
-            if(_exp >= need)
-            {
-                int exceed = _exp - need;
-                Time.timeScale = 0;
-
-
-            }
+            CheckLevelUp();
         }
-        void Calc(out int curExp, out int nextExp, out int needExp)     // 필요 경험치 계산 -> 레벨 참조
+        public void CheckLevelUp()
         {
-            int curLv = _lv;
-            int nextLv = curLv + 1;
+            if (_exp >= _expNeed)
+            {
+                LevelUp();
 
-            curExp = (int) _curve.Evaluate(curLv / _lvMax);
-            nextExp = (int) _curve.Evaluate(nextLv / _lvMax);
-            needExp = nextExp - curExp;
+                UpdateExpbar();
+            }
+            else return;
+        }
+        int Calc(int lv)
+        {
+            int curLv = lv - 1;
+            int nextLv = lv;
+
+            float temp = _curve.Evaluate((float)curLv / _lvMax);
+            int cur = (int)(_expMax * temp);
+
+            temp = _curve.Evaluate((float)nextLv / _lvMax);
+            int next = (int)(_expMax * temp);
+
+            int need = next - cur;
+
+            return need;
+        }
+        void LevelUp()
+        {
+            int exceed = _exp - _expNeed;
+            Time.timeScale = 0;
+
+            _lv++;
+            _exp = exceed;
+
+            UIManager.I._levelUp.Show(true, delegate ()
+            {
+                Time.timeScale = 1;
+            });
         }
     }
 }

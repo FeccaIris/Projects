@@ -4,19 +4,21 @@ using UnityEngine;
 
 namespace SV
 {
-
+    [System.Serializable]
     public class Skill
     {
         public bool _isProj;
+        public int _index;
 
-        float _cool = 0.5f;
-        float _reach = 15.0f;
-        int _ea = 1;
+        [SerializeField] float _cool = 0.5f;
+        [SerializeField] float _reach = 15.0f;
+        [SerializeField] int _ea = 1;
 
-        float _speed = 2000.0f;
-        float _size = 1.0f;
-        float _maintain = 2.0f;
-        int _pierce = 1;
+        [SerializeField] float _speed = 2000.0f;
+        [SerializeField] float _size = 1.0f;
+        [SerializeField] float _maintain = 2.0f;
+        [SerializeField] int _pierce = 1;
+        [SerializeField] int _dmg = 1;
 
         #region Property
         public float Cool
@@ -55,11 +57,17 @@ namespace SV
             get { return _pierce; }
             set { _pierce = value; }
         }
+        public int Damage
+        {
+            get { return _dmg; }
+            set { _dmg = value; }
+        }
         #endregion
 
         public Skill(bool isProj = true)
         {
             _isProj = isProj;
+            _index = SkillManager.I._skList.Count + 1;
         }
     }
 
@@ -67,7 +75,7 @@ namespace SV
     {
         public static SkillManager I;
 
-        List<Skill> _list;
+        public List<Skill> _skList;
 
         Player _player;
 
@@ -80,7 +88,7 @@ namespace SV
         private void Start()
         {
             _player = Player.I;
-            _list = new List<Skill>();
+            _skList = new List<Skill>();
 
             AcquireNew(true);
         }
@@ -95,7 +103,7 @@ namespace SV
         public void AcquireNew(bool isProj)
         {
             Skill n = new Skill(isProj);
-            _list.Add(n);
+            _skList.Add(n);
             StartCoroutine(Activate(n));
         }
 
@@ -130,7 +138,7 @@ namespace SV
                             go.transform.rotation = Quaternion.Lerp(transform.rotation, q, 1.0f);   // Àû ¹æÇâ
 
                             Projectile p = go.GetComponent<Projectile>();
-                            p.Activate(dir, size: skill.Size, pierce: skill.Pierce, maintain: skill.Maintain, speed: skill.Speed);
+                            p.Activate(dir, size: skill.Size, pierce: skill.Pierce, maintain: skill.Maintain, speed: skill.Speed, dmg: skill.Damage);
                             yield return new WaitForSeconds(0.2f / skill.EA);
                         }
 

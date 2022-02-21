@@ -11,6 +11,7 @@ namespace SV
 
         float _speed = 0.3f;
         float _size = 1;
+        int _exp = 1;
 
         protected override void Start()
         {
@@ -31,17 +32,11 @@ namespace SV
             if(_player != null)
                 transform.position += (_player.position - transform.position).normalized * _speed;
         }
-        private void OnTriggerEnter2D(Collider2D col)
-        {
-            if (col.gameObject.tag.Equals("Attack"))
-            {
-                Damaged(1);
-            }
-        }
 
         protected override void Die()
         {
-            base.Die();
+            LevelManager.I.GetExp(_exp);
+
             List<Enemy> list = GameManager.I._enemies;
             if (list != null)
             {
@@ -54,6 +49,8 @@ namespace SV
                     }
                 }
             }
+
+            base.Die();
         }
     }
 }

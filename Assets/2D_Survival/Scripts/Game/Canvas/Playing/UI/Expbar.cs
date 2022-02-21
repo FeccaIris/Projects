@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 namespace SV
 {
-    public class Hpbar : MonoBehaviour
+
+    public class Expbar : MonoBehaviour
     {
         public Image _fill;
 
-        float _offset = -25.0f;
+        float _offset = 210.0f;
 
         public void Init()
         {
@@ -20,6 +21,11 @@ namespace SV
                 Vector2 pos = Camera.main.WorldToScreenPoint(Player.I.transform.position);
                 transform.position = new Vector2(pos.x, pos.y + _offset);
             }
+        }
+
+        public void UpdateUI()
+        {
+
         }
     }
 }

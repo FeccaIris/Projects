@@ -12,18 +12,20 @@ namespace SV
 
         int _pierce;
         int _pierceCount;
+        int _dmg;
 
-        public void Activate(Vector3 dir, float speed, float size, float maintain, int pierce)
+        public void Activate(Vector3 dir, float speed, float size, float maintain, int pierce, int dmg)
         {
             _rgd = GetComponent<Rigidbody2D>();
             _explosion = transform.Find("Explosion").gameObject;
             _explosion.SetActive(false);
 
             _pierce = pierce;
+            _dmg = dmg;
 
             transform.localScale *= size;
 
-            _rgd.AddForce(dir * speed * Time.timeScale);
+            _rgd.AddForce(dir * speed * /*Time.fixedDeltaTime **/ Time.timeScale);
             Invoke("Del", maintain);
         }
         void Del()
@@ -34,7 +36,12 @@ namespace SV
         {
             if (col.gameObject.tag.Equals("Enemy"))
             {
+                Enemy e = col.GetComponent<Enemy>();
+
                 _pierceCount++;
+
+                e.Damaged(_dmg);
+
                 if(_pierceCount >= _pierce)
                 {
                     Del();

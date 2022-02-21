@@ -2,15 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopUp : MonoBehaviour
+namespace SV
 {
-    public virtual void Init()
-    {
 
-    }
-
-    public void Show(bool show)
+    public class PopUp : MonoBehaviour
     {
-        gameObject.SetActive(show);
+        public delegate void CallBack();
+        public CallBack _cb;
+
+        public virtual void Init()
+        {
+            Show(false);
+        }
+
+        public void Show(bool show, CallBack cb = null)
+        {
+            gameObject.SetActive(show);
+
+            _cb = cb;
+        }
     }
 }

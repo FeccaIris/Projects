@@ -5,10 +5,11 @@ using UnityEngine;
 namespace SV
 {
     [System.Serializable]
-    public class Skill
+    public class PlayerSkill
     {
         public bool _isProj;
         public int _index;
+        public int _cost;
 
         [SerializeField] float _cool = 0.5f;
         [SerializeField] float _reach = 15.0f;
@@ -64,10 +65,10 @@ namespace SV
         }
         #endregion
 
-        public Skill(bool isProj = true)
+        public PlayerSkill(bool isProj = true)
         {
             _isProj = isProj;
-            _index = SkillManager.I._skList.Count + 1;
+            _index = SkillManager.I._skList.Count;
         }
     }
 
@@ -75,9 +76,11 @@ namespace SV
     {
         public static SkillManager I;
 
-        public List<Skill> _skList;
+        public List<PlayerSkill> _skList;
 
         Player _player;
+
+        int _cost;
 
         float _distance;
 
@@ -85,10 +88,10 @@ namespace SV
         {
             I = this;
         }
-        private void Start()
+        public void Init()
         {
             _player = Player.I;
-            _skList = new List<Skill>();
+            _skList = new List<PlayerSkill>();
 
             AcquireNew(true);
         }
@@ -102,22 +105,24 @@ namespace SV
 
         public void AcquireNew(bool isProj)
         {
-            Skill n = new Skill(isProj);
+            PlayerSkill n = new PlayerSkill(isProj);
             _skList.Add(n);
             StartCoroutine(Activate(n));
+
+            UIManager.I._levelUp._idButtonList[n._index].Set(n);
         }
 
-        IEnumerator Activate(Skill skill)
+        IEnumerator Activate(PlayerSkill skill)
         {
             GameObject prefab = null;
 
             if (skill._isProj == true)
             {
-                prefab = Resources.Load("SV_Projectile") as GameObject;
+                prefab = GameManager.I._proj;
             }
             else
             {
-                prefab = Resources.Load("SV_Area") as GameObject;
+                
             }
 
             while (true)
@@ -130,7 +135,7 @@ namespace SV
 
                         for (int i = 0; i < skill.EA; i++)
                         {
-                            GameObject go = Instantiate(prefab);
+                            GameObject go = GameManager.I.GetPoolObject(prefab);
                             go.transform.position = _player._firePos.position;
 
                             float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -138,6 +143,7 @@ namespace SV
                             go.transform.rotation = Quaternion.Lerp(transform.rotation, q, 1.0f);   // Àû ¹æÇâ
 
                             Projectile p = go.GetComponent<Projectile>();
+                            p.Init();
                             p.Activate(dir, size: skill.Size, pierce: skill.Pierce, maintain: skill.Maintain, speed: skill.Speed, dmg: skill.Damage);
                             yield return new WaitForSeconds(0.2f / skill.EA);
                         }

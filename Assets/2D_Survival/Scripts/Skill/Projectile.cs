@@ -5,33 +5,36 @@ using UnityEngine;
 namespace SV
 {
 
-    public class Projectile : MonoBehaviour
+    public class Projectile : Skill
     {
         Rigidbody2D _rgd;
-        GameObject _explosion;
 
         int _pierce;
         int _pierceCount;
         int _dmg;
 
-        public void Activate(Vector3 dir, float speed, float size, float maintain, int pierce, int dmg)
+        public void Init()
         {
             _rgd = GetComponent<Rigidbody2D>();
-            _explosion = transform.Find("Explosion").gameObject;
-            _explosion.SetActive(false);
 
+            _pierce = 0;
+            _pierceCount = 0;
+            _dmg = 0;
+
+            transform.localScale = new Vector3(1.25f, 0.25f, 1);
+        }
+
+        public void Activate(Vector3 dir, float speed, float size, float maintain, int pierce, int dmg)
+        {
             _pierce = pierce;
             _dmg = dmg;
 
             transform.localScale *= size;
 
             _rgd.AddForce(dir * speed * /*Time.fixedDeltaTime **/ Time.timeScale);
-            Invoke("Del", maintain);
+            Invoke("EndUse", maintain);
         }
-        void Del()
-        {
-            Destroy(gameObject);
-        }
+
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.gameObject.tag.Equals("Enemy"))
@@ -44,7 +47,7 @@ namespace SV
 
                 if(_pierceCount >= _pierce)
                 {
-                    Del();
+                    EndUse();
                 }
             }
         }

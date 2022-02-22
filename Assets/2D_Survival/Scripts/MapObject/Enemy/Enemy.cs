@@ -5,17 +5,24 @@ using UnityEngine;
 namespace SV
 {
 
-    public class Enemy : Unit
+    public class Enemy : Unit, IPoolable
     {
         public Transform _player;
 
-        float _speed = 0.3f;
-        float _size = 1;
-        int _exp = 1;
+        float _speed;
+        float _size;
+        int _exp;
 
+        public void Init()
+        {
+            _speed = 0.3f;
+            _size = 1;
+            _exp = 1;
+        }
         protected override void Start()
         {
             base.Start();
+            Init();
 
             if(Player.I != null)
                 _player = Player.I.transform;
@@ -50,7 +57,13 @@ namespace SV
                 }
             }
 
-            base.Die();
+            EndUse();
+        }
+
+        public void EndUse()
+        {
+            gameObject.SetActive(false);
+            GameManager.I.RefillPool(gameObject);
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace SV
 {
 
-    public class Button_Skill : Button
+    public class Button_SRF : Button
     {
         public PU_LevelUp _owner;
 
@@ -16,7 +16,12 @@ namespace SV
 
             onClick.AddListener(delegate ()
             {
-                _owner.OnSelect();
+
+
+
+
+
+                _owner.OnEnd();
 
                 LevelManager.I.CheckLevelUp();
             });

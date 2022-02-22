@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2394614287934820328}
   - component: {fileID: 2394614287934820311}
   - component: {fileID: 2394614287934820310}
-  - component: {fileID: 2394614287934820329}
+  - component: {fileID: 8164596686898053263}
   m_Layer: 0
   m_Name: Walker
   m_TagString: Enemy
@@ -122,7 +122,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2394614287934820329
+--- !u!114 &8164596686898053263
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2394614287934820308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 511b1bbba82b2714fa42ba54c21eddcc, type: 3}
+  m_Script: {fileID: 11500000, guid: 9abf84581ceb0e643abfb862f39a9ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _pause: 0

@@ -127,37 +127,40 @@ namespace SV
 
             while (true)
             {
-                if (_player._target != null)
+                if (Time.timeScale >= 1.0f)
                 {
-                    if (_distance <= skill.Reach)
+                    if (_player._target != null)
                     {
-                        Vector3 dir = (_player._target.position - transform.position).normalized;
-
-                        for (int i = 0; i < skill.EA; i++)
+                        if (_distance <= skill.Reach)
                         {
-                            GameObject go = GameManager.I.GetPoolObject(prefab);
-                            go.transform.position = _player._firePos.position;
+                            Vector3 dir = (_player._target.position - transform.position).normalized;
 
-                            float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                            Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
-                            go.transform.rotation = Quaternion.Lerp(transform.rotation, q, 1.0f);   // 利 规氢
+                            for (int i = 0; i < skill.EA; i++)
+                            {
+                                GameObject go = GameManager.I.GetPoolObject(prefab);
+                                go.transform.position = _player._firePos.position;
 
-                            Projectile p = go.GetComponent<Projectile>();
-                            p.Init();
-                            p.Activate(dir, size: skill.Size, pierce: skill.Pierce, maintain: skill.Maintain, speed: skill.Speed, dmg: skill.Damage);
-                            yield return new WaitForSeconds(0.2f / skill.EA);
+                                float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                                Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
+                                go.transform.rotation = Quaternion.Lerp(transform.rotation, q, 1.0f);   // 利 规氢
+
+                                Projectile p = go.GetComponent<Projectile>();
+                                p.Init();
+                                p.Activate(dir, size: skill.Size, pierce: skill.Pierce, maintain: skill.Maintain, speed: skill.Speed, dmg: skill.Damage);
+                                yield return new WaitForSeconds(0.2f / skill.EA);
+                            }
+
+                            yield return new WaitForSeconds(skill.Cool * Time.timeScale);
                         }
-
-                        yield return new WaitForSeconds(skill.Cool * Time.timeScale);
+                        else
+                        {
+                            yield return null;
+                        }
                     }
                     else
                     {
                         yield return null;
                     }
-                }
-                else
-                {
-                    yield return null;
                 }
             }
         }

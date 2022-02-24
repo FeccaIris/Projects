@@ -11,7 +11,7 @@ namespace SV
         public int _index;
         public int _cost;
 
-        [SerializeField] float _cool = 0.5f;
+        [SerializeField] float _cool = 1.0f;
         [SerializeField] float _reach = 15.0f;
         [SerializeField] int _ea = 1;
 
@@ -77,6 +77,7 @@ namespace SV
         public static SkillManager I;
 
         public List<PlayerSkill> _skList;
+        int _skMax = 12;
 
         Player _player;
 
@@ -105,6 +106,9 @@ namespace SV
 
         public void AcquireNew(bool isProj)
         {
+            if (_skList.Count == _skMax)
+                return;
+
             PlayerSkill n = new PlayerSkill(isProj);
             _skList.Add(n);
             StartCoroutine(Activate(n));
@@ -114,6 +118,8 @@ namespace SV
 
         IEnumerator Activate(PlayerSkill skill)
         {
+            yield return new WaitUntil(() => Time.timeScale > 0);
+
             GameObject prefab = null;
 
             if (skill._isProj == true)
@@ -127,41 +133,28 @@ namespace SV
 
             while (true)
             {
-                if (Time.timeScale >= 1.0f)
+                yield return new WaitUntil(() => _player._target != null);
+                yield return new WaitUntil(() => _distance <= skill.Reach);
+
+                Vector3 dir = (_player._target.position - transform.position).normalized;
+
+                for (int i = 0; i < skill.EA; i++)
                 {
-                    if (_player._target != null)
-                    {
-                        if (_distance <= skill.Reach)
-                        {
-                            Vector3 dir = (_player._target.position - transform.position).normalized;
+                    GameObject go = GameManager.I.GetPoolObject(prefab);
+                    go.transform.position = _player._firePos.position;
 
-                            for (int i = 0; i < skill.EA; i++)
-                            {
-                                GameObject go = GameManager.I.GetPoolObject(prefab);
-                                go.transform.position = _player._firePos.position;
+                    float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                    Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
+                    go.transform.rotation = Quaternion.Lerp(transform.rotation, q, 1.0f);   // 利 规氢
 
-                                float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                                Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
-                                go.transform.rotation = Quaternion.Lerp(transform.rotation, q, 1.0f);   // 利 规氢
+                    Projectile p = go.GetComponent<Projectile>();
+                    p.Init();
+                    p.Activate(dir, size: skill.Size, pierce: skill.Pierce, maintain: skill.Maintain, speed: skill.Speed, dmg: skill.Damage);
 
-                                Projectile p = go.GetComponent<Projectile>();
-                                p.Init();
-                                p.Activate(dir, size: skill.Size, pierce: skill.Pierce, maintain: skill.Maintain, speed: skill.Speed, dmg: skill.Damage);
-                                yield return new WaitForSeconds(0.2f / skill.EA);
-                            }
-
-                            yield return new WaitForSeconds(skill.Cool * Time.timeScale);
-                        }
-                        else
-                        {
-                            yield return null;
-                        }
-                    }
-                    else
-                    {
-                        yield return null;
-                    }
+                    yield return new WaitForSeconds(0.2f / skill.EA);
                 }
+
+                yield return new WaitForSeconds(skill.Cool * Time.timeScale);
             }
         }
     }

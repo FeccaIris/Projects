@@ -37,6 +37,12 @@ namespace SV
         }
         void FixedUpdate()
         {
+            if (_target != null)
+            {
+                if (_target.gameObject.activeSelf == false)
+                    _target = null;
+            }
+
             // 타겟 지정 = 리스트 중 가장 가까운 적 = 거리비교
             ChangeTarget();
 

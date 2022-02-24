@@ -5,26 +5,30 @@ using UnityEngine.UI;
 
 namespace SV
 {
-
     public class Button_SRF : Button
     {
         public PU_LevelUp _owner;
 
+        public RFTable _category;
+
+        Text _text;
+
         public void Init(PU_LevelUp owner)
         {
             _owner = owner;
+            _text = GetComponentInChildren<Text>();
 
             onClick.AddListener(delegate ()
             {
-
-
-
-
-
+                _owner._rfTable.Reinforce(_category);
                 _owner.OnEnd();
-
-                LevelManager.I.CheckLevelUp();
             });
+        }
+
+        public void SetCategory(RFTable cat)
+        {
+            _category = cat;
+            _text.text = cat.ToString();
         }
     }
 }

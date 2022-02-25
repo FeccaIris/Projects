@@ -23,7 +23,6 @@ namespace SV
             onClick.AddListener(delegate ()
             {
                 _owner.ReadyRF(_ps);           // 강화 준비 (무작위 선택지)
-
                 _owner.TurnOnIndex(false);
             });
 

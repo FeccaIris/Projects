@@ -20,6 +20,10 @@ namespace SV
 
         END
     }
+    public enum AreaCategory
+    {
+
+    }
 
     [System.Serializable]
     public class Projectile_Table
@@ -89,6 +93,8 @@ namespace SV
         public delegate void CallBack();
         public CallBack _cb;
 
+        public PlayerSkill _ps;
+
         public Projectile_Table _pjtlTable;
 
         public GameObject _idTab;
@@ -129,7 +135,7 @@ namespace SV
             Show(false);
         }
 
-        public void ReadyRF(Skill_Projectile ps)
+        public void ReadyRF(Skill_Projectile ps)    // 인덱스 버튼 입력
         {
             if (ps == null)
                 return;
@@ -137,7 +143,7 @@ namespace SV
             _pjtlTable.SetPS(ps);
 
             ProjectileCategory a, b, c, d;
-
+            // 랜덤 설정 시작
             a = (ProjectileCategory)Random.Range((int)ProjectileCategory.DAMAGE, (int)ProjectileCategory.END);
 
             List<ProjectileCategory> list = new List<ProjectileCategory> { a };

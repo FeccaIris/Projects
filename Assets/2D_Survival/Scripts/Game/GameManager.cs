@@ -13,6 +13,8 @@ namespace SV
     {
         public static GameManager I;
 
+        
+
         public Queue<GameObject> _poolProj = new Queue<GameObject>();
         public Queue<GameObject> _poolWalker = new Queue<GameObject>();
         public GameObject _proj;
@@ -25,8 +27,12 @@ namespace SV
 
         float _spawnCool = 3.0f;
         float _spawnRange = 60.0f;
+        float _spawnEA = 1;
+        int _enemyHpMax;
         
         public float _gameTime = 0.0f;
+        public float _elapsed = 0.0f;
+        public float _elapsed2 = 0.0f;
 
         private void Awake()
         {
@@ -50,6 +56,20 @@ namespace SV
         private void FixedUpdate()
         {
             _gameTime += Time.fixedDeltaTime * Time.timeScale;
+            _elapsed += Time.fixedDeltaTime * Time.timeScale;
+            _elapsed2 += Time.fixedDeltaTime * Time.timeScale;
+            if (_elapsed >= 20.0f)
+            {
+                _elapsed = 0;
+                _spawnEA++;
+            }
+            if (_elapsed2 >= 60.0f)
+            {
+                _elapsed2 = 0;
+                _enemyHpMax++;
+            }
+
+
         }
 
         public void CreatePoolObject(GameObject pf, int ea)
@@ -84,7 +104,7 @@ namespace SV
                 GameObject go = Instantiate(pf);
                 if (parent != null)
                     go.transform.parent = parent;
-
+                go.name = i.ToString();
                 go.SetActive(false);
 
                 if (pool != null)
@@ -117,7 +137,7 @@ namespace SV
             {
                 if(pool.Count <= 0)
                 {
-                    CreatePoolObject(pf, 5);
+                    CreatePoolObject(pf, 50);
                 }
             }
 
@@ -156,24 +176,28 @@ namespace SV
             {
                 yield return new WaitForSeconds(_spawnCool * Time.timeScale);
 
-                if (Player.I != null)
+                for (int i = 0; i < _spawnEA; i++)
                 {
-                    GameObject go = GetPoolObject(_walker);
-                    Enemy e = go.GetComponent<Enemy>();
-                    _enemies.Add(e);
-                    Vector2 pos = Player.I.transform.position;
-                    Vector2 random = Random.insideUnitCircle * _spawnRange;
+                    if (Player.I != null)
+                    {
+                        GameObject go = GetPoolObject(_walker);
+                        Enemy e = go.GetComponent<Enemy>();
+                        e.Init(_enemyHpMax);
+                        _enemies.Add(e);
+                        Vector2 pos = Player.I.transform.position;
+                        Vector2 random = Random.insideUnitCircle * _spawnRange;
 
-                    if (random.x >= 0)
-                        random.x = Mathf.Max(random.x, _spawnRange / 2);
-                    else
-                        random.x = Mathf.Min(random.x, -_spawnRange / 2);
-                    if (random.y >= 0)
-                        random.y = Mathf.Max(random.y, _spawnRange / 2);
-                    else
-                        random.y = Mathf.Min(random.y, -_spawnRange / 2);
+                        if (random.x >= 0)
+                            random.x = Mathf.Max(random.x, _spawnRange / 2);
+                        else
+                            random.x = Mathf.Min(random.x, -_spawnRange / 2);
+                        if (random.y >= 0)
+                            random.y = Mathf.Max(random.y, _spawnRange / 2);
+                        else
+                            random.y = Mathf.Min(random.y, -_spawnRange / 2);
 
-                    go.transform.position = pos + random;
+                        go.transform.position = pos + random;
+                    }
                 }
             }
         }

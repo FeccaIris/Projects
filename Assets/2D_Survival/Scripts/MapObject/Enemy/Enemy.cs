@@ -13,26 +13,32 @@ namespace SV
         float _size;
         int _exp;
 
-        public void Init()
+        Vector3 _default = new Vector3(3, 3, 0);
+
+        public void Init(int delta = 0)
         {
+            _hpMax += delta;
+            _hp = _hpMax;
             _speed = 0.3f;
             _size = 1;
             _exp = 1;
-        }
-        protected override void Start()
-        {
-            base.Start();
-            Init();
 
-            if(Player.I != null)
+            transform.localScale = _default;
+
+            if (Player.I != null)
                 _player = Player.I.transform;
 
             _size = Random.Range(0.5f, 2.0f);
             transform.localScale *= _size;
 
             float reverse = 1 / _size;
-            reverse = reverse < 0.7f ? 0.7f : reverse;
+            reverse = reverse < 0.9f ? 0.9f : reverse;
             _speed *= reverse;
+        }
+        protected override void Start()
+        {
+            base.Start();
+            Init();
         }
         void FixedUpdate()
         {
@@ -62,6 +68,7 @@ namespace SV
 
         public void EndUse()
         {
+
             gameObject.SetActive(false);
             GameManager.I.RefillPool(gameObject);
         }

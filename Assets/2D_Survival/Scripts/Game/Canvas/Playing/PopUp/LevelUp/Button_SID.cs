@@ -10,7 +10,7 @@ namespace SV
     {
         public PU_LevelUp _owner;
 
-        public PlayerSkill _ps = null;
+        public Skill_Projectile _ps = null;
 
         public Text _text;
 
@@ -29,7 +29,7 @@ namespace SV
 
             gameObject.SetActive(false);
         }
-        public void Set(PlayerSkill ps)
+        public void Set(Skill_Projectile ps)
         {
             _ps = ps;
             gameObject.SetActive(true);

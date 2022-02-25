@@ -43,15 +43,11 @@ namespace SV
                     _target = null;
             }
 
-            // 타겟 지정 = 리스트 중 가장 가까운 적 = 거리비교
             ChangeTarget();
 
             if (_target != null)
             {
-                Vector3 dir = (_target.position - transform.position).normalized;
-                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-                _fireRot.transform.rotation = Quaternion.Lerp(_fireRot.transform.rotation, q, 0.5f);
+                RotatePos();
             }
         }
         private void OnCollisionStay2D(Collision2D col)
@@ -73,6 +69,14 @@ namespace SV
             _hpB._fill.fillAmount = (float)_hp / _hpMax;
         }
 
+        public void RotatePos()
+        {
+            Vector3 dir = (_target.position - transform.position).normalized;
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+            _fireRot.transform.rotation = Quaternion.Lerp(_fireRot.transform.rotation, q, 0.5f);
+        }
+
         public void ChangeTarget()
         {
             List<Enemy> list = new List<Enemy>(GameManager.I._enemies);
@@ -83,6 +87,11 @@ namespace SV
 
                 if(list[0] != null)
                     _target = list[0].transform;
+                RotatePos();
+            }
+            else
+            {
+                _target = null;
             }
         }
         public int CompareDistance(Enemy a, Enemy b)

@@ -31,7 +31,9 @@ namespace SV
 
             transform.localScale *= size;
 
-            _rgd.AddForce(dir * speed * /*Time.fixedDeltaTime **/ Time.timeScale);
+            _rgd.AddForce(dir * speed * Time.fixedDeltaTime * TimeCor * Time.timeScale);
+            _rgd.velocity = Vector2.zero;
+
             Invoke("EndUse", maintain);
         }
 
@@ -50,6 +52,11 @@ namespace SV
                     EndUse();
                 }
             }
+        }
+
+        public void Explode()
+        {
+
         }
     }
 }

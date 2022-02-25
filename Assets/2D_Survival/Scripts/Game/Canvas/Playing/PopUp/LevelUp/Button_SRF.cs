@@ -9,7 +9,7 @@ namespace SV
     {
         public PU_LevelUp _owner;
 
-        public RFTable _category;
+        public ProjectileCategory _category;
 
         Text _text;
 
@@ -20,12 +20,12 @@ namespace SV
 
             onClick.AddListener(delegate ()
             {
-                _owner._rfTable.Reinforce(_category);
                 _owner.OnEnd();
+                _owner._pjtlTable.Reinforce(_category);
             });
         }
 
-        public void SetCategory(RFTable cat)
+        public void SetCategory(ProjectileCategory cat)
         {
             _category = cat;
             _text.text = cat.ToString();

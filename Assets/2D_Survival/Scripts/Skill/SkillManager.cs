@@ -4,24 +4,41 @@ using UnityEngine;
 
 namespace SV
 {
+
     [System.Serializable]
     public class PlayerSkill
     {
         public bool _isProj;
         public int _index;
         public int _cost;
+    }
+
+    [System.Serializable]
+    public class Skill_Area : PlayerSkill
+    {
+
+    }
+
+    [System.Serializable]
+    public class Skill_Projectile : PlayerSkill
+    {
+        [SerializeField] int _dmg = 1;
 
         [SerializeField] float _cool = 1.0f;
         [SerializeField] float _reach = 15.0f;
         [SerializeField] int _ea = 1;
 
-        [SerializeField] float _speed = 2000.0f;
+        [SerializeField] float _speed = 100.0f;
         [SerializeField] float _size = 1.0f;
         [SerializeField] float _maintain = 2.0f;
         [SerializeField] int _pierce = 1;
-        [SerializeField] int _dmg = 1;
 
         #region Property
+        public int Damage
+        {
+            get { return _dmg; }
+            set { _dmg = value; }
+        }
         public float Cool
         {
             get { return _cool; }
@@ -37,7 +54,6 @@ namespace SV
             get { return _ea; }
             set { _ea = value; }
         }
-
         public float Speed
         {
             get { return _speed; }
@@ -58,14 +74,9 @@ namespace SV
             get { return _pierce; }
             set { _pierce = value; }
         }
-        public int Damage
-        {
-            get { return _dmg; }
-            set { _dmg = value; }
-        }
         #endregion
 
-        public PlayerSkill(bool isProj = true)
+        public Skill_Projectile(bool isProj = true)
         {
             _isProj = isProj;
             _index = SkillManager.I._skList.Count;
@@ -76,7 +87,7 @@ namespace SV
     {
         public static SkillManager I;
 
-        public List<PlayerSkill> _skList;
+        public List<Skill_Projectile> _skList;
         int _skMax = 12;
 
         Player _player;
@@ -92,7 +103,7 @@ namespace SV
         public void Init()
         {
             _player = Player.I;
-            _skList = new List<PlayerSkill>();
+            _skList = new List<Skill_Projectile>();
 
             AcquireNew(true);
         }
@@ -109,14 +120,14 @@ namespace SV
             if (_skList.Count == _skMax)
                 return;
 
-            PlayerSkill n = new PlayerSkill(isProj);
+            Skill_Projectile n = new Skill_Projectile(isProj);
             _skList.Add(n);
             StartCoroutine(Activate(n));
 
             UIManager.I._levelUp._idButtonList[n._index].Set(n);
         }
 
-        IEnumerator Activate(PlayerSkill skill)
+        IEnumerator Activate(Skill_Projectile skill)
         {
             yield return new WaitUntil(() => Time.timeScale > 0);
 
@@ -133,18 +144,24 @@ namespace SV
 
             while (true)
             {
-                yield return new WaitUntil(() => _player._target != null);
-                yield return new WaitUntil(() => _distance <= skill.Reach);
-
-                Vector3 dir = (_player._target.position - transform.position).normalized;
+                Vector3 dir = new Vector3(); 
 
                 for (int i = 0; i < skill.EA; i++)
                 {
+                    yield return new WaitUntil(() => Time.timeScale > 0);
+                    yield return new WaitUntil(() => _distance <= skill.Reach);
+                    if (_player._target == null)
+                        break;
+
+                    if (_player._target != null)
+                        dir = (_player._target.position - transform.position).normalized;
+
                     GameObject go = GameManager.I.GetPoolObject(prefab);
                     go.transform.position = _player._firePos.position;
-
+                    
                     float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
+
                     go.transform.rotation = Quaternion.Lerp(transform.rotation, q, 1.0f);   // Àû ¹æÇâ
 
                     Projectile p = go.GetComponent<Projectile>();
@@ -153,6 +170,8 @@ namespace SV
 
                     yield return new WaitForSeconds(0.2f / skill.EA);
                 }
+
+                Player.I.ChangeTarget();
 
                 yield return new WaitForSeconds(skill.Cool * Time.timeScale);
             }

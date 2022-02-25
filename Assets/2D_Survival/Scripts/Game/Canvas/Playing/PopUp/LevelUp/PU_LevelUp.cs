@@ -5,52 +5,77 @@ using UnityEngine.UI;
 
 namespace SV
 {
-    public enum RFTable
+    public enum ProjectileCategory
     {
         INVALID = 0,
 
+        DAMAGE,
+        COOL,
+        REACH,
         EA,
+        SIZE,
         SPEED,
-
-        DMG,
-
-
+        MAINTAIN,
+        PIERCE,
 
         END
     }
 
     [System.Serializable]
-    public class Skill_Reinforce_Table
+    public class Projectile_Table
     {
-        public PlayerSkill _ps;
-
-        public bool _increase = true;
+        public Skill_Projectile _ps;
 
         public int _ea;
         public float _speed;
 
-        public void SetPS(PlayerSkill ps)
+        public void SetPS(Skill_Projectile ps)
         {
             _ps = ps;
         }
 
-        public void Reinforce(RFTable cat)
+        public void Reinforce(ProjectileCategory cat)
         {
             switch (cat)
             {
-                case RFTable.EA:
+                case ProjectileCategory.DAMAGE:
+                    {
+                        _ps.Damage += 1;
+                        break;
+                    }
+                case ProjectileCategory.COOL:
+                    {
+                        _ps.Cool *= 0.9f;
+                        break;
+                    }
+                case ProjectileCategory.REACH:
+                    {
+                        _ps.Reach *= 1.1f;
+                        break;
+                    }
+                case ProjectileCategory.EA:
                     {
                         _ps.EA += 1;
                         break;
                     }
-                case RFTable.SPEED:
+                case ProjectileCategory.SPEED:
                     {
-                        _ps.Speed += 500.0f;
+                        _ps.Speed *= 1.1f;
                         break;
                     }
-                case RFTable.DMG:
+                case ProjectileCategory.SIZE:
                     {
-                        _ps.Damage += 1;
+                        _ps.Size *= 1.05f;
+                        break;
+                    }
+                case ProjectileCategory.MAINTAIN:
+                    {
+                        _ps.Maintain *= 1.1f;
+                        break;
+                    }
+                case ProjectileCategory.PIERCE:
+                    {
+                        _ps.Pierce += 1;
                         break;
                     }
                 default:
@@ -64,7 +89,7 @@ namespace SV
         public delegate void CallBack();
         public CallBack _cb;
 
-        public Skill_Reinforce_Table _rfTable;
+        public Projectile_Table _pjtlTable;
 
         public GameObject _idTab;
         public GameObject _rfTab;
@@ -76,7 +101,7 @@ namespace SV
 
         public void Init()
         {
-            _rfTable = new Skill_Reinforce_Table();
+            _pjtlTable = new Projectile_Table();
 
             _idTab = transform.Find("IndexTab").gameObject;
             _rfTab = transform.Find("ReinforceTab").gameObject;
@@ -104,25 +129,22 @@ namespace SV
             Show(false);
         }
 
-        public void ReadyRF(PlayerSkill ps)
+        public void ReadyRF(Skill_Projectile ps)
         {
             if (ps == null)
                 return;
 
-            _rfTable.SetPS(ps);
+            _pjtlTable.SetPS(ps);
 
-            int start = ps._isProj ? (int)RFTable.EA : (int)RFTable.DMG;    // 영역형 구현시 시작점이 아닌 종료점으로 한정할 것
+            ProjectileCategory a, b, c, d;
 
-            RFTable a, b, c, d;
+            a = (ProjectileCategory)Random.Range((int)ProjectileCategory.DAMAGE, (int)ProjectileCategory.END);
 
-            a = (RFTable)Random.Range(start, (int)RFTable.END);
-            d = (RFTable)Random.Range(start, (int)RFTable.END);             // 중복 허용
-
-            List<RFTable> list = new List<RFTable> { a, d };
+            List<ProjectileCategory> list = new List<ProjectileCategory> { a };
 
             while (true)
             {
-                b = (RFTable)Random.Range(start, (int)RFTable.END);
+                b = (ProjectileCategory)Random.Range((int)ProjectileCategory.DAMAGE, (int)ProjectileCategory.END);
                 if (b != a)
                 {
                     list.Add(b);
@@ -131,15 +153,24 @@ namespace SV
             }
             while (true)
             {
-                c = (RFTable)Random.Range(start, (int)RFTable.END);
+                c = (ProjectileCategory)Random.Range((int)ProjectileCategory.DAMAGE, (int)ProjectileCategory.END);
                 if (c != a && c != b)
                 {
                     list.Add(c);
                     break;
                 }
             }
+            while (true)
+            {
+                d = (ProjectileCategory)Random.Range((int)ProjectileCategory.DAMAGE, (int)ProjectileCategory.END);
+                if (d != a && d != b && d!= c)
+                {
+                    list.Add(d);
+                    break;
+                }
+            }
 
-            foreach(Button_SRF bt in _rfButtonList)
+            foreach (Button_SRF bt in _rfButtonList)
             {
                 bt.SetCategory(list[_rfButtonList.IndexOf(bt)]);
             }

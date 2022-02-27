@@ -21,7 +21,7 @@ namespace SV
             onClick.AddListener(delegate ()
             {
                 _owner.OnEnd();
-                _owner._pjtlTable.Reinforce(_category);
+                _owner._rftable.Reinforce(_category);
             });
         }
 

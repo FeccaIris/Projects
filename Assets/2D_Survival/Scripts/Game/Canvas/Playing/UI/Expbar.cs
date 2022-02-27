@@ -10,7 +10,7 @@ namespace SV
     {
         public Image _fill;
 
-        float _offset = 210.0f;
+        float _offset = 200.0f;
 
         public void Init()
         {

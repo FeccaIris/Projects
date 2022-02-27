@@ -5107,8 +5107,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fad1b3bf7d7c4847b47a50a465b6d17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pjtlTable:
-    _ps:
+  _ps:
+    _isProj: 0
+    _index: 0
+    _cost: 0
+  _rftable:
+    _pj:
       _isProj: 0
       _index: 0
       _cost: 0
@@ -5120,6 +5124,10 @@ MonoBehaviour:
       _size: 0
       _maintain: 0
       _pierce: 0
+    _area:
+      _isProj: 0
+      _index: 0
+      _cost: 0
     _ea: 0
     _speed: 0
   _idTab: {fileID: 0}

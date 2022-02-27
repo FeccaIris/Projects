@@ -22,20 +22,34 @@ namespace SV
     }
     public enum AreaCategory
     {
+        INVALID = 0,
 
+        DAMAGE,
+        COOL,
+        REACH,
+        EA,
+        SIZE,
+        MAINTAIN,
+
+        END
     }
 
     [System.Serializable]
-    public class Projectile_Table
+    public class Reinforce_Table
     {
-        public Skill_Projectile _ps;
+        public Skill_Projectile _pj;
+        public Skill_Area _area;
 
-        public int _ea;
-        public float _speed;
-
-        public void SetPS(Skill_Projectile ps)
+        public void SetPS(PlayerSkill ps)
         {
-            _ps = ps;
+            if(ps is Skill_Projectile)
+            {
+                _pj = ps as Skill_Projectile;
+            }
+            else if(ps is Skill_Area)
+            {
+                _area = ps as Skill_Area;
+            }
         }
 
         public void Reinforce(ProjectileCategory cat)
@@ -44,42 +58,42 @@ namespace SV
             {
                 case ProjectileCategory.DAMAGE:
                     {
-                        _ps.Damage += 1;
+                        _pj.Damage += 1;
                         break;
                     }
                 case ProjectileCategory.COOL:
                     {
-                        _ps.Cool *= 0.9f;
+                        _pj.Cool *= 0.9f;
                         break;
                     }
                 case ProjectileCategory.REACH:
                     {
-                        _ps.Reach *= 1.1f;
+                        _pj.Reach *= 1.1f;
                         break;
                     }
                 case ProjectileCategory.EA:
                     {
-                        _ps.EA += 1;
+                        _pj.EA += 1;
                         break;
                     }
                 case ProjectileCategory.SPEED:
                     {
-                        _ps.Speed *= 1.1f;
+                        _pj.Speed *= 1.1f;
                         break;
                     }
                 case ProjectileCategory.SIZE:
                     {
-                        _ps.Size *= 1.05f;
+                        _pj.Size *= 1.05f;
                         break;
                     }
                 case ProjectileCategory.MAINTAIN:
                     {
-                        _ps.Maintain *= 1.1f;
+                        _pj.Maintain *= 1.1f;
                         break;
                     }
                 case ProjectileCategory.PIERCE:
                     {
-                        _ps.Pierce += 1;
+                        _pj.Pierce += 1;
                         break;
                     }
                 default:
@@ -95,7 +109,7 @@ namespace SV
 
         public PlayerSkill _ps;
 
-        public Projectile_Table _pjtlTable;
+        public Reinforce_Table _rftable;
 
         public GameObject _idTab;
         public GameObject _rfTab;
@@ -107,7 +121,7 @@ namespace SV
 
         public void Init()
         {
-            _pjtlTable = new Projectile_Table();
+            _rftable = new Reinforce_Table();
 
             _idTab = transform.Find("IndexTab").gameObject;
             _rfTab = transform.Find("ReinforceTab").gameObject;
@@ -135,12 +149,12 @@ namespace SV
             Show(false);
         }
 
-        public void ReadyRF(Skill_Projectile ps)    // 인덱스 버튼 입력
+        public void ReadyRF(PlayerSkill ps)    // 인덱스 버튼 입력
         {
             if (ps == null)
                 return;
 
-            _pjtlTable.SetPS(ps);
+            _rftable.SetPS(ps);
 
             ProjectileCategory a, b, c, d;
             // 랜덤 설정 시작

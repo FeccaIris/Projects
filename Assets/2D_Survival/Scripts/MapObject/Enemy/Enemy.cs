@@ -13,7 +13,7 @@ namespace SV
         float _size;
         int _exp;
 
-        Vector3 _default = new Vector3(3, 3, 0);
+        Vector3 _default = new Vector3(1, 1, 0);
 
         public void Init(int delta = 0)
         {

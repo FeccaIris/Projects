@@ -7,21 +7,17 @@ namespace SV
 
     public class Projectile : Skill
     {
-        Rigidbody2D _rgd;
-
+        int _dmg;
         int _pierce;
         int _pierceCount;
-        int _dmg;
 
-        public void Init()
+        public override void Init()
         {
-            _rgd = GetComponent<Rigidbody2D>();
+            base.Init();
 
-            _pierce = 0;
             _pierceCount = 0;
-            _dmg = 0;
 
-            transform.localScale = new Vector3(1.25f, 0.25f, 1);
+            transform.localScale = Vector3.one;
         }
 
         public void Activate(Vector3 dir, float speed, float size, float maintain, int pierce, int dmg)

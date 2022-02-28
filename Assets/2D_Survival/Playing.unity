@@ -815,7 +815,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &240411255
 MonoBehaviour:
@@ -1297,7 +1296,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &309316866
 MonoBehaviour:
@@ -2777,7 +2775,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &723487190
 MonoBehaviour:
@@ -3644,7 +3641,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &1008549847
 MonoBehaviour:
@@ -3795,7 +3791,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &1017621895
 MonoBehaviour:
@@ -4485,7 +4480,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &1152877665
 MonoBehaviour:
@@ -4636,7 +4630,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &1207686296
 MonoBehaviour:
@@ -5111,6 +5104,13 @@ MonoBehaviour:
     _isProj: 0
     _index: 0
     _cost: 0
+    _dmg: 1
+    _cool: 1
+    _reach: 15
+    _ea: 1
+    _speed: 100
+    _size: 1
+    _maintain: 2
   _rftable:
     _pj:
       _isProj: 0
@@ -5128,8 +5128,14 @@ MonoBehaviour:
       _isProj: 0
       _index: 0
       _cost: 0
-    _ea: 0
-    _speed: 0
+      _dmg: 1
+      _cool: 1
+      _reach: 15
+      _ea: 1
+      _speed: 100
+      _size: 1
+      _maintain: 2
+      _interval: 1
   _idTab: {fileID: 0}
   _rfTab: {fileID: 0}
   _idButtonList: []
@@ -5596,7 +5602,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &1482207956
 MonoBehaviour:
@@ -6591,7 +6596,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &1734292447
 MonoBehaviour:
@@ -7025,7 +7029,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1890191414
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7143,7 +7147,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &1901176875
 MonoBehaviour:
@@ -7840,7 +7843,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &2054386496
 MonoBehaviour:
@@ -7991,7 +7993,6 @@ MonoBehaviour:
     _speed: 0
     _size: 0
     _maintain: 0
-    _pierce: 0
   _text: {fileID: 0}
 --- !u!114 &2079717834
 MonoBehaviour:

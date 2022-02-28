@@ -174,10 +174,15 @@ namespace SV
         {
             while (_playing)
             {
-                yield return new WaitForSeconds(_spawnCool * Time.timeScale);
+                yield return new WaitForSeconds(_spawnCool);
 
+                if (_enemies.Count >= 50)
+                    yield return null;
+                
                 for (int i = 0; i < _spawnEA; i++)
                 {
+                    yield return new WaitUntil(() => Time.timeScale > 0);
+
                     if (Player.I != null)
                     {
                         GameObject go = GetPoolObject(_walker);

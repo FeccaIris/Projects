@@ -9,7 +9,7 @@ namespace SV
     {
         public PU_LevelUp _owner;
 
-        public ProjectileCategory _category;
+        public Category _category;
 
         Text _text;
 
@@ -25,7 +25,7 @@ namespace SV
             });
         }
 
-        public void SetCategory(ProjectileCategory cat)
+        public void SetCategory(Category cat)
         {
             _category = cat;
             _text.text = cat.ToString();

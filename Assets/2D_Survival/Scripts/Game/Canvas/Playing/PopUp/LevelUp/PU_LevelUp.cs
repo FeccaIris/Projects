@@ -5,33 +5,23 @@ using UnityEngine.UI;
 
 namespace SV
 {
-    public enum ProjectileCategory
+    public enum Category
     {
         INVALID = 0,
 
-        DAMAGE,
-        COOL,
-        REACH,
-        EA,
-        SIZE,
+        PIERCE_PJ_START,
+        
+        DAMAGE_AREA_START,
         SPEED,
-        MAINTAIN,
-        PIERCE,
-
-        END
-    }
-    public enum AreaCategory
-    {
-        INVALID = 0,
-
-        DAMAGE,
         COOL,
         REACH,
         EA,
         SIZE,
         MAINTAIN,
+        
+        INTERVAL_PJ_END,
 
-        END
+        AREA_END
     }
 
     [System.Serializable]
@@ -52,48 +42,48 @@ namespace SV
             }
         }
 
-        public void Reinforce(ProjectileCategory cat)
+        public void Reinforce(Category cat)
         {
             switch (cat)
             {
-                case ProjectileCategory.DAMAGE:
+                case Category.PIERCE_PJ_START:
+                    {
+                        _pj.Pierce += 1;
+                        break;
+                    }
+                case Category.DAMAGE_AREA_START:
                     {
                         _pj.Damage += 1;
                         break;
                     }
-                case ProjectileCategory.COOL:
+                case Category.COOL:
                     {
                         _pj.Cool *= 0.9f;
                         break;
                     }
-                case ProjectileCategory.REACH:
+                case Category.REACH:
                     {
                         _pj.Reach *= 1.1f;
                         break;
                     }
-                case ProjectileCategory.EA:
+                case Category.EA:
                     {
                         _pj.EA += 1;
                         break;
                     }
-                case ProjectileCategory.SPEED:
+                case Category.SPEED:
                     {
                         _pj.Speed *= 1.1f;
                         break;
                     }
-                case ProjectileCategory.SIZE:
+                case Category.SIZE:
                     {
                         _pj.Size *= 1.05f;
                         break;
                     }
-                case ProjectileCategory.MAINTAIN:
+                case Category.MAINTAIN:
                     {
                         _pj.Maintain *= 1.1f;
-                        break;
-                    }
-                case ProjectileCategory.PIERCE:
-                    {
-                        _pj.Pierce += 1;
                         break;
                     }
                 default:
@@ -156,15 +146,18 @@ namespace SV
 
             _rftable.SetPS(ps);
 
-            ProjectileCategory a, b, c, d;
+            Category a, b, c, d;
             // 랜덤 설정 시작
-            a = (ProjectileCategory)Random.Range((int)ProjectileCategory.DAMAGE, (int)ProjectileCategory.END);
 
-            List<ProjectileCategory> list = new List<ProjectileCategory> { a };
+            
+
+            a = (Category)Random.Range((int)Category.PIERCE_PJ_START, (int)Category.INTERVAL_PJ_END);
+
+            List<Category> list = new List<Category> { a };
 
             while (true)
             {
-                b = (ProjectileCategory)Random.Range((int)ProjectileCategory.DAMAGE, (int)ProjectileCategory.END);
+                b = (Category)Random.Range((int)Category.PIERCE_PJ_START, (int)Category.INTERVAL_PJ_END);
                 if (b != a)
                 {
                     list.Add(b);
@@ -173,7 +166,7 @@ namespace SV
             }
             while (true)
             {
-                c = (ProjectileCategory)Random.Range((int)ProjectileCategory.DAMAGE, (int)ProjectileCategory.END);
+                c = (Category)Random.Range((int)Category.PIERCE_PJ_START, (int)Category.INTERVAL_PJ_END);
                 if (c != a && c != b)
                 {
                     list.Add(c);
@@ -182,7 +175,7 @@ namespace SV
             }
             while (true)
             {
-                d = (ProjectileCategory)Random.Range((int)ProjectileCategory.DAMAGE, (int)ProjectileCategory.END);
+                d = (Category)Random.Range((int)Category.PIERCE_PJ_START, (int)Category.INTERVAL_PJ_END);
                 if (d != a && d != b && d!= c)
                 {
                     list.Add(d);

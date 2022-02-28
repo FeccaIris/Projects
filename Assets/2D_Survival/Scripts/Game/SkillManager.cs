@@ -11,27 +11,14 @@ namespace SV
         public bool _isProj;
         public int _index;
         public int _cost;
-    }
 
-    [System.Serializable]
-    public class Skill_Area : PlayerSkill
-    {
-
-    }
-
-    [System.Serializable]
-    public class Skill_Projectile : PlayerSkill
-    {
         [SerializeField] int _dmg = 1;
-
         [SerializeField] float _cool = 1.0f;
         [SerializeField] float _reach = 15.0f;
         [SerializeField] int _ea = 1;
-
         [SerializeField] float _speed = 100.0f;
         [SerializeField] float _size = 1.0f;
         [SerializeField] float _maintain = 2.0f;
-        [SerializeField] int _pierce = 1;
 
         #region Property
         public int Damage
@@ -69,6 +56,42 @@ namespace SV
             get { return _maintain; }
             set { _maintain = value; }
         }
+        #endregion
+
+        public PlayerSkill(bool isPj)
+        {
+            _isProj = isPj;
+        }
+    }
+
+    [System.Serializable]
+    public class Skill_Area : PlayerSkill
+    {
+        [SerializeField] float _interval = 1.0f;
+
+        #region Property
+
+        public float Interval
+        {
+            get { return _interval; }
+            set { _interval = value; }
+        }
+        #endregion
+
+        public Skill_Area(bool isPj = false) : base(isPj)
+        {
+            
+        }
+    }
+
+    [System.Serializable]
+    public class Skill_Projectile : PlayerSkill
+    {
+
+        [SerializeField] int _pierce = 1;
+
+        #region Property
+
         public int Pierce
         {
             get { return _pierce; }
@@ -76,10 +99,18 @@ namespace SV
         }
         #endregion
 
-        public Skill_Projectile(bool isProj = true)
+        public Skill_Projectile(bool isPj = true) : base(isPj)
         {
-            _isProj = isProj;
+            _isProj = isPj;
             _index = SkillManager.I._skList.Count;
+
+            Damage = 1;
+            EA = 1;
+            Cool = 1.0f;
+            Reach = 15.0f;
+            Speed = 100.0f;
+            Size = 1.0f;
+            Maintain = 2.0f;
         }
     }
 
@@ -87,7 +118,7 @@ namespace SV
     {
         public static SkillManager I;
 
-        public List<Skill_Projectile> _skList;
+        public List<PlayerSkill> _skList;
         int _skMax = 12;
 
         Player _player;
@@ -103,16 +134,19 @@ namespace SV
         public void Init()
         {
             _player = Player.I;
-            _skList = new List<Skill_Projectile>();
+            _skList = new List<PlayerSkill>();
 
             AcquireNew(true);
         }
         private void FixedUpdate()
         {
-            if (_player._target != null)
+            if (_player != null)
             {
-                _distance = Vector3.Distance(transform.position, _player._target.position);
-            }   
+                if (_player._target != null)
+                {
+                    _distance = Vector3.Distance(transform.position, _player._target.position);
+                }
+            }
         }
 
         public void AcquireNew(bool isProj)
@@ -120,45 +154,66 @@ namespace SV
             if (_skList.Count == _skMax)
                 return;
 
-            Skill_Projectile n = new Skill_Projectile(isProj);
-            _skList.Add(n);
-            StartCoroutine(Activate(n));
+            PlayerSkill newskill = null;//new PlayerSkill(isProj);
 
-            UIManager.I._levelUp._idButtonList[n._index].Set(n);
-        }
-
-        IEnumerator Activate(Skill_Projectile skill)
-        {
-            yield return new WaitUntil(() => Time.timeScale > 0);
-
-            GameObject prefab = null;
-
-            if (skill._isProj == true)
+            if(isProj == true)
             {
-                prefab = GameManager.I._proj;
+                Skill_Projectile pj = new Skill_Projectile();
+                newskill = pj;
             }
             else
             {
+                Skill_Area area = new Skill_Area();
+                newskill = area;
+            }
+
+            if (newskill != null)
+            {
+                _skList.Add(newskill);
+                ActivateSkill(newskill);
+                UIManager.I._levelUp._idButtonList[newskill._index].Set(newskill);
+            }
+        }
+
+        public void ActivateSkill(PlayerSkill skill)
+        {
+            if (skill is Skill_Projectile)
+            {
+                Skill_Projectile pj = skill as Skill_Projectile;
+                GameObject prefab = GameManager.I._proj;
+                StartCoroutine(Projectile(pj, prefab));
+            }
+            else if(skill is Skill_Area)
+            {
                 
             }
+        }
+
+        IEnumerator Projectile(Skill_Projectile pj, GameObject pf)
+        {
+            Skill_Projectile skill = pj;
+            GameObject prefab = pf;
+
+            yield return new WaitUntil(() => Time.timeScale > 0);
 
             while (true)
             {
-                Vector3 dir = new Vector3(); 
+                Vector3 dir = new Vector3();
+                if (_player._target != null)
+                    dir = (_player._target.position - transform.position).normalized;
+
+                yield return new WaitUntil(() => _distance <= skill.Reach);
 
                 for (int i = 0; i < skill.EA; i++)
                 {
                     yield return new WaitUntil(() => Time.timeScale > 0);
-                    yield return new WaitUntil(() => _distance <= skill.Reach);
+
                     if (_player._target == null)
                         break;
 
-                    if (_player._target != null)
-                        dir = (_player._target.position - transform.position).normalized;
-
                     GameObject go = GameManager.I.GetPoolObject(prefab);
                     go.transform.position = _player._firePos.position;
-                    
+
                     float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
 

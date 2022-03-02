@@ -10,11 +10,11 @@ namespace SV
         INVALID = 0,
 
         PIERCE_PJ_START,
+        REACH,
         
         DAMAGE_AREA_START,
         SPEED,
         COOL,
-        REACH,
         EA,
         SIZE,
         MAINTAIN,
@@ -42,52 +42,59 @@ namespace SV
             }
         }
 
-        public void Reinforce(Category cat)
+        public void Reinforce(PlayerSkill ps, Category cat)
         {
-            switch (cat)
+            if (ps is Skill_Projectile)
             {
-                case Category.PIERCE_PJ_START:
-                    {
-                        _pj.Pierce += 1;
+                switch (cat)
+                {
+                    case Category.PIERCE_PJ_START:
+                        {
+                            _pj.Pierce += 1;
+                            break;
+                        }
+                    case Category.DAMAGE_AREA_START:
+                        {
+                            _pj.Damage += 1;
+                            break;
+                        }
+                    case Category.COOL:
+                        {
+                            _pj.Cool *= 0.9f;
+                            break;
+                        }
+                    case Category.REACH:
+                        {
+                            _pj.Reach *= 1.1f;
+                            break;
+                        }
+                    case Category.EA:
+                        {
+                            _pj.EA += 1;
+                            break;
+                        }
+                    case Category.SPEED:
+                        {
+                            _pj.Speed *= 1.1f;
+                            break;
+                        }
+                    case Category.SIZE:
+                        {
+                            _pj.Size *= 1.05f;
+                            break;
+                        }
+                    case Category.MAINTAIN:
+                        {
+                            _pj.Maintain *= 1.1f;
+                            break;
+                        }
+                    default:
                         break;
-                    }
-                case Category.DAMAGE_AREA_START:
-                    {
-                        _pj.Damage += 1;
-                        break;
-                    }
-                case Category.COOL:
-                    {
-                        _pj.Cool *= 0.9f;
-                        break;
-                    }
-                case Category.REACH:
-                    {
-                        _pj.Reach *= 1.1f;
-                        break;
-                    }
-                case Category.EA:
-                    {
-                        _pj.EA += 1;
-                        break;
-                    }
-                case Category.SPEED:
-                    {
-                        _pj.Speed *= 1.1f;
-                        break;
-                    }
-                case Category.SIZE:
-                    {
-                        _pj.Size *= 1.05f;
-                        break;
-                    }
-                case Category.MAINTAIN:
-                    {
-                        _pj.Maintain *= 1.1f;
-                        break;
-                    }
-                default:
-                    break;
+                }
+            }
+            else if(ps is Skill_Area)
+            {
+                Debug.Log("?");
             }
         }
     }
@@ -146,18 +153,30 @@ namespace SV
 
             _rftable.SetPS(ps);
 
-            Category a, b, c, d;
             // 랜덤 설정 시작
+            Category a, b, c, d;
 
-            
+            int start = 0;
+            int end = 0;
 
-            a = (Category)Random.Range((int)Category.PIERCE_PJ_START, (int)Category.INTERVAL_PJ_END);
+            if(ps is Skill_Projectile)
+            {
+                start = (int)Category.PIERCE_PJ_START;
+                end = (int)Category.INTERVAL_PJ_END;
+            }
+            else if(ps is Skill_Area)
+            {
+                start = (int)Category.DAMAGE_AREA_START;
+                end = (int)Category.AREA_END;
+            }
+
+            a = (Category)Random.Range(start, end);
 
             List<Category> list = new List<Category> { a };
 
             while (true)
             {
-                b = (Category)Random.Range((int)Category.PIERCE_PJ_START, (int)Category.INTERVAL_PJ_END);
+                b = (Category)Random.Range(start, end);
                 if (b != a)
                 {
                     list.Add(b);
@@ -166,7 +185,7 @@ namespace SV
             }
             while (true)
             {
-                c = (Category)Random.Range((int)Category.PIERCE_PJ_START, (int)Category.INTERVAL_PJ_END);
+                c = (Category)Random.Range(start, end);
                 if (c != a && c != b)
                 {
                     list.Add(c);
@@ -175,7 +194,7 @@ namespace SV
             }
             while (true)
             {
-                d = (Category)Random.Range((int)Category.PIERCE_PJ_START, (int)Category.INTERVAL_PJ_END);
+                d = (Category)Random.Range(start, end);
                 if (d != a && d != b && d!= c)
                 {
                     list.Add(d);
@@ -185,7 +204,7 @@ namespace SV
 
             foreach (Button_SRF bt in _rfButtonList)
             {
-                bt.SetCategory(list[_rfButtonList.IndexOf(bt)]);
+                bt.SetCategory(list[_rfButtonList.IndexOf(bt)], ps);
             }
         }
 
@@ -195,12 +214,12 @@ namespace SV
 
             _cb = cb;
         }       // 콜백 저장
-        public void TurnOnIndex(bool b)
+        public void TurnOnIndex(bool b)     // 인덱스 버튼 초기화시 : false
         {
             _idTab.SetActive(b);
             _rfTab.SetActive(!b);
         }
-        public void OnEnd()
+        public void OnEnd()                 // 강화 버튼 초기화시
         {
             if (_cb != null)
                 _cb();

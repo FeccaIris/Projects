@@ -14,12 +14,13 @@ namespace SV
         public static GameManager I;
 
         
-
         public Queue<GameObject> _poolProj = new Queue<GameObject>();
+        public Queue<GameObject> _poolArea = new Queue<GameObject>();
         public Queue<GameObject> _poolWalker = new Queue<GameObject>();
-        public GameObject _proj;
-        public GameObject _walker;
 
+        public GameObject _proj;
+        public GameObject _area;
+        public GameObject _walker;
 
         public List<Enemy> _enemies;
 
@@ -28,7 +29,7 @@ namespace SV
         float _spawnCool = 3.0f;
         float _spawnRange = 60.0f;
         float _spawnEA = 1;
-        int _enemyHpMax;
+        int _enemyHpDeltaT;
         
         public float _gameTime = 0.0f;
         public float _elapsed = 0.0f;
@@ -41,10 +42,12 @@ namespace SV
         private void Start()
         {
             _proj = Resources.Load("SV_Projectile") as GameObject;
+            _area = Resources.Load("SV_Area") as GameObject;
             _walker = Resources.Load("Walker") as GameObject;
 
             CreatePoolObject(_walker, 50);
             CreatePoolObject(_proj, 10);
+            CreatePoolObject(_area, 10);
 
             UIManager.I.Init();
             SkillManager.I.Init();
@@ -66,10 +69,8 @@ namespace SV
             if (_elapsed2 >= 60.0f)
             {
                 _elapsed2 = 0;
-                _enemyHpMax++;
+                _enemyHpDeltaT++;
             }
-
-
         }
 
         public void CreatePoolObject(GameObject pf, int ea)
@@ -95,6 +96,11 @@ namespace SV
                     {
                         pool = _poolProj;
                         parent = transform.Find("Pool").Find("Skills").Find("Projectile");
+                    }
+                    else if(sk is Area)
+                    {
+                        pool = _poolArea;
+                        parent = transform.Find("Pool").Find("Skills").Find("Area");
                     }
                 }
             }
@@ -131,6 +137,8 @@ namespace SV
                 {
                     if (sk is Projectile)
                         pool = _poolProj;
+                    else if (sk is Area)
+                        pool = _poolArea;
                 }
             }
             if (pool != null)
@@ -142,7 +150,6 @@ namespace SV
             }
 
             go = pool.Dequeue();
-            go.SetActive(true);
 
             return go;
         }
@@ -186,8 +193,9 @@ namespace SV
                     if (Player.I != null)
                     {
                         GameObject go = GetPoolObject(_walker);
+                        
                         Enemy e = go.GetComponent<Enemy>();
-                        e.Init(_enemyHpMax);
+                        e.Init(_enemyHpDeltaT);
                         _enemies.Add(e);
                         Vector2 pos = Player.I.transform.position;
                         Vector2 random = Random.insideUnitCircle * _spawnRange;
@@ -202,6 +210,7 @@ namespace SV
                             random.y = Mathf.Min(random.y, -_spawnRange / 2);
 
                         go.transform.position = pos + random;
+                        go.SetActive(true);
                     }
                 }
             }

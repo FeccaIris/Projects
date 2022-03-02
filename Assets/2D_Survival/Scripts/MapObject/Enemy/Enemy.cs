@@ -12,18 +12,18 @@ namespace SV
         float _speed;
         float _size;
         int _exp;
-
-        Vector3 _default = new Vector3(1, 1, 0);
+        [SerializeField] int _hpTemp;
 
         public void Init(int delta = 0)
         {
-            _hpMax += delta;
-            _hp = _hpMax;
+            _hpTemp = _hpMax;
+            _hpTemp += delta;
+            
             _speed = 0.3f;
             _size = 1;
             _exp = 1;
 
-            transform.localScale = _default;
+            transform.localScale = Vector3.one;
 
             if (Player.I != null)
                 _player = Player.I.transform;
@@ -31,13 +31,26 @@ namespace SV
             _size = Random.Range(0.5f, 2.0f);
             transform.localScale *= _size;
 
+            if (_size > 1.5f)
+                _hpTemp += 2;
+            else if (_size > 1.2f)
+                _hpTemp += 1;
+            else if (_size < 0.7f)
+                _hpTemp -= 2;
+            else if (_size < 1.0f)
+                _hpTemp -= 1;
+
+            _hp = _hpTemp;
+
+            _exp += _hpTemp / 5;
+
             float reverse = 1 / _size;
             reverse = reverse < 0.9f ? 0.9f : reverse;
             _speed *= reverse;
         }
         protected override void Start()
         {
-            base.Start();
+            _rgd = GetComponent<Rigidbody2D>();
             Init();
         }
         void FixedUpdate()

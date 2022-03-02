@@ -80,7 +80,16 @@ namespace SV
 
         public Skill_Area(bool isPj = false) : base(isPj)
         {
-            
+            _isProj = isPj;
+            _index = SkillManager.I._skList.Count;
+
+            Damage = 1;
+            EA = 1;
+            Cool = 5.0f;
+            Speed = 0.0f;
+            Size = 1.0f;
+            Maintain = 2.0f;
+            Interval = 0.5f;
         }
     }
 
@@ -107,10 +116,11 @@ namespace SV
             Damage = 1;
             EA = 1;
             Cool = 1.0f;
-            Reach = 15.0f;
             Speed = 100.0f;
             Size = 1.0f;
             Maintain = 2.0f;
+            Reach = 15.0f;
+            Pierce = 1;
         }
     }
 
@@ -136,7 +146,7 @@ namespace SV
             _player = Player.I;
             _skList = new List<PlayerSkill>();
 
-            AcquireNew(true);
+            AcquireNew(false);
         }
         private void FixedUpdate()
         {
@@ -154,7 +164,7 @@ namespace SV
             if (_skList.Count == _skMax)
                 return;
 
-            PlayerSkill newskill = null;//new PlayerSkill(isProj);
+            PlayerSkill newskill = null;
 
             if(isProj == true)
             {
@@ -185,7 +195,9 @@ namespace SV
             }
             else if(skill is Skill_Area)
             {
-                
+                Skill_Area area = skill as Skill_Area;
+                GameObject prefab = GameManager.I._area;
+                StartCoroutine(Area(area, prefab));
             }
         }
 
@@ -213,6 +225,7 @@ namespace SV
 
                     GameObject go = GameManager.I.GetPoolObject(prefab);
                     go.transform.position = _player._firePos.position;
+                    go.SetActive(true);
 
                     float z = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                     Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
@@ -228,7 +241,37 @@ namespace SV
 
                 Player.I.ChangeTarget();
 
-                yield return new WaitForSeconds(skill.Cool * Time.timeScale);
+                yield return new WaitForSeconds(skill.Cool);
+            }
+        }
+
+        IEnumerator Area(Skill_Area area, GameObject pf)
+        {
+            Skill_Area skill = area;
+            GameObject prefab = pf;
+            Vector3 pos = _player.transform.position;
+
+            yield return new WaitUntil(() => Time.timeScale > 0);
+
+            GameObject go = GameManager.I.GetPoolObject(prefab);
+            go.transform.position = _player.transform.position;
+            go.SetActive(true);
+            Area a = go.GetComponent<Area>();
+            a.Init();
+            a.Activate(area);
+
+            while (true)
+            {
+                if (area.Speed > 0)
+                {
+                    yield return null;
+                }
+                else
+                {
+                    yield return null;
+                    pos = _player.transform.position;
+                    go.transform.position = pos;
+                }
             }
         }
     }

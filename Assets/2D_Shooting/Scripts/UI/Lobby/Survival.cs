@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace ss
+{
+
+    public class Survival : MonoBehaviour
+    {
+        List<Button> _buttons;
+
+        public void Init()
+        {
+            _buttons = new List<Button>(transform.Find("Buttons").GetComponentsInChildren<Button>(true));
+
+            foreach (Button b in _buttons)
+            {
+                switch (b.name)
+                {
+                    case "Return":
+                        {
+                            b.onClick.AddListener(delegate ()
+                            {
+                                UIManager.I._lobby._survival.gameObject.SetActive(false);
+                            });
+                            break;
+                        }
+                    default:
+                        break;
+                }
+            }
+
+            gameObject.SetActive(false);
+        }
+    }
+}

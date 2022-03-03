@@ -34,6 +34,31 @@ namespace ss
                             });
                             break;
                         }
+                    case "Option":
+                        {
+                            b.onClick.AddListener(delegate ()
+                            {
+                                UIManager.I._lobby._option.gameObject.SetActive(true);
+                            });
+                            break;
+                        }
+                    case "Credit":
+                        {
+                            b.onClick.AddListener(delegate ()
+                            {
+                                UIManager.I._lobby._credit.gameObject.SetActive(true);
+                            });
+                            break;
+                        }
+                    case "Quit":
+                        {
+                            b.onClick.AddListener(delegate ()
+                            {
+                                Application.Quit();
+                                Debug.Log("quit");
+                            });
+                            break;
+                        }
                     default:
                         break;
                 }

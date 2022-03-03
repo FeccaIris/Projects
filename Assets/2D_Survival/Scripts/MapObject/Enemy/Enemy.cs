@@ -18,7 +18,7 @@ namespace SV
         {
             _hpTemp = _hpMax;
             _hpTemp += delta;
-            
+
             _speed = 0.3f;
             _size = 1;
             _exp = 1;
@@ -55,7 +55,7 @@ namespace SV
         }
         void FixedUpdate()
         {
-            if(_player != null)
+            if (_player != null)
                 transform.position += (_player.position - transform.position).normalized * _speed;
         }
 

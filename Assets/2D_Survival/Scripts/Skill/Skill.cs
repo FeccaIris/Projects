@@ -30,26 +30,17 @@ namespace SV
 
         public void Activate()
         {
-            transform.position = _player.transform.position;
+            transform.position = _ps._startPos;
             gameObject.SetActive(true);
 
             if (_ps._doesStay == true)
                 Invoke("EndUse", _ps._maintain);
-            
-            
-            if(_ps._doesMove == true)
-            {
-                if(_ps._hasTarget == true)
-                {
-                    if(_ps._reach >= _player._distance)
-                    {
-                        if(_player._target != null)
-                            _rgd.AddForce(_player._target.position * Time.fixedDeltaTime * TimeCor * _ps._speed);
-                    }
-                }
-            }
         }
 
+        void FixedUpdate()
+        {
+
+        }
         void OnTriggerEnter2D(Collider2D col)
         {
             Enemy e = col.GetComponent<Enemy>();

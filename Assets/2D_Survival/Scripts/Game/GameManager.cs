@@ -90,6 +90,7 @@ namespace SV
                 GameObject go = Instantiate(pf);
                 if (parent != null)
                     go.transform.parent = parent;
+                go.name = i.ToString();
                 go.SetActive(false);
 
                 if (pool != null)

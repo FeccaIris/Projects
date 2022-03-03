@@ -14,12 +14,10 @@ namespace SV
         public static GameManager I;
 
         
-        public Queue<GameObject> _poolProj = new Queue<GameObject>();
-        public Queue<GameObject> _poolArea = new Queue<GameObject>();
+        public Queue<GameObject> _poolSkill = new Queue<GameObject>();
         public Queue<GameObject> _poolWalker = new Queue<GameObject>();
 
-        public GameObject _proj;
-        public GameObject _area;
+        public GameObject _skill;
         public GameObject _walker;
 
         public List<Enemy> _enemies;
@@ -41,13 +39,11 @@ namespace SV
         }
         private void Start()
         {
-            _proj = Resources.Load("SV_Projectile") as GameObject;
-            _area = Resources.Load("SV_Area") as GameObject;
+            _skill = Resources.Load("Skill") as GameObject;
             _walker = Resources.Load("Walker") as GameObject;
 
             CreatePoolObject(_walker, 50);
-            CreatePoolObject(_proj, 10);
-            CreatePoolObject(_area, 10);
+            CreatePoolObject(_skill, 50);
 
             UIManager.I.Init();
             SkillManager.I.Init();
@@ -78,31 +74,15 @@ namespace SV
             Queue<GameObject> pool = null;
             Transform parent = null;
 
-            Enemy e = pf.GetComponent<Enemy>();
-            if(e != null)
+            if (pf.name.Equals("Skill"))
             {
-                if (e is Walker)
-                {
-                    pool = _poolWalker;
-                    parent = transform.Find("Pool").Find("Enemies").Find("Walker");
-                }
+                pool = _poolSkill;
+                parent = transform.Find("Pool").Find("Skills");
             }
-            else
+            else if (pf.name.Equals("Walker"))
             {
-                Skill sk = pf.GetComponent<Skill>();
-                if(sk != null)
-                {
-                    if (sk is Projectile)
-                    {
-                        pool = _poolProj;
-                        parent = transform.Find("Pool").Find("Skills").Find("Projectile");
-                    }
-                    else if(sk is Area)
-                    {
-                        pool = _poolArea;
-                        parent = transform.Find("Pool").Find("Skills").Find("Area");
-                    }
-                }
+                pool = _poolWalker;
+                parent = transform.Find("Pool").Find("Enemies").Find("Walker");
             }
 
             for (int i = 0; i < ea; i++)
@@ -110,7 +90,6 @@ namespace SV
                 GameObject go = Instantiate(pf);
                 if (parent != null)
                     go.transform.parent = parent;
-                go.name = i.ToString();
                 go.SetActive(false);
 
                 if (pool != null)
@@ -124,23 +103,15 @@ namespace SV
             GameObject go = null;
             Queue<GameObject> pool = null;
 
-            Enemy e = pf.GetComponent<Enemy>();
-            if (e != null)
+            if (pf.name.Equals("Skill"))
             {
-                if (e is Walker)
-                    pool = _poolWalker;
+                pool = _poolSkill;
             }
-            else
+            else if (pf.name.Equals("Walker"))
             {
-                Skill sk = pf.GetComponent<Skill>();
-                if (sk != null)
-                {
-                    if (sk is Projectile)
-                        pool = _poolProj;
-                    else if (sk is Area)
-                        pool = _poolArea;
-                }
+                pool = _poolWalker;
             }
+
             if (pool != null)
             {
                 if(pool.Count <= 0)
@@ -157,20 +128,13 @@ namespace SV
         {
             Queue<GameObject> pool = null;
 
-            Enemy e = pf.GetComponent<Enemy>();
-            if (e != null)
+            if (pf.name.Equals("Skill"))
             {
-                if (e is Walker)
-                    pool = _poolWalker;
+                pool = _poolSkill;
             }
-            else
+            else if (pf.name.Equals("Walker"))
             {
-                Skill sk = pf.GetComponent<Skill>();
-                if (sk != null)
-                {
-                    if (sk is Projectile)
-                        pool = _poolProj;
-                }
+                pool = _poolWalker;
             }
 
             if (pool != null)
@@ -181,6 +145,10 @@ namespace SV
         {
             while (_playing)
             {
+                yield return null;
+                if (_enemies.Count >= 80)
+                    continue;
+
                 yield return new WaitForSeconds(_spawnCool);
 
                 if (_enemies.Count >= 50)

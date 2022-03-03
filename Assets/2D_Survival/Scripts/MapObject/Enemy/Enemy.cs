@@ -79,9 +79,27 @@ namespace SV
             EndUse();
         }
 
+        public void OnSkill(PlayerSkill ps)
+        {
+            StartCoroutine(OnArea(ps));
+        }
+
+        IEnumerator OnArea(PlayerSkill ps)
+        {
+            while (true)
+            {
+                Damaged(ps._dmg);
+                yield return new WaitForSeconds(ps._interval);
+            }
+        }
+
+        public void ExitSkill()
+        {
+            StopAllCoroutines();
+        }
+
         public void EndUse()
         {
-
             gameObject.SetActive(false);
             GameManager.I.RefillPool(gameObject);
         }

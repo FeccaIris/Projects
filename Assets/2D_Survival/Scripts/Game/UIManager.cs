@@ -11,7 +11,8 @@ namespace SV
 
         public Hpbar _hpB;
         public Expbar _expB;
-        public PU_LevelUp _levelUp;
+
+        public LevelUp _lvUp;
 
         void Awake()
         {
@@ -22,11 +23,12 @@ namespace SV
         {
             _hpB = transform.Find("Playing").Find("UI").Find("Hpbar").GetComponent<Hpbar>();
             _expB = transform.Find("Playing").Find("UI").Find("Expbar").GetComponent<Expbar>();
-            _levelUp = transform.Find("Playing").Find("PopUp").Find("LevelUp").GetComponent<PU_LevelUp>();
+            _lvUp = transform.Find("Playing").Find("PopUp").Find("LevelUp").GetComponent<LevelUp>();
+
 
             _hpB.Init();
             _expB.Init();
-            _levelUp.Init();
+            _lvUp.Init();
         }
     }
 }

@@ -11,10 +11,8 @@ namespace SV
         int _pierce;
         int _pierceCount;
 
-        public override void Init()
+        public void Init()
         {
-            base.Init();
-
             _pierceCount = 0;
 
             transform.localScale = Vector3.one;

@@ -13,6 +13,8 @@ namespace SV
         public Transform _firePos;
         public Transform _target;
 
+        public float _distance;
+
         Hpbar _hpB;
 
         private void Awake()
@@ -44,6 +46,9 @@ namespace SV
             }
 
             ChangeTarget();
+
+            if(_target != null)
+                _distance = Vector3.Distance(transform.position, _target.position);
 
             if (_target != null)
             {

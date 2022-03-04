@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/2D_Survival/Loading.unity
     guid: 79e2e14d2aed6b04494ab97fa5fdcd7a
-  - enabled: 1
+  - enabled: 0
     path: Assets/2D_Survival/Lobby.unity
     guid: 200e6db3bb63b4e47ab8b4fc7629b375
-  - enabled: 1
+  - enabled: 0
     path: Assets/2D_Survival/Playing.unity
     guid: b745eb776756d424ebea7845eb04c7f6
+  - enabled: 1
+    path: Assets/2D_Shooting/2D_Shooting.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

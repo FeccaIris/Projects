@@ -18,6 +18,15 @@ namespace ss
             {
                 switch (b.name)
                 {
+                    case "Tutorial":
+                        {
+                            b.onClick.AddListener(delegate ()
+                            {
+                                UIManager.I._lobby.CloseAll(true);
+                                UIManager.I._lobby._selectUnit.gameObject.SetActive(true);
+                            });
+                            break;
+                        }
                     case "Survival":
                         {
                             b.onClick.AddListener(delegate ()
@@ -39,14 +48,6 @@ namespace ss
                             b.onClick.AddListener(delegate ()
                             {
                                 UIManager.I._lobby._option.gameObject.SetActive(true);
-                            });
-                            break;
-                        }
-                    case "Credit":
-                        {
-                            b.onClick.AddListener(delegate ()
-                            {
-                                UIManager.I._lobby._credit.gameObject.SetActive(true);
                             });
                             break;
                         }

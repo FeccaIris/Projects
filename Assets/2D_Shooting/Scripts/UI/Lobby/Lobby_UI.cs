@@ -8,8 +8,8 @@ namespace ss
 
     public class Lobby_UI : MonoBehaviour
     {
-        Lobby _owner;
-        List<Button> _buttons;
+        public Lobby _owner;
+        public List<Button> _buttons;
 
         public virtual void Init(Lobby owner)
         {

@@ -11,7 +11,6 @@ namespace ss
         public Survival _survival;
         public Infinite _infinite;
         public Option _option;
-        public Credit _credit;
 
         public SelectUnit _selectUnit;
 
@@ -23,14 +22,12 @@ namespace ss
             _survival = transform.Find("Survival").GetComponent<Survival>();
             _infinite = transform.Find("Infinite").GetComponent<Infinite>();
             _option = transform.Find("Option").GetComponent<Option>();
-            _credit = transform.Find("Credit").GetComponent<Credit>();
             _selectUnit = transform.Find("SelectUnit").GetComponent<SelectUnit>();
 
             _menu.Init();
             _survival.Init(this);
             _infinite.Init(this);
             _option.Init(this);
-            _credit.Init(this);
             _selectUnit.Init(this);
         }
 
@@ -40,6 +37,7 @@ namespace ss
             {
                 if (ui.gameObject.activeSelf == false)
                     continue;
+
                 ui.gameObject.SetActive(false);
             }
 
@@ -47,9 +45,13 @@ namespace ss
                 _menu.gameObject.SetActive(false);
             else
             {
-                if(_menu.gameObject.activeSelf != true)
-                    _menu.gameObject.SetActive(true);
+                _menu.gameObject.SetActive(true);
             }
+        }
+
+        public void GameStart()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

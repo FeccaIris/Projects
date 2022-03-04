@@ -8,12 +8,13 @@ namespace SV
     [System.Serializable]
     public class PlayerSkill
     {
+        #region Member
         public Player _player;
 
         public int _index;
         public int _cost;
 
-
+        #region Boolean
         public bool _hasCool;
         public bool _doesMove;
         public bool _isProjectile;
@@ -22,7 +23,9 @@ namespace SV
         public bool _isMultiple;
         public bool _doesMultihit;
         public bool _atRandom;
-        
+        #endregion
+
+        #region Attribute
         public int _dmg = 1;
         public float _size = 1.0f;
         public Vector3 _startPos;
@@ -30,14 +33,25 @@ namespace SV
         public float _cool = 1.0f;
         public float _speed = 100.0f;
         public int _pierce = 1;
-        public float _reach = 15.0f;
+        public float _reach = 25.0f;
         public float _maintain = 2.0f;
         public int _ea = 1;
         public float _interval = 1.0f;
+        #endregion
 
-        public PlayerSkill(bool hasC, bool pj, bool mv, bool hasT, bool stay, bool mt, bool mtH, bool rdP, Vector3 pos)
+        #endregion
+
+        public void Reinforce()
+        {
+            
+        }
+
+
+        public PlayerSkill(bool hasC, bool pj, bool mv, bool hasT, bool stay, bool mt, bool mtH, bool rdP)
         {
             _player = Player.I;
+
+            _index = SkillManager.I._skList.Count;
 
             _hasCool = hasC;
             _isProjectile = pj;
@@ -47,7 +61,8 @@ namespace SV
             _isMultiple = mt;
             _doesMultihit = mtH;
             _atRandom = rdP;
-            _startPos = pos;
+            if(Player.I != null)
+                _startPos = Player.I.transform.position;
         }
     }
 
@@ -72,15 +87,17 @@ namespace SV
             _player = Player.I;
             _skList = new List<PlayerSkill>();
 
-            AcquireNew(hasC: true, pj: true, hasT: true, mv: true, stay: true, mt: true, mtH: false, rdP: false, pos: _player.transform.position) ;
+            AcquireNew();   // 기본 : 투사체
         }
 
-        public void AcquireNew(bool hasC, bool pj, bool mv, bool hasT, bool stay, bool mt, bool mtH, bool rdP, Vector3 pos)
+        public void AcquireNew(bool hasC = true, bool pj = true, bool mv = true, bool hasT = true,
+            bool stay = true, bool mt = true, bool mtH = false, bool rdP = false)
         {
             if (_skList.Count >= _skillLimits)
                 return;
 
-            PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, mv: mv, hasT: hasT, stay: stay, mt: mt, mtH: mtH, rdP: rdP, pos: pos);
+            PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, mv: mv, hasT: hasT,
+                                             stay: stay, mt: mt, mtH: mtH, rdP: rdP);
             _skList.Add(ps);
             Activate(ps);
         }
@@ -103,36 +120,35 @@ namespace SV
             {
                 yield return new WaitUntil(() => _player._target != null);
 
-                if (ps._hasTarget == true)
+                if (ps._hasTarget == true)                          // 사거리 체크
                     yield return new WaitUntil(() => ps._reach >= _player._distance);
 
-                if (ps._atRandom == true)
+                if (ps._atRandom == true)                           // 시작 위치 체크
                 {
-                    //ps._startPos = Random;
+                    //ps._startPos = Random;                        // 무작위 시작 위치 미구현
                 }
                 else
                 {
                     ps._startPos = _player.transform.position;
                 }
 
-                if (ps._doesMove == true)
+                if (ps._doesMove == true)                           // 이동 체크
                 {
                     Vector3 dir = new Vector3();
 
-                    if (ps._hasTarget == true)
+                    if (ps._hasTarget == true)                      // 목표 여부 체크
                     {
                         if (_player == null) break;
                         if (_player._target != null)
-                            dir = (_player._target.position - transform.position).normalized;
+                            dir = _player._target.position - transform.position;
+                        dir = dir.normalized;
                     }
                     else
                     {
-                        if (_player == null) break;
-                        if (_player._target != null)
-                            dir = (_player._target.position - transform.position).normalized;
+                        // 랜덤 미구현
                     }
 
-                    if (ps._isMultiple == true)
+                    if (ps._isMultiple == true)                     // 다중 여부 체크
                     {
                         for (int i = 0; i < ps._ea; i++)
                         {
@@ -147,12 +163,16 @@ namespace SV
                             yield return new WaitForSeconds(0.1f / ps._cool);
                         }
                     }
+                    else
+                    {
+                        yield return null;  // 단일 발동 미구현
+                    }
                 }
                 else
                 {
-                    yield return null;
+                    yield return null;      // 비이동 미구현
                 }
-                yield return new WaitForSeconds(ps._cool);
+                yield return new WaitForSeconds(ps._cool);          // 쿨타임
             }
         }
     }   

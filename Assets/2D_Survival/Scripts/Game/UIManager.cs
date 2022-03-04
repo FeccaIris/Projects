@@ -25,10 +25,14 @@ namespace SV
             _expB = transform.Find("Playing").Find("UI").Find("Expbar").GetComponent<Expbar>();
             _lvUp = transform.Find("Playing").Find("PopUp").Find("LevelUp").GetComponent<LevelUp>();
 
-
             _hpB.Init();
             _expB.Init();
             _lvUp.Init();
+        }
+
+        public void LevelUP()
+        {
+            _lvUp.LevelUP();
         }
     }
 }

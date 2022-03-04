@@ -74,7 +74,8 @@ namespace SV
         void LevelUp()
         {
             int exceed = _exp - _expNeed;
-            //Time.timeScale = 0;
+            Time.timeScale = 0;
+            UIManager.I.LevelUP();
 
             _lv++;
             _exp = exceed;

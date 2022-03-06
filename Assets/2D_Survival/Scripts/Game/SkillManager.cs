@@ -12,7 +12,9 @@ namespace SV
         public Player _player;
 
         public int _index;
+
         public int _cost;
+        public int _dmg = 1;
 
         #region Boolean
         public bool _hasCool;
@@ -25,8 +27,7 @@ namespace SV
         public bool _atRandom;
         #endregion
 
-        #region Attribute
-        public int _dmg = 1;
+        #region Property
         public float _size = 1.0f;
         public Vector3 _startPos;
 
@@ -41,9 +42,9 @@ namespace SV
 
         #endregion
 
-        public void Reinforce()
+        public void SkillReinforce()
         {
-            
+            // 
         }
 
 
@@ -70,7 +71,7 @@ namespace SV
     {
         public static SkillManager I;
 
-        public const float TimeCor = 100000.0f;
+        public const float TimeCor = 100_000.0f;
 
         Player _player;
 

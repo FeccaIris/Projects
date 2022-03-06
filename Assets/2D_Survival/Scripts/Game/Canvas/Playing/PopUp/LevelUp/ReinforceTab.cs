@@ -54,7 +54,8 @@ namespace SV
             
             foreach (Button_LevelUp b in _buttons)
             {
-                Debug.Log("!@#!@$!%$");
+                // 강화 버튼 설정
+
             }
         }
 

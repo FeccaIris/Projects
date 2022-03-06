@@ -52,6 +52,20 @@ namespace SV
                             });
                             break;
                         }
+                    case "DmgUp":
+                        {
+                            b.onClick.AddListener(delegate ()
+                            {
+                                foreach(PlayerSkill k in SkillManager.I._skList)
+                                {
+                                    k._dmg += 1;
+                                    Debug.Log(k._dmg);
+                                    _owner.CloseAll();
+                                }
+                            });
+
+                            break;
+                        }
                     default:
                         break;
                 }

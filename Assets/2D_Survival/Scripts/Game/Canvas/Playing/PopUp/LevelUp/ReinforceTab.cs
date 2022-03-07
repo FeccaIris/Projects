@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 namespace SV
 {
-    public enum Category
+    public enum Category0
     {
-        DMG,
         SIZE,
 
         COOL,
@@ -27,11 +26,11 @@ namespace SV
     {
         public List<Button_LevelUp> _buttons;
 
-        public List<Category> _cats;
+        public List<Category0> _cats;
 
         public override void Init(LevelUp owner)
         {
-            _cats = new List<Category> { Category.DMG, Category.SIZE };
+            _cats = new List<Category0> { Category0.SIZE, Category0.SIZE };
 
             _buttons = new List<Button_LevelUp>(GetComponentsInChildren<Button_LevelUp>());
 
@@ -39,7 +38,8 @@ namespace SV
             {
                 b.onClick.AddListener(delegate ()
                 {
-                    // 스킬 강화 미구현
+                    /// 스킬 강화 미구현
+                    /// 강화시 공격력 증가 10%
 
                     _owner.CloseAll();
                 });
@@ -78,7 +78,7 @@ namespace SV
 
             if (ps._hasCool == true)
             {
-                _cats.Add(Category.COOL);
+                _cats.Add(Category0.COOL);
             }
             else
             {
@@ -87,26 +87,26 @@ namespace SV
            /**/
             if (ps._doesStay == true)
             {
-                _cats.Add(Category.MAINTAIN);
+                _cats.Add(Category0.MAINTAIN);
             }
            /**/
             if (ps._doesMove == true)
             {
-                _cats.Add(Category.SPEED);
+                _cats.Add(Category0.SPEED);
             }
            /**/
             if (ps._isProjectile == true)
             {
                 ps._doesMultihit = false;
-                _cats.Add(Category.PIERCE);
+                _cats.Add(Category0.PIERCE);
             }
            /**/
             if (ps._hasTarget == true)
             {
-                ps._atRandom = false;
+                ps._isRandom = false;
             }
            /**/
-            if (ps._atRandom == true) { }
+            if (ps._isRandom == true) { }
            /**/
             if (ps._isMultiple == true) { }
            /**/

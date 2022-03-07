@@ -15,20 +15,23 @@ namespace SV
 
         public int _cost;
         public int _dmg = 1;
+        public float _size = 1.0f;
 
         #region Boolean
+        public bool _isRandom;
+        public bool _hasTarget;         // 사거리, 시작점, 방향 결정
+        
+        public bool _isProjectile;
+        public bool _isMultiple;
+
+        public bool _doesMultihit;
+        
         public bool _hasCool;
         public bool _doesMove;
-        public bool _isProjectile;
-        public bool _hasTarget;         // 사거리, 시작점, 방향 결정
         public bool _doesStay;
-        public bool _isMultiple;
-        public bool _doesMultihit;
-        public bool _atRandom;
         #endregion
 
         #region Property
-        public float _size = 1.0f;
         public Vector3 _startPos;
 
         public float _cool = 1.0f;
@@ -61,7 +64,7 @@ namespace SV
             _doesStay = stay;
             _isMultiple = mt;
             _doesMultihit = mtH;
-            _atRandom = rdP;
+            _isRandom = rdP;
             if(Player.I != null)
                 _startPos = Player.I.transform.position;
         }
@@ -101,6 +104,8 @@ namespace SV
                                              stay: stay, mt: mt, mtH: mtH, rdP: rdP);
             _skList.Add(ps);
             Activate(ps);
+
+            UIManager.I._lvUp.SetIndex(ps);
         }
 
         public void Activate(PlayerSkill ps)
@@ -124,7 +129,7 @@ namespace SV
                 if (ps._hasTarget == true)                          // 사거리 체크
                     yield return new WaitUntil(() => ps._reach >= _player._distance);
 
-                if (ps._atRandom == true)                           // 시작 위치 체크
+                if (ps._isRandom == true)                           // 시작 위치 체크
                 {
                     //ps._startPos = Random;                        // 무작위 시작 위치 미구현
                 }

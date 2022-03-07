@@ -67,6 +67,7 @@ namespace SV
         {
             Destroy(_hpB.gameObject);
             base.Die();
+            GameManager.I.GameOver();
         }
 
         void UpdateHp()

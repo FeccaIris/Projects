@@ -31,7 +31,7 @@ namespace SV
         {
             yield return null;
 
-            AsyncOperation op = SceneManager.LoadSceneAsync((int)SceneNum.PLAY);
+            AsyncOperation op = SceneManager.LoadSceneAsync("Playing");
 
             op.allowSceneActivation = false;
 
@@ -42,9 +42,9 @@ namespace SV
 
                 if (op.progress >= 0.9f)
                 {
-                    _progress.text = "Press the space bar to Countinue";
+                    _progress.text = "Press any key to Countinue";
 
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.anyKey)
                     {
                         op.allowSceneActivation = true;
                     }

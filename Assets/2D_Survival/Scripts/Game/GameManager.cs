@@ -22,7 +22,7 @@ namespace SV
 
         public List<Enemy> _enemies;
 
-        bool _playing = true;
+        public bool _playing = true;
 
         float _spawnCool = 3.0f;
         float _spawnRange = 60.0f;
@@ -54,19 +54,28 @@ namespace SV
         }
         private void FixedUpdate()
         {
-            _gameTime += Time.fixedDeltaTime * Time.timeScale;
-            _elapsed += Time.fixedDeltaTime * Time.timeScale;
-            _elapsed2 += Time.fixedDeltaTime * Time.timeScale;
-            if (_elapsed >= 20.0f)
+            if (_playing)
             {
-                _elapsed = 0;
-                _spawnEA++;
+                _gameTime += Time.fixedDeltaTime * Time.timeScale;
+                _elapsed += Time.fixedDeltaTime * Time.timeScale;
+                _elapsed2 += Time.fixedDeltaTime * Time.timeScale;
+                if (_elapsed >= 20.0f)
+                {
+                    _elapsed = 0;
+                    _spawnEA++;
+                }
+                if (_elapsed2 >= 60.0f)
+                {
+                    _elapsed2 = 0;
+                    _enemyHpDeltaT++;
+                }
             }
-            if (_elapsed2 >= 60.0f)
-            {
-                _elapsed2 = 0;
-                _enemyHpDeltaT++;
-            }
+        }
+
+        public void GameOver()
+        {
+            _playing = false;
+            UIManager.I.GameOver();
         }
 
         public void CreatePoolObject(GameObject pf, int ea)

@@ -10,22 +10,17 @@ namespace SV
     {
         public Image _fill;
 
-        float _offset = 200.0f;
+        //float _offset = 250.0f;
 
         public void Init()
         {
             _fill = transform.Find("Fill").GetComponent<Image>();
-
+            /*
             if (Player.I != null)
             {
                 Vector2 pos = Camera.main.WorldToScreenPoint(Player.I.transform.position);
                 transform.position = new Vector2(pos.x, pos.y + _offset);
-            }
-        }
-
-        public void UpdateUI()
-        {
-
+            }*/
         }
     }
 }

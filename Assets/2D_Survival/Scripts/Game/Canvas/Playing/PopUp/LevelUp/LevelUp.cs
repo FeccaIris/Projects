@@ -6,40 +6,51 @@ namespace SV
 {
     public class LevelUp : MonoBehaviour
     {
-        public IndexTab _indexT;
-        public ReinforceTab _reinforceT;
+        public FirstTab _fistTab;
+        public SecondTab _secondTab;
+        public ThirdTab _thirdTab;
 
         public List<LevelUpPU> _puList;
 
         public void Init()
         {
-            _indexT = transform.Find("IndexTab").GetComponent<IndexTab>();
-            _reinforceT = transform.Find("ReinforceTab").GetComponent<ReinforceTab>();
+            _fistTab = transform.Find("FirstTab").GetComponent<FirstTab>();
+            _secondTab = transform.Find("SecondTab").GetComponent<SecondTab>();
+            _thirdTab = transform.Find("ThirdTab").GetComponent<ThirdTab>();
 
-            _indexT.Init(this);
-            _reinforceT.Init(this);
+            _fistTab.Init(this);
+            _secondTab.Init(this);
+            _thirdTab.Init(this);
 
             gameObject.SetActive(false);
         }
 
         public void LevelUP()
         {
-            _indexT.gameObject.SetActive(true);
+            OffAll();
+            _fistTab.gameObject.SetActive(true);
             gameObject.SetActive(true);
-
-            _indexT.SetIndexButton();
-
-            _indexT.gameObject.SetActive(true);
         }
 
-        public void ReadyForReinforce(PlayerSkill ps)   // 인덱스 버튼 입력 = 스킬 선택
+        public void SetIndex(PlayerSkill ps)
         {
-            _reinforceT.SetReinforceButton(ps);
-            Debug.Log(ps._index);
+            _secondTab.SetButtons(ps);
         }
 
+        public void ReadyForRF(PlayerSkill ps)
+        {
+            _thirdTab.ReadyForRF(ps);
+        }
 
-        public void TurnOnOff(LevelUpPU on, LevelUpPU off)
+        public void OffAll()
+        {
+            foreach (LevelUpPU pu in _puList)
+            {
+                if (pu.gameObject.activeSelf == true)
+                    pu.gameObject.SetActive(false);
+            }
+        }
+        public void OnOff(LevelUpPU on, LevelUpPU off)
         {
             off.gameObject.SetActive(false);
             on.gameObject.SetActive(true);
@@ -47,12 +58,7 @@ namespace SV
 
         public void CloseAll()
         {
-            foreach(LevelUpPU pu in _puList)
-            {
-                if(pu.gameObject.activeSelf == true)
-                    pu.gameObject.SetActive(false);
-            }
-
+            OffAll();
             gameObject.SetActive(false);
 
             Time.timeScale = 1;

@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace ss
 {
-
     public class GameManager : MonoBehaviour
     {
         public static GameManager I;
@@ -16,6 +15,9 @@ namespace ss
 
         void Start()
         {
+            Player.I.Init();
+
+
             UIManager.I.Init();
         }
     }

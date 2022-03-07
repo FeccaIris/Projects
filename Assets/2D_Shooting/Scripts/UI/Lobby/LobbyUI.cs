@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ss
 {
 
-    public class Lobby : MonoBehaviour
+    public class LobbyUI : MonoBehaviour
     {
         public Menu _menu;
         public Survival _survival;
@@ -14,7 +14,7 @@ namespace ss
 
         public SelectUnit _selectUnit;
 
-        public List<Lobby_UI> _uiList = new List<Lobby_UI>();
+        public List<Lobby_Child> _childList = new List<Lobby_Child>();
 
         public void Init()
         {
@@ -33,7 +33,7 @@ namespace ss
 
         public void CloseAll(bool menuOff = false)
         {
-            foreach(Lobby_UI ui in _uiList)
+            foreach(Lobby_Child ui in _childList)
             {
                 if (ui.gameObject.activeSelf == false)
                     continue;

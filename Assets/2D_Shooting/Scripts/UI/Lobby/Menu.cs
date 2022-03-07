@@ -22,6 +22,7 @@ namespace ss
                         {
                             b.onClick.AddListener(delegate ()
                             {
+                                UIManager.I.GameStart(false);
                                 UIManager.I._lobby.CloseAll(true);
                                 UIManager.I._lobby._selectUnit.gameObject.SetActive(true);
                             });

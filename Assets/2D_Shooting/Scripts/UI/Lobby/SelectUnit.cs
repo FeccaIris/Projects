@@ -6,9 +6,9 @@ using UnityEngine.UI;
 namespace ss
 {
 
-    public class SelectUnit : Lobby_UI
+    public class SelectUnit : Lobby_Child
     {
-        public override void Init(Lobby owner)
+        public override void Init(LobbyUI owner)
         {
             base.Init(owner);
 

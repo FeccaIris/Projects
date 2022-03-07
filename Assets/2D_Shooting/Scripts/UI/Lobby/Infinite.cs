@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace ss
 {
 
-    public class Infinite : Lobby_UI
+    public class Infinite : Lobby_Child
     {
 
     }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace ss
 {
 
-    public class Option : Lobby_UI
+    public class Option : Lobby_Child
     {
 
     }

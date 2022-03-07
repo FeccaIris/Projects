@@ -6,15 +6,15 @@ using UnityEngine.UI;
 namespace ss
 {
 
-    public class Lobby_UI : MonoBehaviour
+    public class Lobby_Child : MonoBehaviour
     {
-        public Lobby _owner;
+        public LobbyUI _owner;
         public List<Button> _buttons;
 
-        public virtual void Init(Lobby owner)
+        public virtual void Init(LobbyUI owner)
         {
             _owner = owner;
-            _owner._uiList.Add(this);
+            _owner._childList.Add(this);
 
             _buttons = new List<Button>(transform.Find("Buttons").GetComponentsInChildren<Button>(true));
 

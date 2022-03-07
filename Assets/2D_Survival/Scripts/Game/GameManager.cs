@@ -45,8 +45,8 @@ namespace SV
             CreatePoolObject(_walker, 50);
             CreatePoolObject(_skill, 50);
 
-            SkillManager.I.Init();
             UIManager.I.Init();
+            SkillManager.I.Init();
             LevelManager.I.Init();
             Player.I.Init();
 

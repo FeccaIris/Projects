@@ -32,9 +32,9 @@ namespace SV
             gameObject.SetActive(true);
         }
 
-        public void SetIndex(PlayerSkill ps)
+        public void SetIndex(List<PlayerSkill> list)
         {
-            _secondTab.SetButtons(ps);
+            _secondTab.SetButtons(list);
         }
 
         public void ReadyForRF(PlayerSkill ps)

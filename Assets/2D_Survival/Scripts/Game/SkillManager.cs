@@ -45,9 +45,45 @@ namespace SV
 
         #endregion
 
-        public void SkillReinforce()
+        public void SkillReinforce(Category cat)
         {
-            // 
+            _dmg += 1;
+
+            switch (cat)
+            {
+                case Category.COOL:
+                    {
+                        _cool *= 0.9f;
+                        break;
+                    }
+                case Category.EA:
+                    {
+                        _ea += 1;
+                        break;
+                    }
+                case Category.MAINTAIN:
+                    {
+                        _maintain *= 1.2f;
+                        break;
+                    }
+                case Category.PIERCE:
+                    {
+                        _pierce += 1;
+                        break;
+                    }
+                case Category.SPEED:
+                    {
+                        _speed *= 1.2f;
+                        break;
+                    }
+                case Category.REACH:
+                    {
+                        _reach *= 1.2f;
+                        break;
+                    }
+                default:
+                    break;
+            }
         }
 
 
@@ -105,7 +141,7 @@ namespace SV
             _skList.Add(ps);
             Activate(ps);
 
-            UIManager.I._lvUp.SetIndex(ps);
+            UIManager.I._lvUp.SetIndex(_skList);
         }
 
         public void Activate(PlayerSkill ps)

@@ -18,14 +18,15 @@ namespace SV
         public float _size = 1.0f;
 
         #region Boolean
+        public bool _isProjectile;
+        
         public bool _isRandom;
         public bool _hasTarget;         // 사거리, 시작점, 방향 결정
-        
-        public bool _isProjectile;
+
         public bool _isMultiple;
 
         public bool _doesMultihit;
-        
+
         public bool _hasCool;
         public bool _doesMove;
         public bool _doesStay;
@@ -34,7 +35,7 @@ namespace SV
         #region Property
         public Vector3 _startPos;
 
-        public float _cool = 1.0f;
+        public float _cool = 2.0f;
         public float _speed = 100.0f;
         public int _pierce = 1;
         public float _reach = 25.0f;
@@ -47,10 +48,13 @@ namespace SV
 
         public void SkillReinforce(Category cat)
         {
-            _dmg += 1;
-
             switch (cat)
             {
+                case Category.DAMAGE:
+                    {
+                        _dmg += 2;
+                        break;
+                    }
                 case Category.COOL:
                     {
                         _cool *= 0.9f;
@@ -101,7 +105,7 @@ namespace SV
             _isMultiple = mt;
             _doesMultihit = mtH;
             _isRandom = rdP;
-            if(Player.I != null)
+            if (Player.I != null)
                 _startPos = Player.I.transform.position;
         }
     }
@@ -148,7 +152,10 @@ namespace SV
         {
             if (ps._hasCool == true)
             {
-                StartCoroutine(ActivateHasCool(ps));
+                if (ps._isProjectile == true)
+                    StartCoroutine(Projectile(ps));
+                else
+                    return;
             }
             else
             {
@@ -156,66 +163,31 @@ namespace SV
             }
         }
 
-        IEnumerator ActivateHasCool(PlayerSkill ps)
+        IEnumerator Projectile(PlayerSkill ps)
         {
             while (true)
             {
                 yield return new WaitUntil(() => _player._target != null);
 
-                if (ps._hasTarget == true)                          // 사거리 체크
-                    yield return new WaitUntil(() => ps._reach >= _player._distance);
+                ps._startPos = transform.position;
 
-                if (ps._isRandom == true)                           // 시작 위치 체크
+                if (ps._reach >= _player._distance)
                 {
-                    //ps._startPos = Random;                        // 무작위 시작 위치 미구현
-                }
-                else
-                {
-                    ps._startPos = _player.transform.position;
-                }
+                    Vector3 dir = _player._target.position - transform.position;
+                    dir = dir.normalized;
 
-                if (ps._doesMove == true)                           // 이동 체크
-                {
-                    Vector3 dir = new Vector3();
-
-                    if (ps._hasTarget == true)                      // 목표 여부 체크
+                    for (int i = 0; i < ps._ea; i++)
                     {
-                        if (_player == null) break;
-                        if (_player._target != null)
-                            dir = _player._target.position - transform.position;
-                        dir = dir.normalized;
-                    }
-                    else
-                    {
-                        // 랜덤 미구현
-                    }
+                        GameObject go = GameManager.I.GetPoolObject(GameManager.I._skill);
+                        Skill k = go.GetComponent<Skill>();
+                        k.Init(ps);
+                        k.Projectile(dir);
 
-                    if (ps._isMultiple == true)                     // 다중 여부 체크
-                    {
-                        for (int i = 0; i < ps._ea; i++)
-                        {
-                            GameObject go = GameManager.I.GetPoolObject(GameManager.I._skill);
-                            Skill k = go.GetComponent<Skill>();
-                            k.Init(ps);
-                            k.Activate();
-
-                            k._rgd.AddForce(dir * Time.fixedDeltaTime * TimeCor * Time.timeScale);
-                            k._rgd.velocity = Vector3.zero;
-
-                            yield return new WaitForSeconds(0.1f / ps._cool);
-                        }
-                    }
-                    else
-                    {
-                        yield return null;  // 단일 발동 미구현
+                        yield return new WaitForSeconds(0.15f / ps._ea);
                     }
                 }
-                else
-                {
-                    yield return null;      // 비이동 미구현
-                }
-                yield return new WaitForSeconds(ps._cool);          // 쿨타임
+                yield return new WaitForSeconds(ps._cool);
             }
         }
-    }   
+    }
 }

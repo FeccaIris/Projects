@@ -26,15 +26,19 @@ namespace SV
             _rgd = GetComponent<Rigidbody2D>();
             _ps = ps;
             _player = Player.I;
+
+            transform.position = ps._startPos;
+
+            transform.localScale *= _ps._size;
         }
 
-        public void Activate()
+        public void Projectile(Vector3 dir)
         {
-            transform.position = _ps._startPos;
             gameObject.SetActive(true);
+            _rgd.AddForce(dir * _ps._speed * Time.fixedDeltaTime * TimeCor * Time.timeScale);
+            _rgd.velocity = Vector2.zero;
 
-            if (_ps._doesStay == true)
-                Invoke("EndUse", _ps._maintain);
+            Invoke("EndUse", _ps._maintain);
         }
 
         void FixedUpdate()

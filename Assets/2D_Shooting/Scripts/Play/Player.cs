@@ -9,7 +9,8 @@ namespace ss
         public static Player I;
 
         GameObject _unit;
-        SpriteRenderer _sprite;
+        SpriteRenderer _body;
+        SpriteRenderer _sword;
 
         void Awake()
         {
@@ -18,7 +19,8 @@ namespace ss
         public void Init()
         {
             _unit = transform.Find("Unit").gameObject;
-            _sprite = _unit.GetComponent<SpriteRenderer>();
+            _body = _unit.GetComponent<SpriteRenderer>();
+            _sword = _body.transform.Find("Sword").GetComponent<SpriteRenderer>();
         }
         void FixedUpdate()
         {
@@ -29,11 +31,13 @@ namespace ss
 
             if(look.x < 0)
             {
-                _sprite.flipY = true;
+                _body.flipY = true;
+                
             }
             else
             {
-                _sprite.flipY = false;
+                _body.flipY = false;
+                
             }
 
             float z = Mathf.Atan2(look.y, look.x) * Mathf.Rad2Deg;

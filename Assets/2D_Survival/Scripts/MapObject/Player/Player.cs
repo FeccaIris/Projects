@@ -9,9 +9,11 @@ namespace SV
         public static Player I;
 
         public GameObject _unit;
-        public GameObject _fireRot;
-        public Transform _firePos;
+        public GameObject _unit_f;
+
         public Transform _target;
+
+        public Vector3 _forward;
 
         public float _distance;
 
@@ -34,11 +36,12 @@ namespace SV
             base.Start();
 
             _unit = transform.Find("Unit").gameObject;
-            _fireRot = transform.Find("FireRot").gameObject;
-            _firePos = transform.Find("FireRot").Find("FirePos").transform;
+            _unit_f = _unit.transform.Find("Forward").gameObject;
         }
         void FixedUpdate()
         {
+            _forward = (_unit_f.transform.position - transform.position).normalized;
+
             if (_target != null)
             {
                 if (_target.gameObject.activeSelf == false)
@@ -49,11 +52,6 @@ namespace SV
 
             if(_target != null)
                 _distance = Vector3.Distance(transform.position, _target.position);
-
-            if (_target != null)
-            {
-                RotatePos();
-            }
         }
         private void OnCollisionStay2D(Collision2D col)
         {
@@ -75,14 +73,6 @@ namespace SV
             _hpB._fill.fillAmount = (float)_hp / _hpMax;
         }
 
-        public void RotatePos()
-        {
-            Vector3 dir = (_target.position - transform.position).normalized;
-            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-            Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-            _fireRot.transform.rotation = Quaternion.Lerp(_fireRot.transform.rotation, q, 0.5f);
-        }
-
         public void ChangeTarget()
         {
             List<Enemy> list = new List<Enemy>(GameManager.I._enemies);
@@ -93,7 +83,6 @@ namespace SV
 
                 if(list[0] != null)
                     _target = list[0].transform;
-                RotatePos();
             }
             else
             {

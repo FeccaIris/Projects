@@ -61,6 +61,8 @@ namespace SV
 
         protected override void Die()
         {
+            GameManager.I._kills++;
+
             LevelManager.I.GetExp(_exp);
 
             List<Enemy> list = GameManager.I._enemies;

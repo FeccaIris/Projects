@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 namespace SV
 {
-
     public class UIManager : MonoBehaviour
     {
         public static UIManager I;
@@ -51,25 +50,38 @@ namespace SV
         {
             if (GameManager.I._playing)
             {
-                int temp = (int)GameManager.I._gameTime / 60;
-                string m = temp.ToString();
+                float time = GameManager.I._gameTime;
+                TimeSpan t = new TimeSpan(0, 0, (int)time);
 
-                temp = (int)GameManager.I._gameTime % 60;
-                string s = temp.ToString();
-
-                _gameTime.text = m + ":" + s;
+                if (t.Hours >= 1)
+                    _gameTime.text = t.Hours + " : " + t.Minutes + " : " + t.Seconds;
+                else
+                    _gameTime.text = t.Minutes + " : " + t.Seconds;
             }
         }
 
         public void GameOver()
         {
             _playing.SetActive(false);
-            _gameOver.gameObject.SetActive(true);
+            _gameOver.Show();
         }
 
         public void LevelUP()
         {
             _lvUp.LevelUP();
+        }
+        public void AcquireSecond()
+        {
+            // 정면
+            _lvUp.AcquireNew(2);
+            SkillManager.I.AcquireNew(hasT: true);
+            SkillManager.I.SetSkill(SkillManager.I._skList[1], rch: 20.0f, cool: 2.0f, dmg: 1);
+        }
+        public void AcquireThird()
+        {
+            // 무작위
+            _lvUp.AcquireNew(3);
+            SkillManager.I.AcquireNew();
         }
     }
 }

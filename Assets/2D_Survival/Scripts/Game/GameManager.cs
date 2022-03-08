@@ -33,6 +33,8 @@ namespace SV
         public float _elapsed = 0.0f;
         public float _elapsed2 = 0.0f;
 
+        public int _kills;
+
         private void Awake()
         {
             I = this;
@@ -43,7 +45,7 @@ namespace SV
             _walker = Resources.Load("Walker") as GameObject;
 
             CreatePoolObject(_walker, 50);
-            CreatePoolObject(_skill, 50);
+            CreatePoolObject(_skill, 100);
 
             UIManager.I.Init();
             SkillManager.I.Init();
@@ -86,7 +88,7 @@ namespace SV
             if (pf.name.Equals("Skill"))
             {
                 pool = _poolSkill;
-                parent = transform.Find("Pool").Find("Skills");
+                parent = transform.Find("Pool").Find("Skills").Find("Projectile");
             }
             else if (pf.name.Equals("Walker"))
             {

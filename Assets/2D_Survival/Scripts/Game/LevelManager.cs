@@ -11,9 +11,11 @@ namespace SV
 
         public Expbar _expB;
 
-        [SerializeField]int _lv = 1;
+        [SerializeField] int _lv = 1;
         [SerializeField] int _exp;
         [SerializeField] int _expNeed;
+
+        public int Level { get { return _lv; } }
 
         public AnimationCurve _curve;
         int _lvMax = 200;
@@ -75,7 +77,19 @@ namespace SV
         {
             int exceed = _exp - _expNeed;
             Time.timeScale = 0;
-            UIManager.I.LevelUP();
+
+            if (_lv == 20)
+            {
+                UIManager.I.AcquireThird();
+            }
+            else if (_lv == 5)
+            {
+                UIManager.I.AcquireSecond();
+            }
+            else
+            {
+                UIManager.I.LevelUP();
+            }
 
             _lv++;
             _exp = exceed;

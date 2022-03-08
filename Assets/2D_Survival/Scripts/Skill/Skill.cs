@@ -12,6 +12,7 @@ namespace SV
 
         PlayerSkill _ps;
         Player _player;
+        SpriteRenderer _sprite;
 
         int _pierceCount = 0;
 
@@ -26,16 +27,26 @@ namespace SV
             _rgd = GetComponent<Rigidbody2D>();
             _ps = ps;
             _player = Player.I;
+            _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
 
             transform.position = ps._startPos;
 
             transform.localScale *= _ps._size;
+
+            if (_ps._index.Equals(1))
+            {
+                _sprite.color = new Color(255, 255, 255);
+            }
+            else if (_ps._index.Equals(2))
+            {
+                _sprite.color = new Color(255, 255, 255);
+            }
         }
 
-        public void Projectile(Vector3 dir)
+        public void Projectile()
         {
             gameObject.SetActive(true);
-            _rgd.AddForce(dir * _ps._speed * Time.fixedDeltaTime * TimeCor * Time.timeScale);
+            _rgd.AddForce(_ps._targerPos * _ps._speed * Time.fixedDeltaTime * TimeCor * Time.timeScale);
             _rgd.velocity = Vector2.zero;
 
             Invoke("EndUse", _ps._maintain);

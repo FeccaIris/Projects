@@ -34,7 +34,7 @@ namespace SV
                                 foreach(PlayerSkill k in SkillManager.I._skList)
                                 {
                                     k._dmg += 1;
-                                    k._size *= 1.15f;
+                                    k._size *= 1.1f;
                                 }
 
                                 _owner.CloseAll();

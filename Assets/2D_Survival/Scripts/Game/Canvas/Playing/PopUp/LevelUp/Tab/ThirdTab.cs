@@ -48,11 +48,14 @@ namespace SV
 
             if(_ps != null)
             {
+                if (_ps._hasTarget == true)
+                {
+                    cat.Add(Category.REACH);
+                }
                 if (_ps._isProjectile == true)
                 {
                     cat.Add(Category.PIERCE);
                     cat.Add(Category.SPEED);
-                    cat.Add(Category.REACH);
                 }
                 else
                 {

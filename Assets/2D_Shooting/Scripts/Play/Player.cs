@@ -8,9 +8,13 @@ namespace ss
     {
         public static Player I;
 
-        GameObject _unit;
-        SpriteRenderer _body;
-        SpriteRenderer _sword;
+        GameObject _body;
+        GameObject _sword;
+
+        SpriteRenderer _body_sp;
+        SpriteRenderer _sword_sp;
+
+        bool _flip = false;
 
         void Awake()
         {
@@ -18,9 +22,13 @@ namespace ss
         }
         public void Init()
         {
-            _unit = transform.Find("Unit").gameObject;
-            _body = _unit.GetComponent<SpriteRenderer>();
-            _sword = _body.transform.Find("Sword").GetComponent<SpriteRenderer>();
+            _body = transform.Find("Body").gameObject;
+            _sword = transform.Find("Sword").gameObject;
+
+            _body_sp = _body.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            _sword_sp = _sword.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+
+            _sword_sp.transform.position = new Vector3(1.275f, -0.4f, 0);
         }
         void FixedUpdate()
         {
@@ -29,20 +37,40 @@ namespace ss
 
             Vector3 look = (mPos - transform.position).normalized;
 
-            if(look.x < 0)
+            float z = Mathf.Atan2(look.y, look.x) * Mathf.Rad2Deg;
+            Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
+            _body.transform.rotation = Quaternion.Lerp(_body.transform.rotation, q, 1.0f);
+            _sword.transform.rotation = Quaternion.Lerp(_sword.transform.rotation, q, 1.0f);
+
+            if (look.x < 0)
             {
-                _body.flipY = true;
-                
+                if(_flip == false)
+                {
+                    _flip = true;
+
+                    Vector3 pos = _sword_sp.transform.localPosition;
+                    pos.y *= -1;
+                    _sword_sp.transform.localPosition = pos;
+
+                    _body_sp.flipY = true;
+                    _sword_sp.flipY = true;
+                }
             }
             else
             {
-                _body.flipY = false;
-                
+                if (_flip == true)
+                {
+                    _flip = false;
+
+                    Vector3 pos = _sword_sp.transform.localPosition;
+                    pos.y *= -1;
+                    _sword_sp.transform.localPosition = pos;
+
+                    _body_sp.flipY = false;
+                    _sword_sp.flipY = false;
+                }
             }
 
-            float z = Mathf.Atan2(look.y, look.x) * Mathf.Rad2Deg;
-            Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
-            _unit.transform.rotation = Quaternion.Lerp(_unit.transform.rotation, q, 1.0f);
         }
     }
 }

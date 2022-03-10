@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2394614287934820308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 10000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7584972097698671204}
@@ -85,9 +85,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pause: 0
   _rgd: {fileID: 0}
+  _sprite: {fileID: 0}
   _hp: 0
   _hpMax: 3
   _player: {fileID: 0}
+  _speed: 0
+  _size: 0
+  _hpTemp: 0
+  _exp: 0
+  _trace: 1
 --- !u!1 &7240106640381967409
 GameObject:
   m_ObjectHideFlags: 0

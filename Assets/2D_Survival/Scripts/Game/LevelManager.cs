@@ -78,7 +78,7 @@ namespace SV
             int exceed = _exp - _expNeed;
             Time.timeScale = 0;
 
-            if (_lv == 20)
+            if (_lv == 10)
             {
                 UIManager.I.AcquireThird();
             }

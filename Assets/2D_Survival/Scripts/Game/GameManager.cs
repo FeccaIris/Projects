@@ -16,17 +16,21 @@ namespace SV
         
         public Queue<GameObject> _poolSkill = new Queue<GameObject>();
         public Queue<GameObject> _poolWalker = new Queue<GameObject>();
+        public Queue<GameObject> _poolCharger = new Queue<GameObject>();
 
         public GameObject _skill;
         public GameObject _walker;
+        public GameObject _charger;
 
         public List<Enemy> _enemies;
 
         public bool _playing = true;
 
-        float _spawnCool = 3.0f;
         float _spawnRange = 60.0f;
-        float _spawnEA = 1;
+        float _walkerCool = 3.0f;
+        float _chargerCool = 6.0f;
+        float _walkerEA = 1;
+        float _chargerEA = 1;
         float _enemyHpDeltaT;
         
         public float _gameTime = 0.0f;
@@ -43,9 +47,11 @@ namespace SV
         {
             _skill = Resources.Load("Skill") as GameObject;
             _walker = Resources.Load("Walker") as GameObject;
+            _charger = Resources.Load("Charger") as GameObject;
 
             CreatePoolObject(_walker, 50);
             CreatePoolObject(_skill, 100);
+            CreatePoolObject(_charger, 50);
 
             UIManager.I.Init();
             SkillManager.I.Init();
@@ -53,6 +59,7 @@ namespace SV
             Player.I.Init();
 
             StartCoroutine(SpawnWalker());
+            StartCoroutine(SpawnCharger());
         }
         private void FixedUpdate()
         {
@@ -64,9 +71,9 @@ namespace SV
                 if (_elapsed >= 20.0f)
                 {
                     _elapsed = 0;
-                    _spawnEA *= 2;
+                    _walkerEA *= 2;
                 }
-                if (_elapsed2 >= 60.0f)
+                if (_elapsed2 >= 10.0f)
                 {
                     _elapsed2 = 0;
                     _enemyHpDeltaT++;
@@ -94,6 +101,11 @@ namespace SV
             {
                 pool = _poolWalker;
                 parent = transform.Find("Pool").Find("Enemies").Find("Walker");
+            }
+            else if (pf.name.Equals("Charger"))
+            {
+                pool = _poolCharger;
+                parent = transform.Find("Pool").Find("Enemies").Find("Charger");
             }
 
             for (int i = 0; i < ea; i++)
@@ -123,6 +135,10 @@ namespace SV
             {
                 pool = _poolWalker;
             }
+            else if (pf.name.Equals("Charger"))
+            {
+                pool = _poolCharger;
+            }
 
             if (pool != null)
             {
@@ -148,6 +164,10 @@ namespace SV
             {
                 pool = _poolWalker;
             }
+            else if (pf.name.Equals("Charger"))
+            {
+                pool = _poolCharger;
+            }
 
             if (pool != null)
                 pool.Enqueue(pf);
@@ -157,16 +177,14 @@ namespace SV
         {
             while (_playing)
             {
-                yield return null;
-                if (_enemies.Count >= 80)
-                    continue;
+                if (_enemies.Count >= 200)
+                    yield return new WaitUntil(() => _enemies.Count <= 200);
 
-                yield return new WaitForSeconds(_spawnCool);
+                yield return new WaitForSeconds(_walkerCool);
 
-                if (_enemies.Count >= 50)
-                    yield return null;
-                
-                for (int i = 0; i < _spawnEA; i++)
+                Vector2 random = new Vector2();
+
+                for (int i = 0; i < _walkerEA; i++)
                 {
                     yield return new WaitUntil(() => Time.timeScale > 0);
 
@@ -179,21 +197,109 @@ namespace SV
                         _enemies.Add(e);
                         Vector2 pos = Player.I.transform.position;
 
-                        List<Vector2> list = new List<Vector2>();
-
-                        Vector2 random = Random.insideUnitCircle * _spawnRange;
+                        while (true)
+                        {
+                            Vector2 t = Random.insideUnitCircle * _spawnRange;
+                            if(random != t)
+                            {
+                                random = t;
+                                break;
+                            }
+                        }
 
                         if (random.x >= 0)
-                            random.x = Mathf.Max(random.x, _spawnRange / 2);
+                            random.x = Mathf.Max(random.x, random.x + _spawnRange / 2);
                         else
-                            random.x = Mathf.Min(random.x, -_spawnRange / 2);
+                            random.x = Mathf.Min(random.x, random.x + -_spawnRange / 2);
                         if (random.y >= 0)
-                            random.y = Mathf.Max(random.y, _spawnRange / 2);
+                            random.y = Mathf.Max(random.y, random.y + _spawnRange / 2);
                         else
-                            random.y = Mathf.Min(random.y, -_spawnRange / 2);
+                            random.y = Mathf.Min(random.y, random.y + - _spawnRange / 2);
 
                         go.transform.position = pos + random;
                         go.SetActive(true);
+                    }
+                }
+            }
+        }
+        IEnumerator SpawnCharger()
+        {
+            while (_playing)
+            {
+                yield return new WaitUntil(() => _gameTime >= 20.0f);
+
+                if (_enemies.Count >= 200)
+                    yield return new WaitUntil(() => _enemies.Count <= 200);
+
+                yield return new WaitForSeconds(_chargerCool);
+
+                for (int i = 0; i < _chargerEA; i++)
+                {
+                    yield return new WaitUntil(() => Time.timeScale > 0);
+
+                    if (Player.I != null)
+                    {
+                        Vector2 r = new Vector2();
+                        for (int j = 0; j < 4; j++)
+                        {
+                            GameObject go = GetPoolObject(_charger);
+
+                            Enemy e = go.GetComponent<Enemy>();
+                            e.Init(_enemyHpDeltaT);
+                            _enemies.Add(e);
+                            Vector2 pos = Player.I.transform.position;
+
+                            Vector2 sPos = new Vector2();
+
+                            while (true)
+                            {
+                                Vector2 t = Random.insideUnitCircle;
+                                if( r != t)
+                                {
+                                    r = t;
+                                    break;
+                                }
+                                yield return null;
+                            }
+
+                            if (r.x >= 0)
+                                r.x = Mathf.Max(r.x, 2);
+                            else
+                                r.x = Mathf.Min(r.x, -2);
+                            if (r.y >= 0)
+                                r.y = Mathf.Max(r.y, 2);
+                            else
+                                r.y = Mathf.Min(r.y, -2);
+
+                            r *= 5;
+                            switch (j)
+                            {
+                                case 0:
+                                    {
+                                        sPos = new Vector2(0, 50) + r;
+                                        break;
+                                    }
+                                case 1:
+                                    {
+                                        sPos = new Vector2(0, -50) + r;
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        sPos = new Vector2(80, 0) + r;
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        sPos = new Vector2(-80, 0) + r;
+                                        break;
+                                    }
+                            }
+
+                            go.transform.position = pos + sPos;
+
+                            go.SetActive(true);
+                        }
                     }
                 }
             }

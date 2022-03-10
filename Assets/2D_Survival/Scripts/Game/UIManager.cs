@@ -17,6 +17,13 @@ namespace SV
         public Expbar _expB;
         public Text _gameTime;
 
+        public GameObject _icon_1;
+        public Text _lv_1;
+        public GameObject _icon_2;
+        public Text _lv_2;
+        public GameObject _icon_3;
+        public Text _lv_3;
+
         public LevelUp _lvUp;
 
 
@@ -37,6 +44,21 @@ namespace SV
             _hpB = play.Find("UI").Find("Hpbar").GetComponent<Hpbar>();
             _expB = play.Find("UI").Find("Expbar").GetComponent<Expbar>();
             _gameTime = play.Find("UI").Find("GameTime").GetComponent<Text>();
+
+            _icon_1 = play.Find("UI").Find("1").gameObject;
+            _icon_2 = play.Find("UI").Find("2").gameObject;
+            _icon_3 = play.Find("UI").Find("3").gameObject;
+
+            _icon_2.SetActive(false);
+            _icon_3.SetActive(false);
+
+            _lv_1 = _icon_1.transform.Find("Text").GetComponent<Text>();
+            _lv_2 = _icon_2.transform.Find("Text").GetComponent<Text>();
+            _lv_3 = _icon_3.transform.Find("Text").GetComponent<Text>();
+
+            _lv_1.text = "LV.1";
+            _lv_2.text = "LV.1";
+            _lv_3.text = "LV.1";
 
             _lvUp = play.Find("PopUp").Find("LevelUp").GetComponent<LevelUp>();
             
@@ -73,16 +95,18 @@ namespace SV
         public void AcquireSecond()
         {
             // 정면
+            _icon_2.SetActive(true);
             _lvUp.AcquireNew(2);
-            SkillManager.I.AcquireNew(hasT: true);
-            SkillManager.I.SetSkill(SkillManager.I._skList[1], rch: 20.0f, cool: 2.0f, dmg: 1);
+            SkillManager.I.AcquireNew(hasT: false);
+            SkillManager.I.SetSkill(SkillManager.I._skList[1], ea: 6, rch: 20.0f, cool: 2.0f, dmg: 4, interval: 0.1f, size: 5, pierce: 20, spd: 150.0f);
         }
         public void AcquireThird()
         {
             // 무작위
+            _icon_3.SetActive(true);
             _lvUp.AcquireNew(3);
             SkillManager.I.AcquireNew(hasT: false);
-            SkillManager.I.SetSkill(SkillManager.I._skList[2]);
+            SkillManager.I.SetSkill(SkillManager.I._skList[2], ea: 10, dmg: 2, interval: 0.05f, spd: 200.0f, size: 1.5f);
         }
     }
 }

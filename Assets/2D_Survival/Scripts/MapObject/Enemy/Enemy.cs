@@ -9,28 +9,37 @@ namespace SV
     {
         public Transform _player;
 
-        float _speed;
-        float _size;
-        int _exp;
-        [SerializeField] float _hpTemp;
+        public float _speed;
+        public float _size;
+        public float _hpTemp;
+        public int _exp;
 
+        public bool _trace = true;
+
+        protected override void Start()
+        {
+            _rgd = GetComponent<Rigidbody2D>();
+            _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            Init();
+        }
         public virtual void Init(float delta = 0)
         {
             _hpTemp = _hpMax;
             _hpTemp += delta;
+            // 체력 보정
 
             _speed = 0.3f;
             _size = 1;
             _exp = 1;
 
-            transform.localScale = Vector3.one;
+            transform.localScale = Vector3.one; 
+            // 초기화
 
             if (Player.I != null)
                 _player = Player.I.transform;
 
             _size = Random.Range(0.5f, 2.0f);
             transform.localScale *= _size;
-
             if (_size > 1.5f)
                 _hpTemp += 2;
             else if (_size > 1.2f)
@@ -39,39 +48,29 @@ namespace SV
                 _hpTemp -= 2;
             else if (_size < 1.0f)
                 _hpTemp -= 1;
-
             _hp = _hpTemp;
+            // 크기 무작위 설정
 
             _exp += (int)_hpTemp / 5;
-
-            float reverse = 1 / _size;
-            reverse = reverse < 0.9f ? 0.9f : reverse;
-            _speed *= reverse;
         }
-        protected override void Start()
-        {
-            _rgd = GetComponent<Rigidbody2D>();
-            _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            Init();
-        }
-        void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             if (_player != null)
-                transform.position += (_player.position - transform.position).normalized * _speed;
+            {
+                if (_trace == true)
+                    transform.position += (_player.position - transform.position).normalized * _speed;
+            }
         }
 
         public override void Damaged(int dmg)
         {
-            StartCoroutine(Hit());
-
             base.Damaged(dmg);
         }
         IEnumerator Hit()
         {
-            Color c = _sprite.color;
             _sprite.color = Color.white;
             yield return new WaitForSeconds(0.1f);
-            _sprite.color = c;
+            _sprite.color = Color.black;
         }
         protected override void Die()
         {

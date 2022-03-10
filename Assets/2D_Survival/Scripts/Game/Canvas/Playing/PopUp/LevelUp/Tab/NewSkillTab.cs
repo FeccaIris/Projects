@@ -29,13 +29,13 @@ namespace SV
         {
             if(id == 2)
             {
-                _name.text = "자동 사격";
-                _desc.text = "가장 가까운 적을 향해 사격합니다.";
+                _name.text = "돌파 사격";
+                _desc.text = "정면을 향해 사격합니다.\n투사체가 모든 적을 관통합니다.";
                 gameObject.SetActive(true);
             }
             else if(id == 3)
             {
-                _name.text = "난사";
+                _name.text = "무차별 사격";
                 _desc.text = "다수의 탄환을 무작위 방향으로 사격합니다.";
                 gameObject.SetActive(true);
             }

@@ -44,7 +44,7 @@ namespace SV
         public void ReadyForRF(PlayerSkill ps)
         {
             _ps = ps;
-            List<Category> cat = new List<Category> { Category.DAMAGE, Category.COOL, Category.EA, Category.MAINTAIN };
+            List<Category> cat = new List<Category> { Category.COOL, Category.EA, Category.MAINTAIN };
 
             if(_ps != null)
             {

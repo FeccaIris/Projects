@@ -24,7 +24,9 @@ namespace SV
 
         public virtual void Damaged(int dmg)
         {
-            StartCoroutine(Hit());
+            if (gameObject.activeSelf != false)
+                StartCoroutine(Hit());
+
             _hp -= dmg;
             if(_hp <= 0)
             {
@@ -39,7 +41,6 @@ namespace SV
         }
         protected virtual void Die()
         {
-            _sprite.color = Color.white;
             Destroy(gameObject);
         }
 

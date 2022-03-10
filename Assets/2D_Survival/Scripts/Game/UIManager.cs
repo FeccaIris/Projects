@@ -81,7 +81,8 @@ namespace SV
         {
             // ¹«ÀÛÀ§
             _lvUp.AcquireNew(3);
-            SkillManager.I.AcquireNew();
+            SkillManager.I.AcquireNew(hasT: false);
+            SkillManager.I.SetSkill(SkillManager.I._skList[2]);
         }
     }
 }

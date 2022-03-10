@@ -144,7 +144,7 @@ namespace SV
             PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, mv: mv, hasT: hasT,
                                              stay: stay, mt: mt, mtH: mtH, rdP: rdP);
             _skList.Add(ps);
-            SetSkill(ps, size: 2.0f);
+            SetSkill(ps, size: 2.0f, mntn: 3.0f, spd: 150.0f);
 
             UIManager.I._lvUp.SetIndex(_skList);
         }
@@ -181,6 +181,8 @@ namespace SV
 
         IEnumerator Projectile(PlayerSkill ps)
         {
+            // 코루틴 추가 생성 => 스킬 발동과 동시에 쿨타임 발생
+
             while (true)
             {
                 yield return new WaitForSeconds(ps._cool);

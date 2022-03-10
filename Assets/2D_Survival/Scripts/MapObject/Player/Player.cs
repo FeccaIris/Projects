@@ -8,8 +8,8 @@ namespace SV
     {
         public static Player I;
 
-        public GameObject _unit;
-        public GameObject _unit_f;
+        public GameObject _spriteObj;
+        public GameObject _forwardObj;
 
         public Transform _target;
 
@@ -35,12 +35,12 @@ namespace SV
         {
             base.Start();
 
-            _unit = transform.Find("Unit").gameObject;
-            _unit_f = _unit.transform.Find("Forward").gameObject;
+            _spriteObj = transform.Find("Sprite").gameObject;
+            _forwardObj = _spriteObj.transform.Find("Forward").gameObject;
         }
         void FixedUpdate()
         {
-            _forward = (_unit_f.transform.position - transform.position).normalized;
+            _forward = (_forwardObj.transform.position - transform.position).normalized;
 
             if (_target != null)
             {
@@ -52,6 +52,20 @@ namespace SV
 
             if(_target != null)
                 _distance = Vector3.Distance(transform.position, _target.position);
+        }
+        private void OnCollisionExit2D(Collision2D col)
+        {
+            if (col.gameObject.tag.Equals("Enemy"))
+            {
+                //_sprite.color = Color.black;
+            }
+        }
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            if (col.gameObject.tag.Equals("Enemy"))
+            {
+                //_sprite.color = Color.white;
+            }
         }
         private void OnCollisionStay2D(Collision2D col)
         {

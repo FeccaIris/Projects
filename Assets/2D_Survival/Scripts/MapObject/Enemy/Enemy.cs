@@ -12,9 +12,9 @@ namespace SV
         float _speed;
         float _size;
         int _exp;
-        [SerializeField] int _hpTemp;
+        [SerializeField] float _hpTemp;
 
-        public void Init(int delta = 0)
+        public virtual void Init(float delta = 0)
         {
             _hpTemp = _hpMax;
             _hpTemp += delta;
@@ -42,7 +42,7 @@ namespace SV
 
             _hp = _hpTemp;
 
-            _exp += _hpTemp / 5;
+            _exp += (int)_hpTemp / 5;
 
             float reverse = 1 / _size;
             reverse = reverse < 0.9f ? 0.9f : reverse;
@@ -51,6 +51,7 @@ namespace SV
         protected override void Start()
         {
             _rgd = GetComponent<Rigidbody2D>();
+            _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             Init();
         }
         void FixedUpdate()
@@ -59,6 +60,19 @@ namespace SV
                 transform.position += (_player.position - transform.position).normalized * _speed;
         }
 
+        public override void Damaged(int dmg)
+        {
+            StartCoroutine(Hit());
+
+            base.Damaged(dmg);
+        }
+        IEnumerator Hit()
+        {
+            Color c = _sprite.color;
+            _sprite.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+            _sprite.color = c;
+        }
         protected override void Die()
         {
             GameManager.I._kills++;

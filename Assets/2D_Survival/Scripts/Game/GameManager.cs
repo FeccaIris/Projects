@@ -27,7 +27,7 @@ namespace SV
         float _spawnCool = 3.0f;
         float _spawnRange = 60.0f;
         float _spawnEA = 1;
-        int _enemyHpDeltaT;
+        float _enemyHpDeltaT;
         
         public float _gameTime = 0.0f;
         public float _elapsed = 0.0f;
@@ -52,7 +52,7 @@ namespace SV
             LevelManager.I.Init();
             Player.I.Init();
 
-            StartCoroutine(SpawnEnemy());
+            StartCoroutine(SpawnWalker());
         }
         private void FixedUpdate()
         {
@@ -64,7 +64,7 @@ namespace SV
                 if (_elapsed >= 20.0f)
                 {
                     _elapsed = 0;
-                    _spawnEA++;
+                    _spawnEA *= 2;
                 }
                 if (_elapsed2 >= 60.0f)
                 {
@@ -88,7 +88,7 @@ namespace SV
             if (pf.name.Equals("Skill"))
             {
                 pool = _poolSkill;
-                parent = transform.Find("Pool").Find("Skills").Find("Projectile");
+                parent = transform.Find("Pool").Find("Skills");
             }
             else if (pf.name.Equals("Walker"))
             {
@@ -153,7 +153,7 @@ namespace SV
                 pool.Enqueue(pf);
         }
 
-        IEnumerator SpawnEnemy()
+        IEnumerator SpawnWalker()
         {
             while (_playing)
             {
@@ -178,6 +178,9 @@ namespace SV
                         e.Init(_enemyHpDeltaT);
                         _enemies.Add(e);
                         Vector2 pos = Player.I.transform.position;
+
+                        List<Vector2> list = new List<Vector2>();
+
                         Vector2 random = Random.insideUnitCircle * _spawnRange;
 
                         if (random.x >= 0)

@@ -49,7 +49,7 @@ namespace SV
                     look = (look.magnitude > 1.0f) ? look.normalized : look;
                     float z = Mathf.Atan2(look.y, look.x) * Mathf.Rad2Deg;
                     Quaternion q = Quaternion.AngleAxis(z - 90, Vector3.forward);
-                    _player._unit.transform.rotation = Quaternion.Lerp(_player._unit.transform.rotation, q, 0.5f);
+                    _player._spriteObj.transform.rotation = Quaternion.Lerp(_player._spriteObj.transform.rotation, q, 0.5f);
                 }
 
                 if (_direction.magnitude != 0.0f)
@@ -71,7 +71,7 @@ namespace SV
                 look = (look.magnitude > 1.0f) ? look.normalized : look;
                 float z = Mathf.Atan2(look.y, look.x) * Mathf.Rad2Deg;
                 Quaternion q = Quaternion.AngleAxis(z - 90, Vector3.forward);
-                _player._unit.transform.rotation = Quaternion.Lerp(_player._unit.transform.rotation, q, 0.5f);
+                _player._spriteObj.transform.rotation = Quaternion.Lerp(_player._spriteObj.transform.rotation, q, 0.5f);
             }
         }
     }

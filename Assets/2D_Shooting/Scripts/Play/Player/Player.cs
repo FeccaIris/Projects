@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 namespace ss
 {
     public class Player : MonoBehaviour
     {
         public static Player I;
+
+        Rigidbody2D _rgd;
 
         GameObject _body;
         GameObject _sword;
@@ -22,6 +25,8 @@ namespace ss
         }
         public void Init()
         {
+            _rgd = GetComponent<Rigidbody2D>();
+
             _body = transform.Find("Body").gameObject;
             _sword = transform.Find("Sword").gameObject;
 
@@ -71,6 +76,14 @@ namespace ss
                 }
             }
 
+            if (Input.GetMouseButton(0))
+            {
+                _rgd.AddForce(look * 10.0f);
+            }
+            if (Input.GetKey(KeyCode.C))
+            {
+                _rgd.velocity *= 0.97f;
+            }
         }
     }
 }

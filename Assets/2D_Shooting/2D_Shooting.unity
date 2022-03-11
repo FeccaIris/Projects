@@ -2219,6 +2219,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f8fdebb4911d64f9866379c11ff93d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sword_sp: {fileID: 0}
+  _sword_anim: {fileID: 0}
+  _offset_idle: {x: 1.275, y: -0.4, z: 0}
+  _offset_move: {x: 2.334, y: -0.901, z: 0}
+  _flip: 0
 --- !u!50 &340261893
 Rigidbody2D:
   serializedVersion: 4
@@ -7523,7 +7528,7 @@ Animator:
   m_GameObject: {fileID: 1365699994}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 68902a18523349846b5d3c076889eb6f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3292a05ed37eaaf408f6e8b4ebb0a579, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

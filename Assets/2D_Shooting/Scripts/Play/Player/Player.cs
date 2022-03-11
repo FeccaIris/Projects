@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.CrossPlatformInput;
+
 
 namespace ss
 {
@@ -10,14 +10,24 @@ namespace ss
         public static Player I;
 
         Rigidbody2D _rgd;
+        Camera _cam;
 
+        #region Child
         GameObject _body;
-        GameObject _sword;
-
         SpriteRenderer _body_sp;
-        SpriteRenderer _sword_sp;
+        Animator _body_anim;
 
-        bool _flip = false;
+        GameObject _sword;
+        public SpriteRenderer _sword_sp;
+        public Animator _sword_anim;
+        #endregion
+
+        public Vector3 _offset_idle = new Vector3(1.275f, -0.4f, 0);
+        public Vector3 _offset_move = new Vector3(2.334f, -0.901f, 0);
+
+        public bool _flip = false;
+
+        float _maxSpd = 800.0f;
 
         void Awake()
         {
@@ -26,17 +36,48 @@ namespace ss
         public void Init()
         {
             _rgd = GetComponent<Rigidbody2D>();
+            _cam = Camera.main;
 
             _body = transform.Find("Body").gameObject;
-            _sword = transform.Find("Sword").gameObject;
-
             _body_sp = _body.transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            _sword_sp = _sword.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            _body_anim = _body_sp.GetComponent<Animator>();
 
-            _sword_sp.transform.position = new Vector3(1.275f, -0.4f, 0);
+            _sword = transform.Find("Sword").gameObject;
+            _sword_sp = _sword.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            _sword_anim = _sword_sp.GetComponent<Animator>();
+
+            _sword_sp.transform.localPosition = new Vector3(1.275f, -0.4f, 0);
         }
         void FixedUpdate()
         {
+            #region Limit Speed
+            if (_rgd.velocity.x > _maxSpd)
+            {
+                Vector2 vel = _rgd.velocity;
+                vel.x = _maxSpd;
+                _rgd.velocity = vel;
+            }
+            if (_rgd.velocity.x < -_maxSpd)
+            {
+                Vector2 vel = _rgd.velocity;
+                vel.x = -_maxSpd;
+                _rgd.velocity = vel;
+            }
+            if (_rgd.velocity.y > _maxSpd)
+            {
+                Vector2 vel = _rgd.velocity;
+                vel.y = _maxSpd;
+                _rgd.velocity = vel;
+            }
+            if (_rgd.velocity.x < -_maxSpd)
+            {
+                Vector2 vel = _rgd.velocity;
+                vel.y = -_maxSpd;
+                _rgd.velocity = vel;
+            }
+            #endregion
+
+            #region Look at mouse
             Vector3 mPos = Input.mousePosition;
             mPos = Camera.main.ScreenToWorldPoint(mPos);
 
@@ -75,13 +116,25 @@ namespace ss
                     _sword_sp.flipY = false;
                 }
             }
+            #endregion
 
             if (Input.GetMouseButton(0))
             {
-                _rgd.AddForce(look * 10.0f);
+                _rgd.AddForce(look * 100.0f);
+                if(_body_anim.GetBool("Move") != true)
+                    _body_anim.SetBool("Move", true);
+                if (_sword_anim.GetBool("Move") != true)
+                    _sword_anim.SetBool("Move", true);
+            }
+            else
+            {
+                _body_anim.SetBool("Move", false);
+                _sword_anim.SetBool("Move", false);
             }
             if (Input.GetKey(KeyCode.C))
             {
+                _body_anim.SetBool("Move", false);
+                _sword_anim.SetBool("Move", false);
                 _rgd.velocity *= 0.97f;
             }
         }

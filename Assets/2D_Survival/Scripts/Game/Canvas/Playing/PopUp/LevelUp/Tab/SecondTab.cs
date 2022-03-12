@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SV
 {
@@ -36,7 +37,19 @@ namespace SV
             for(int i = 0; i < list.Count; i++)
             {
                 _buttons[i]._ps = list[i];
+
+                UpdateButtonLevel();
+
                 _buttons[i].gameObject.SetActive(true);
+            }
+        }
+
+        public void UpdateButtonLevel()
+        {
+            foreach(Button_LevelUp b in _buttons)
+            {
+                Text t = b.transform.Find("Image").Find("Level").GetComponent<Text>();
+                t.text = $"Lv.{b._ps._level}";
             }
         }
     }

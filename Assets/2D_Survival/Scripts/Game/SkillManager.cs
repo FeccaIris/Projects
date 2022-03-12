@@ -8,12 +8,11 @@ namespace SV
     [System.Serializable]
     public class PlayerSkill
     {
-        #region Member
         public Player _player;
 
         public int _index;
-
         public int _level = 1;
+
         public int _dmg = 1;
         public float _size = 1.0f;
 
@@ -45,11 +44,10 @@ namespace SV
         public float _interval = 1.0f;
         #endregion
 
-        #endregion
-
         public void SkillReinforce(Category cat)
         {
             _level++;
+            UIManager.I.UpdateIconLevel(_index, _level);
             switch (cat)
             {
                 case Category.COOL:

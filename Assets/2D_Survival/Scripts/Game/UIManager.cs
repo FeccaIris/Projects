@@ -24,6 +24,8 @@ namespace SV
         public GameObject _icon_3;
         public Text _lv_3;
 
+        List<Text> _lvList = new List<Text>();
+
         public LevelUp _lvUp;
 
 
@@ -56,9 +58,12 @@ namespace SV
             _lv_2 = _icon_2.transform.Find("Text").GetComponent<Text>();
             _lv_3 = _icon_3.transform.Find("Text").GetComponent<Text>();
 
-            _lv_1.text = "LV.1";
-            _lv_2.text = "LV.1";
-            _lv_3.text = "LV.1";
+            _lv_1.text = "Lv.1";
+            _lv_2.text = "Lv.1";
+            _lv_3.text = "Lv.1";
+
+            Text[] arr = { _lv_1, _lv_2, _lv_3 };
+            _lvList.AddRange(arr);
 
             _lvUp = play.Find("PopUp").Find("LevelUp").GetComponent<LevelUp>();
             
@@ -107,6 +112,11 @@ namespace SV
             _lvUp.AcquireNew(3);
             SkillManager.I.AcquireNew(hasT: false);
             SkillManager.I.SetSkill(SkillManager.I._skList[2], ea: 10, dmg: 2, interval: 0.05f, spd: 200.0f, size: 1.5f);
+        }
+
+        public void UpdateIconLevel(int id, int level)
+        {
+            _lvList[id].text = $"Lv.{level}";
         }
     }
 }

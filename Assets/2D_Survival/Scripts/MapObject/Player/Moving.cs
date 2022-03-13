@@ -15,6 +15,7 @@ namespace SV
         bool _moveOn = true;
 
         Vector3 _direction;
+        Vector3 _look;
         float _moveSpeed = 0.5f;
 
         void Start()
@@ -27,27 +28,33 @@ namespace SV
         {
             _rgd.velocity = Vector2.zero;
 
+            float h = CrossPlatformInputManager.GetAxis("Horizontal");
+            float v = CrossPlatformInputManager.GetAxis("Vertical");
+
+            if (h != 0 || v != 0)
             {
-                float h = CrossPlatformInputManager.GetAxis("Horizontal");
-                float v = CrossPlatformInputManager.GetAxis("Vertical");
-
-                if (h != 0 || v != 0)
+                if (_moveOn == true)
                 {
-                    if (_moveOn == true)
-                        Move(h, v);
+                    //Move(h, v);
+                    _direction = new Vector3(h, v, 0).normalized;
                 }
-            }   // 키보드
-
-            _direction = _joystick.GetDirection();
-            Vector3 look = _direction;
-            _direction *= _moveSpeed * Time.timeScale;
+            }
+            else
+            {
+                _direction = _joystick.GetDirection();      // 조이스틱 방향 받아옴
+                //_look = _direction;
+                //_direction *= _moveSpeed * Time.timeScale;
+            }
 
             if (_moveOn == true)
             {
-                if (look != Vector3.zero)
+                _look = _direction;
+                _direction *= _moveSpeed * Time.timeScale;
+
+                if (_look != Vector3.zero)
                 {
-                    look = (look.magnitude > 1.0f) ? look.normalized : look;
-                    float z = Mathf.Atan2(look.y, look.x) * Mathf.Rad2Deg;
+                    _look = (_look.magnitude > 1.0f) ? _look.normalized : _look;
+                    float z = Mathf.Atan2(_look.y, _look.x) * Mathf.Rad2Deg;
                     Quaternion q = Quaternion.AngleAxis(z - 90, Vector3.forward);
                     _player._spriteObj.transform.rotation = Quaternion.Lerp(_player._spriteObj.transform.rotation, q, 0.5f);
                 }

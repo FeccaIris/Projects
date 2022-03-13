@@ -7,7 +7,6 @@ namespace SV
 {
     public enum Category
     {
-        DAMAGE,
         COOL,
         EA,
         MAINTAIN,
@@ -16,7 +15,6 @@ namespace SV
         PIERCE,
         INTERVAL,
     }
-
 
     public class ThirdTab : LevelUpPU
     {
@@ -45,7 +43,7 @@ namespace SV
         public void ReadyForRF(PlayerSkill ps)
         {
             _ps = ps;
-            List<Category> cat = new List<Category> { Category.COOL, Category.EA, Category.MAINTAIN };
+            List<Category> cat = new List<Category> { Category.COOL, Category.EA};
 
             if(_ps != null)
             {
@@ -89,7 +87,45 @@ namespace SV
                 _buttons[i]._cat = list[i];
 
                 Text t = _buttons[i].transform.Find("Text").GetComponent<Text>();
-                t.text = list[i].ToString();
+                //t.text = list[i].ToString();
+                switch (list[i])
+                {
+                    case Category.COOL:
+                        {
+                            t.text = "쿨타임 감소";
+                            break;
+                        }
+                    case Category.EA:
+                        {
+                            t.text = "개수 증가";
+                            break;
+                        }
+                    case Category.INTERVAL:
+                        {
+                            t.text = "피해간격 감소";
+                            break;
+                        }
+                    case Category.MAINTAIN:
+                        {
+                            t.text = "유지시간 증가";
+                            break;
+                        }
+                    case Category.PIERCE:
+                        {
+                            t.text = "관통력 증가";
+                            break;
+                        }
+                    case Category.REACH:
+                        {
+                            t.text = "사거리 증가";
+                            break;
+                        }
+                    case Category.SPEED:
+                        {
+                            t.text = "속도 증가";
+                            break;
+                        }
+                }
             }
 
         }

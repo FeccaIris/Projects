@@ -46,7 +46,7 @@ namespace SV
         public void Projectile()
         {
             gameObject.SetActive(true);
-            _rgd.AddForce(_ps._targerPos * _ps._speed * Time.fixedDeltaTime * TimeCor * Time.timeScale);
+            _rgd.AddForce(_ps._targerPos * _ps._speed * Time.fixedDeltaTime * TimeCor);
             _rgd.velocity = Vector2.zero;
 
             Invoke("EndUse", _ps._maintain);

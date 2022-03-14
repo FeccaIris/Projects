@@ -50,6 +50,11 @@ namespace SV
             UIManager.I.UpdateIconLevel(_index, _level);
             switch (cat)
             {
+                case Category.DAMAGE:
+                    {
+                        _dmg += 1;
+                        break;
+                    }
                 case Category.COOL:
                     {
                         _cool *= 0.9f;
@@ -57,7 +62,10 @@ namespace SV
                     }
                 case Category.EA:
                     {
-                        _ea += 1;
+                        if (_index == 0)
+                            _ea += 1;
+                        else
+                            _ea += 2;
                         break;
                     }
                 case Category.MAINTAIN:
@@ -142,7 +150,7 @@ namespace SV
             UIManager.I._lvUp.SetIndex(_skList);
         }
 
-        public void SetSkill(PlayerSkill ps, int dmg = 2, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
+        public void SetSkill(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
         {
             ps._dmg = dmg;
             ps._cool = cool;
@@ -178,8 +186,7 @@ namespace SV
 
             while (true)
             {
-                yield return new WaitForSeconds(ps._cool);
-
+                yield return null;
                 Vector3 rPos = Vector3.zero;
 
                 if (ps._hasTarget == true)
@@ -219,7 +226,9 @@ namespace SV
                     }
                 }
 
-                for (int i = 0; i < ps._ea; i++)
+                int ea = ps._ea;
+
+                for (int i = 0; i < ea; i++)
                 {
                     ps._startPos = transform.position;
                     if (ps._index == 1)
@@ -252,6 +261,7 @@ namespace SV
 
                     yield return new WaitForSeconds(ps._interval);
                 }
+                yield return new WaitForSeconds(ps._cool);
             }
         }
     }

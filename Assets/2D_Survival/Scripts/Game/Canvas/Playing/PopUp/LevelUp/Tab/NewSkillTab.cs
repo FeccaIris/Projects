@@ -29,7 +29,7 @@ namespace SV
         {
             if(id == 2)
             {
-                _name.text = "돌파 사격";
+                _name.text = "정면 사격";
                 _desc.text = "정면을 향해 사격합니다.\n투사체가 모든 적을 관통합니다.";
                 gameObject.SetActive(true);
             }

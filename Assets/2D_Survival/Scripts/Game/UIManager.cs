@@ -87,10 +87,10 @@ namespace SV
             }
         }
 
-        public void GameOver()
+        public void GameOver(bool clear = false)
         {
             _playing.SetActive(false);
-            _gameOver.Show();
+            _gameOver.Show(clear);
         }
 
         public void LevelUP()
@@ -103,7 +103,7 @@ namespace SV
             _icon_2.SetActive(true);
             _lvUp.AcquireNew(2);
             SkillManager.I.AcquireNew(hasT: false);
-            SkillManager.I.SetSkill(SkillManager.I._skList[1], ea: 6, rch: 20.0f, cool: 2.0f, dmg: 4, interval: 0.1f, size: 5, pierce: 20, spd: 150.0f);
+            SkillManager.I.SetSkill(SkillManager.I._skList[1], ea: 8, rch: 20.0f, cool: 2.0f, dmg: 3, interval: 0.1f, size: 5, pierce: 500, spd: 150.0f);
         }
         public void AcquireThird()
         {
@@ -111,7 +111,7 @@ namespace SV
             _icon_3.SetActive(true);
             _lvUp.AcquireNew(3);
             SkillManager.I.AcquireNew(hasT: false);
-            SkillManager.I.SetSkill(SkillManager.I._skList[2], ea: 10, dmg: 2, interval: 0.05f, spd: 200.0f, size: 1.5f);
+            SkillManager.I.SetSkill(SkillManager.I._skList[2], ea: 30, dmg: 10, interval: 0.05f, spd: 200.0f, size: 1.5f, cool: 4.0f);
         }
 
         public void UpdateIconLevel(int id, int level)

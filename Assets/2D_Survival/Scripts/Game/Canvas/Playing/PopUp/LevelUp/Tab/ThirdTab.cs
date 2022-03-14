@@ -7,6 +7,7 @@ namespace SV
 {
     public enum Category
     {
+        DAMAGE,
         COOL,
         EA,
         MAINTAIN,
@@ -43,7 +44,7 @@ namespace SV
         public void ReadyForRF(PlayerSkill ps)
         {
             _ps = ps;
-            List<Category> cat = new List<Category> { Category.COOL, Category.EA};
+            List<Category> cat = new List<Category> { Category.COOL, Category.EA, Category.DAMAGE};
 
             if(_ps != null)
             {
@@ -53,7 +54,8 @@ namespace SV
                 }
                 if (_ps._isProjectile == true)
                 {
-                    cat.Add(Category.PIERCE);
+                    if(_ps._index != 1)
+                        cat.Add(Category.PIERCE);
                     cat.Add(Category.SPEED);
                 }
                 else
@@ -90,6 +92,11 @@ namespace SV
                 //t.text = list[i].ToString();
                 switch (list[i])
                 {
+                    case Category.DAMAGE:
+                        {
+                            t.text = "공격력 증가";
+                            break;
+                        }
                     case Category.COOL:
                         {
                             t.text = "쿨타임 감소";

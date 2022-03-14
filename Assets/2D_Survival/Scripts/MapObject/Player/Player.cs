@@ -16,6 +16,7 @@ namespace SV
         public Vector3 _forward;
 
         public float _distance;
+        public bool _immune = false;
 
         Hpbar _hpB;
 
@@ -53,20 +54,6 @@ namespace SV
             if(_target != null)
                 _distance = Vector3.Distance(transform.position, _target.position);
         }
-        private void OnCollisionExit2D(Collision2D col)
-        {
-            if (col.gameObject.tag.Equals("Enemy"))
-            {
-                //_sprite.color = Color.black;
-            }
-        }
-        private void OnCollisionEnter2D(Collision2D col)
-        {
-            if (col.gameObject.tag.Equals("Enemy"))
-            {
-                //_sprite.color = Color.white;
-            }
-        }
         private void OnCollisionStay2D(Collision2D col)
         {
             if (col.gameObject.tag.Equals("Enemy"))
@@ -75,12 +62,30 @@ namespace SV
                 UpdateHp();
             }
         }
+        public override void Damaged(int dmg)
+        {
+            if(_immune == false)
+                base.Damaged(dmg);
+        }
         protected override void Die()
         {
             Destroy(_hpB.gameObject);
             base.Die();
             GameManager.I.GameOver();
         }
+        public void ImmuneFor(float time = 0.5f)
+        {
+            _sprite.color = Color.white;
+            _immune = true;
+
+            Invoke("Breakimmune", time);
+        }
+        public void Breakimmune()
+        {
+            _sprite.color = Color.black;
+            _immune = false;
+        }
+
 
         void UpdateHp()
         {

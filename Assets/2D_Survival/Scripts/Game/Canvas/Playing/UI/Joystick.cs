@@ -45,8 +45,8 @@ namespace SV
                 pos.y = pos.y / _bgImg.rectTransform.sizeDelta.y * 2;
 
                 _inputVector = new Vector3(pos.x, pos.y, 0);
-                _inputVector = _inputVector.normalized;         
-                //_inputVector = (_inputVector.magnitude > 1.0f) ? _inputVector.normalized : _inputVector;
+                //_inputVector = _inputVector.normalized;         
+                _inputVector = (_inputVector.magnitude > 1.0f) ? _inputVector.normalized : _inputVector;
 
                 float x = _inputVector.x * bg.sizeDelta.x * 0.4f;
                 float y = _inputVector.y * bg.sizeDelta.y * 0.4f;

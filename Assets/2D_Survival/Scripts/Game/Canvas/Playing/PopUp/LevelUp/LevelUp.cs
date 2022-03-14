@@ -31,7 +31,7 @@ namespace SV
         public void LevelUP()
         {
             OffAll();
-            _fistTab.gameObject.SetActive(true);
+            _secondTab.gameObject.SetActive(true);
             gameObject.SetActive(true);
         }
 
@@ -72,6 +72,7 @@ namespace SV
             gameObject.SetActive(false);
 
             Time.timeScale = 1;
+            Player.I.ImmuneFor(1.0f);
             LevelManager.I.CheckLevelUp();
         }
     }

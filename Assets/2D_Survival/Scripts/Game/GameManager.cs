@@ -32,10 +32,13 @@ namespace SV
         float _walkerEA = 1;
         float _chargerEA = 1;
         float _enemyHpDeltaT;
+
+        int _maxEnemies = 500;
         
         public float _gameTime = 0.0f;
         public float _elapsed = 0.0f;
         public float _elapsed2 = 0.0f;
+        public float _elapsed3 = 0.0f;
 
         public int _kills;
 
@@ -68,15 +71,26 @@ namespace SV
                 _gameTime += Time.fixedDeltaTime * Time.timeScale;
                 _elapsed += Time.fixedDeltaTime * Time.timeScale;
                 _elapsed2 += Time.fixedDeltaTime * Time.timeScale;
+                _elapsed3 += Time.fixedDeltaTime * Time.timeScale;
                 if (_elapsed >= 20.0f)
                 {
                     _elapsed = 0;
                     _walkerEA *= 2;
+                    _chargerEA++;
                 }
                 if (_elapsed2 >= 10.0f)
                 {
                     _elapsed2 = 0;
                     _enemyHpDeltaT++;
+                }
+                if (_elapsed3 >= 40.0f)
+                {
+                    _elapsed3 = 0;
+                    _chargerEA++;
+                }
+                if (_gameTime >= 60 * 5)
+                {
+                    GameClear();
                 }
             }
         }
@@ -85,6 +99,11 @@ namespace SV
         {
             _playing = false;
             UIManager.I.GameOver();
+        }
+        public void GameClear()
+        {
+            _playing = false;
+            UIManager.I.GameOver(true);
         }
 
         public void CreatePoolObject(GameObject pf, int ea)
@@ -175,10 +194,10 @@ namespace SV
 
         IEnumerator SpawnWalker()
         {
-            while (_playing)
+            while (_playing == true)
             {
-                if (_enemies.Count >= 200)
-                    yield return new WaitUntil(() => _enemies.Count <= 200);
+                if (_enemies.Count >= _maxEnemies)
+                    yield return new WaitUntil(() => _enemies.Count < _maxEnemies);
 
                 yield return new WaitForSeconds(_walkerCool);
 
@@ -224,12 +243,12 @@ namespace SV
         }
         IEnumerator SpawnCharger()
         {
-            while (_playing)
+            while (_playing == true)
             {
                 yield return new WaitUntil(() => _gameTime >= 20.0f);
 
-                if (_enemies.Count >= 200)
-                    yield return new WaitUntil(() => _enemies.Count <= 200);
+                if (_enemies.Count >= _maxEnemies)
+                    yield return new WaitUntil(() => _enemies.Count <= _maxEnemies);
 
                 yield return new WaitForSeconds(_chargerCool);
 

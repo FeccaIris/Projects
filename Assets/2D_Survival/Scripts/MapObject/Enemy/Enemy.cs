@@ -55,10 +55,13 @@ namespace SV
         }
         protected virtual void FixedUpdate()
         {
-            if (_player != null)
+            if (GameManager.I._playing == true)
             {
-                if (_trace == true)
-                    transform.position += (_player.position - transform.position).normalized * _speed;
+                if (_player != null)
+                {
+                    if (_trace == true)
+                        transform.position += (_player.position - transform.position).normalized * _speed;
+                }
             }
         }
 

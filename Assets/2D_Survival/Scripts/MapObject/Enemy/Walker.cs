@@ -15,6 +15,7 @@ namespace SV
             reverse = reverse < 0.9f ? 0.9f : reverse;
             _speed *= reverse;
             // ¼Óµµ
+            Invoke("EndUse", 20.0f);
         }
     }
 }

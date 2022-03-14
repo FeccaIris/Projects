@@ -62,10 +62,7 @@ namespace SV
                     }
                 case Category.EA:
                     {
-                        if (_index == 0)
-                            _ea += 1;
-                        else
-                            _ea += 2;
+                        _ea += 1;
                         break;
                     }
                 case Category.MAINTAIN:

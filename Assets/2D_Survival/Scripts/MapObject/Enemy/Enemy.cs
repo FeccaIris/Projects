@@ -51,7 +51,7 @@ namespace SV
             _hp = _hpTemp;
             // 크기 무작위 설정
 
-            _exp += (int)_hpTemp / 5;
+            //_exp += (int)_hpTemp / 10;
         }
         protected virtual void FixedUpdate()
         {

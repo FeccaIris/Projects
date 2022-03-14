@@ -86,7 +86,7 @@ namespace SV
             {
                 foreach (Enemy e in list)
                 {
-                    if (e == this)
+                    if (e.gameObject == gameObject)
                     {
                         list.Remove(this);
                         break;

@@ -11,15 +11,15 @@ namespace ss
 
         Rigidbody2D _rgd;
         Camera _cam;
+        GameObject _sprite;
+        Animator _anim;
 
         #region Child
         GameObject _body;
         SpriteRenderer _body_sp;
-        Animator _body_anim;
 
         GameObject _sword;
         public SpriteRenderer _sword_sp;
-        public Animator _sword_anim;
         #endregion
 
         public Vector3 _offset_idle = new Vector3(1.275f, -0.4f, 0);
@@ -37,14 +37,18 @@ namespace ss
         {
             _rgd = GetComponent<Rigidbody2D>();
             _cam = Camera.main;
+            _sprite = transform.Find("Sprite").gameObject;
+            _anim = _sprite.GetComponent<Animator>();
 
-            _body = transform.Find("Body").gameObject;
-            _body_sp = _body.transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            _body_anim = _body_sp.GetComponent<Animator>();
 
-            _sword = transform.Find("Sword").gameObject;
-            _sword_sp = _sword.transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            _sword_anim = _sword_sp.GetComponent<Animator>();
+            //_body = transform.Find("Sprite").Find("Body").gameObject;
+            //_body_sp = _body.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+
+            //_sword = transform.Find("Sprite").Find("Sword").gameObject;
+            //_sword_sp = _sword.transform.Find("Sprite").GetComponent<SpriteRenderer>();
+
+            _body_sp = _sprite.transform.Find("Body").GetComponent<SpriteRenderer>();
+            _sword_sp = _sprite.transform.Find("Sword").GetComponent<SpriteRenderer>();
 
             _sword_sp.transform.localPosition = new Vector3(1.275f, -0.4f, 0);
         }
@@ -85,8 +89,10 @@ namespace ss
 
             float z = Mathf.Atan2(look.y, look.x) * Mathf.Rad2Deg;
             Quaternion q = Quaternion.AngleAxis(z, Vector3.forward);
-            _body.transform.rotation = Quaternion.Lerp(_body.transform.rotation, q, 1.0f);
-            _sword.transform.rotation = Quaternion.Lerp(_sword.transform.rotation, q, 1.0f);
+            _sprite.transform.rotation = Quaternion.Lerp(_sprite.transform.rotation, q, 1.0f);
+
+            //_body.transform.rotation = Quaternion.Lerp(_body.transform.rotation, q, 1.0f);
+            //_sword.transform.rotation = Quaternion.Lerp(_sword.transform.rotation, q, 1.0f);
 
             if (look.x < 0)
             {
@@ -121,20 +127,24 @@ namespace ss
             if (Input.GetMouseButton(0))
             {
                 _rgd.AddForce(look * 100.0f);
-                if(_body_anim.GetBool("Move") != true)
-                    _body_anim.SetBool("Move", true);
-                if (_sword_anim.GetBool("Move") != true)
-                    _sword_anim.SetBool("Move", true);
+                if (_anim.GetBool("Move") != true)
+                    _anim.SetBool("Move", true);
+                //if(_body_anim.GetBool("Move") != true)
+                  //  _body_anim.SetBool("Move", true);
+                //if (_sword_anim.GetBool("Move") != true)
+                  //  _sword_anim.SetBool("Move", true);
             }
             else
             {
-                _body_anim.SetBool("Move", false);
-                _sword_anim.SetBool("Move", false);
+                _anim.SetBool("Move", false);
+                //_body_anim.SetBool("Move", false);
+                //_sword_anim.SetBool("Move", false);
             }
             if (Input.GetKey(KeyCode.C))
             {
-                _body_anim.SetBool("Move", false);
-                _sword_anim.SetBool("Move", false);
+                _anim.SetBool("Move", false);
+                //_body_anim.SetBool("Move", false);
+                //_sword_anim.SetBool("Move", false);
                 _rgd.velocity *= 0.97f;
             }
         }

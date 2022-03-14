@@ -7,6 +7,7 @@ namespace ss
     public class GameManager : MonoBehaviour
     {
         public static GameManager I;
+        public Player _player;
 
         void Awake()
         {
@@ -15,8 +16,8 @@ namespace ss
 
         void Start()
         {
-            Player.I.Init();
-
+            _player = FindObjectOfType<Player>(); // 프리팹 로드로 추후 변경
+            _player.Init();
 
             UIManager.I.Init();
         }

@@ -7,8 +7,6 @@ namespace SV
 
     public class MapObject : MonoBehaviour
     {
-        public bool _pause = false;
-
         protected virtual void Start()
         {
 

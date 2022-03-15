@@ -50,8 +50,9 @@ namespace SV
                 _hpTemp -= 1;
             _hp = _hpTemp;
             // 크기 무작위 설정
-
             //_exp += (int)_hpTemp / 10;
+
+            Invoke("EndUse", 30.0f);
         }
         protected virtual void FixedUpdate()
         {
@@ -63,36 +64,25 @@ namespace SV
                         transform.position += (_player.position - transform.position).normalized * _speed;
                 }
             }
+
+            if (_player != null)
+            {
+                float dis = Vector3.Distance(transform.position, _player.position);
+                if (dis >= 150.0f)
+                    EndUse();
+            }
         }
 
         public override void Damaged(int dmg)
         {
             base.Damaged(dmg);
         }
-        IEnumerator Hit()
-        {
-            _sprite.color = Color.white;
-            yield return new WaitForSeconds(0.1f);
-            _sprite.color = Color.black;
-        }
+
         protected override void Die()
         {
             GameManager.I._kills++;
 
             LevelManager.I.GetExp(_exp);
-
-            List<Enemy> list = GameManager.I._enemies;
-            if (list != null)
-            {
-                foreach (Enemy e in list)
-                {
-                    if (e.gameObject == gameObject)
-                    {
-                        list.Remove(this);
-                        break;
-                    }
-                }
-            }
 
             EndUse();
         }
@@ -118,6 +108,22 @@ namespace SV
 
         public void EndUse()
         {
+            if (this is Enemy)
+            {
+                List<Enemy> list = GameManager.I._enemies;
+                if (list != null)
+                {
+                    foreach (Enemy e in list)
+                    {
+                        if (e.gameObject == gameObject)
+                        {
+                            list.Remove(this);
+                            break;
+                        }
+                    }
+                }
+            }
+
             gameObject.SetActive(false);
             GameManager.I.RefillPool(gameObject);
         }

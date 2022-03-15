@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace SV
 {
-
     public class Unit : MapObject
     {
         public Rigidbody2D _rgd;

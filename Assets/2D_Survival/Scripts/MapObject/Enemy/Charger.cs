@@ -15,10 +15,7 @@ namespace SV
             _trace = false;
             base.Init(delta);
             _speed = 1.0f;
-
-            Invoke("EndUse", 15.0f);
         }
-
         protected override void FixedUpdate()
         {
             if (_player != null)
@@ -31,6 +28,16 @@ namespace SV
             }
 
             base.FixedUpdate();
+        }
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            if (col.gameObject.tag.Equals("Player"))
+            {
+                Player player = col.gameObject.GetComponent<Player>();
+                if (player != null)
+                    player.Damaged(10);
+                EndUse();
+            }
         }
     }
 }

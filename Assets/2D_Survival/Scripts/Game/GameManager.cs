@@ -81,7 +81,7 @@ namespace SV
                 if (_elapsed2 >= 10.0f)
                 {
                     _elapsed2 = 0;
-                    _enemyHpDeltaT++;
+                    _enemyHpDeltaT += 2;
                 }
                 if (_elapsed3 >= 40.0f)
                 {

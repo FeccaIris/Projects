@@ -82,7 +82,7 @@ namespace SV
                     }
                 case Category.REACH:
                     {
-                        _reach *= 1.2f;
+                        _reach *= 1.5f;
                         break;
                     }
                 default:
@@ -181,7 +181,7 @@ namespace SV
         {
             // 코루틴 추가 생성 => 스킬 발동과 동시에 쿨타임 발생
 
-            while (true)
+            while (GameManager.I._playing == true)
             {
                 yield return null;
                 Vector3 rPos = Vector3.zero;

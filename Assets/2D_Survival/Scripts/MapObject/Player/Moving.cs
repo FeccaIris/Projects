@@ -12,7 +12,6 @@ namespace SV
 
         Rigidbody2D _rgd;
         Player _player;
-        bool _moveOn = true;
 
         Vector3 _direction;
         Vector3 _look;
@@ -33,7 +32,7 @@ namespace SV
 
             if (h != 0 || v != 0)
             {
-                if (_moveOn == true)
+                if (GameManager.I._playing == true)
                 {
                     //Move(h, v);
                     _direction = new Vector3(h, v, 0).normalized;
@@ -46,7 +45,7 @@ namespace SV
                 //_direction *= _moveSpeed * Time.timeScale;
             }
 
-            if (_moveOn == true)
+            if (GameManager.I._playing == true)
             {
                 _look = _direction;
                 _direction *= _moveSpeed * Time.timeScale;

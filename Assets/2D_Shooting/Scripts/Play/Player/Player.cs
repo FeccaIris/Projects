@@ -24,6 +24,7 @@ namespace ss
 
         public Vector3 _offset_idle = new Vector3(1.275f, -0.4f, 0);
         public Vector3 _offset_move = new Vector3(2.334f, -0.901f, 0);
+        public Vector3 _offset_shoot = new Vector3(1.362f, -0.618f, 0);
 
         public bool _flip = false;
 
@@ -51,6 +52,8 @@ namespace ss
             _sword_sp = _sprite.transform.Find("Sword").GetComponent<SpriteRenderer>();
 
             _sword_sp.transform.localPosition = new Vector3(1.275f, -0.4f, 0);
+
+            
         }
         void FixedUpdate()
         {
@@ -146,6 +149,14 @@ namespace ss
                 //_body_anim.SetBool("Move", false);
                 //_sword_anim.SetBool("Move", false);
                 _rgd.velocity *= 0.97f;
+            }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                _anim.SetBool("Shoot", true);
+            }
+            else
+            {
+                _anim.SetBool("Shoot", false);
             }
         }
     }

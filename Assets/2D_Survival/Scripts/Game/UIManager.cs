@@ -44,9 +44,9 @@ namespace SV
             Transform play = transform.Find("Playing");
 
             _hpB = play.Find("UI").Find("Hpbar").GetComponent<Hpbar>();
+
             _expB = play.Find("UI").Find("Expbar").GetComponent<Expbar>();
             _gameTime = play.Find("UI").Find("GameTime").GetComponent<Text>();
-
             _icon_1 = play.Find("UI").Find("1").gameObject;
             _icon_2 = play.Find("UI").Find("2").gameObject;
             _icon_3 = play.Find("UI").Find("3").gameObject;

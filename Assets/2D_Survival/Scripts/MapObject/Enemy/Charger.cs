@@ -33,10 +33,7 @@ namespace SV
         {
             if (col.gameObject.tag.Equals("Player"))
             {
-                Player player = col.gameObject.GetComponent<Player>();
-                if (player != null)
-                    player.Damaged(10);
-                EndUse();
+                Invoke("EndUse", 0.3f);
             }
         }
     }

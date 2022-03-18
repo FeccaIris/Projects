@@ -1,5 +1,5 @@
-
-.vs/Unity Project/v16/.suo
+.vs
+.suo
 
 
 
@@ -10,5 +10,5 @@ Temp
 
 *.sln
 *.csproj
-
+*.suo
 

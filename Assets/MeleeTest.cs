@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using ss;
 
-public class MoveStart : StateMachineBehaviour
+public class MeleeTest : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        /*
         Player player = GameManager.I._player;
-        Vector3 offset = player._offset_move;
+
+        Vector3 offset = player._offset_melee_body;
         if (player._flip == true)
         {
             offset.y *= -1;
         }
-        player._sword_sp.transform.localPosition = offset;*/
+        player._body_sp.transform.localPosition = offset;
+        ///
+        offset = player._offset_melee_body + player._offset_melee;
+        if (player._flip == true)
+        {
+            offset.y *= -1;
+        }
+        player._sword_sp.transform.localPosition = offset;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

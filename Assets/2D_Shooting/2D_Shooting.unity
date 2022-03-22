@@ -2224,11 +2224,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f8fdebb4911d64f9866379c11ff93d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sprite: {fileID: 0}
+  _body_sp: {fileID: 0}
   _sword_sp: {fileID: 0}
   _offset_idle: {x: 1.275, y: -0.4, z: 0}
   _offset_move: {x: 2.334, y: -0.901, z: 0}
   _offset_shoot: {x: 1.362, y: -0.618, z: 0}
   _offset_melee: {x: 0.17, y: 0, z: 0}
+  _offset_melee_body: {x: 1.83, y: 1.21, z: 0}
   _flip: 0
 --- !u!50 &340261893
 Rigidbody2D:
@@ -3040,7 +3043,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: bad3cf189cdb60b46acf7ce249b1c410, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6314,13 +6317,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: f6c10aa2b531e814fbdaa8ff4fe8dcbb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 8.93, y: 6.03}
+  m_Size: {x: 5.58, y: 4.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

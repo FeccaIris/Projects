@@ -34,8 +34,14 @@ namespace ss
         {
             Player player = GameManager.I._player;
 
-            Vector3 offset = player._offset_melee;
-
+            Vector3 offset = player._offset_melee_body;
+            if (player._flip == true)
+            {
+                offset.y *= -1;
+            }
+            player._body_sp.transform.localPosition = offset;
+            ///
+            offset = player._offset_melee_body + player._offset_melee;
             if (player._flip == true)
             {
                 offset.y *= -1;

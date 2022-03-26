@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using ss;
 
-public class MeleeTest : StateMachineBehaviour
+public class OffsetStart : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo state, int layerIndex)
     {
         Player player = GameManager.I._player;
+        Vector3 offset = new Vector3();
 
-        Vector3 offset = player._offset_melee_body;
-        if (player._flip == true)
+        if (state.IsName("Melee1"))
         {
-            offset.y *= -1;
+            offset = player._offset_melee;
         }
-        player._body_sp.transform.localPosition = offset;
-        ///
-        offset = player._offset_melee_body + player._offset_melee;
+        else if (state.IsName("Shoot"))
+        {
+            offset = player._offset_shoot;
+        }
+        else if (state.IsName("Move"))
+        {
+            offset = player._offset_move;
+        }
+
         if (player._flip == true)
         {
             offset.y *= -1;

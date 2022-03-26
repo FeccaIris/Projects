@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ss;
 
-public class OffestEnd : StateMachineBehaviour
+public class OffsetEnd : StateMachineBehaviour
 {
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -27,7 +27,7 @@ public class OffestEnd : StateMachineBehaviour
             offset.y *= -1;
         }
         player._sword_sp.transform.localPosition = offset;
-        player._body_sp.transform.localPosition = Vector3.zero;
+        //player._body_sp.transform.localPosition = Vector3.zero;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

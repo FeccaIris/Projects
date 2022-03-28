@@ -13,6 +13,8 @@ namespace ss
         Rigidbody2D _rgd;
         Animator _anim;
 
+        PlayerSprite _pSprite;
+
         #region Child
 
         public GameObject _sprite;
@@ -41,6 +43,9 @@ namespace ss
             _rgd = GetComponent<Rigidbody2D>();
             _sprite = transform.Find("Sprite").gameObject;
             _anim = _sprite.GetComponent<Animator>();
+
+            _pSprite = _sprite.GetComponent<PlayerSprite>();
+            _pSprite.Init(this);
 
             _body_sp = _sprite.transform.Find("Body").GetComponent<SpriteRenderer>();
             _sword_sp = _sprite.transform.Find("Sword").GetComponent<SpriteRenderer>();

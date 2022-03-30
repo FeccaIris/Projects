@@ -101,7 +101,7 @@ namespace SV
         {
             // Á¤¸é
             _icon_2.SetActive(true);
-            _lvUp.AcquireNew(2);
+            _lvUp.AcquireNew(2);    // UI
             SkillManager.I.AcquireNew(hasT: false);
             SkillManager.I.SetSkill(SkillManager.I._skList[1], ea: 7, rch: 20.0f, cool: 2.0f, dmg: 1, interval: 0.1f, size: 5, pierce: 500, spd: 150.0f);
         }

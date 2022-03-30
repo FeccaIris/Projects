@@ -142,6 +142,7 @@ namespace SV
 
             PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, mv: mv, hasT: hasT,
                                              stay: stay, mt: mt, mtH: mtH, rdP: rdP);
+
             _skList.Add(ps);
 
             UIManager.I._lvUp.SetIndex(_skList);

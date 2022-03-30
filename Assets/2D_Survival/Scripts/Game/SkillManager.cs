@@ -119,7 +119,6 @@ namespace SV
 
         public List<PlayerSkill> _skList;
         int _skillLimits = 12;
-        int _costLimits;
 
         private void Awake()
         {
@@ -130,8 +129,12 @@ namespace SV
             _player = Player.I;
             _skList = new List<PlayerSkill>();
 
-            AcquireNew();   // 기본 : 투사체
-            SetSkill(_skList[0], size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);
+            //AcquireNew();
+            // 기본 투사체
+            //ActivateSkill(_skList[0], size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);
+
+            AcquireNew(pj: false);
+            ActivateSkill(_skList[0]);
         }
 
         public void AcquireNew(bool hasC = true, bool pj = true, bool mv = true, bool hasT = true,
@@ -148,7 +151,7 @@ namespace SV
             UIManager.I._lvUp.SetIndex(_skList);
         }
 
-        public void SetSkill(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
+        public void ActivateSkill(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
         {
             ps._dmg = dmg;
             ps._cool = cool;
@@ -175,6 +178,16 @@ namespace SV
             else
             {
 
+            }
+        }
+        
+        IEnumerator HasCool(PlayerSkill ps, IEnumerator skill)
+        {
+            while(GameManager.I._playing == true)
+            {
+                StartCoroutine(skill);
+
+                yield return new WaitForSeconds(ps._cool);
             }
         }
 
@@ -260,6 +273,13 @@ namespace SV
                     yield return new WaitForSeconds(ps._interval);
                 }
                 yield return new WaitForSeconds(ps._cool);
+            }
+        }
+        IEnumerator Area(PlayerSkill ps)
+        {
+            while(GameManager.I._playing == true)
+            {
+                yield return null;
             }
         }
     }

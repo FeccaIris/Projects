@@ -103,7 +103,7 @@ namespace SV
             _icon_2.SetActive(true);
             _lvUp.AcquireNew(2);    // UI
             SkillManager.I.AcquireNew(hasT: false);
-            SkillManager.I.SetSkill(SkillManager.I._skList[1], ea: 7, rch: 20.0f, cool: 2.0f, dmg: 1, interval: 0.1f, size: 5, pierce: 500, spd: 150.0f);
+            SkillManager.I.ActivateSkill(SkillManager.I._skList[1], ea: 7, rch: 20.0f, cool: 2.0f, dmg: 1, interval: 0.1f, size: 5, pierce: 500, spd: 150.0f);
         }
         public void AcquireThird()
         {
@@ -111,7 +111,7 @@ namespace SV
             _icon_3.SetActive(true);
             _lvUp.AcquireNew(3);
             SkillManager.I.AcquireNew(hasT: false);
-            SkillManager.I.SetSkill(SkillManager.I._skList[2], ea: 70, dmg: 10, interval: 0.05f, spd: 250.0f, size: 1.5f, cool: 4.0f);
+            SkillManager.I.ActivateSkill(SkillManager.I._skList[2], ea: 70, dmg: 10, interval: 0.05f, spd: 250.0f, size: 1.5f, cool: 4.0f);
         }
 
         public void UpdateIconLevel(int id, int level)

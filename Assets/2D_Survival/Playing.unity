@@ -3547,7 +3547,7 @@ GameObject:
   - component: {fileID: 510232565}
   - component: {fileID: 510232564}
   m_Layer: 5
-  m_Name: Minus
+  m_Name: Text2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7301,7 +7301,7 @@ GameObject:
   - component: {fileID: 1244872666}
   - component: {fileID: 1244872665}
   m_Layer: 5
-  m_Name: Minus
+  m_Name: Text2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7353,14 +7353,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "\uD22C\uC0AC\uCCB4 \uCD94\uC801\uAE30\uB2A5 \uC81C\uAC70\n\uCFE8\uD0C0\uC784
-    \uC99D\uAC00\n\uD22C\uC0AC\uCCB4 \uC18D\uB3C4 \uAC10\uC18C"
+  m_Text: "- \uBAA8\uB4E0 \uD22C\uC0AC\uCCB4 \uC18D\uB3C4"
 --- !u!222 &1244872666
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8317,7 +8316,7 @@ GameObject:
   - component: {fileID: 1455444561}
   - component: {fileID: 1455444560}
   m_Layer: 5
-  m_Name: Plus
+  m_Name: Text1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11313,7 +11312,7 @@ GameObject:
   - component: {fileID: 2012954650}
   - component: {fileID: 2012954649}
   m_Layer: 5
-  m_Name: Plus
+  m_Name: Text1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11365,14 +11364,14 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 1
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: "\uD22C\uC0AC\uCCB4 \uAC1C\uC218 \uC99D\uAC00\n\uD22C\uC0AC\uCCB4\uAC00
-    \uBAA8\uB4E0 \uC801 \uAD00\uD1B5\n\uD22C\uC0AC\uCCB4 \uC801\uC911\uC2DC \uD3ED\uBC1C"
+  m_Text: "+ \uC720\uB3C4 \uD22C\uC0AC\uCCB4 1\uAC1C\n+ \uC8FC\uBCC0 \uC601\uC5ED\uACF5\uACA9
+    1\uD68C"
 --- !u!222 &2012954650
 CanvasRenderer:
   m_ObjectHideFlags: 0

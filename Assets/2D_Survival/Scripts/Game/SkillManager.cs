@@ -17,8 +17,16 @@ namespace SV
         public float _size = 1.0f;
 
         #region Boolean
-        public bool _isProjectile;
+
+        public bool _isProjectile;      // 관통횟수
+        public bool _hasCool;           // 쿨타임
+        public bool _doesMove;          // 이동속도
+        public bool _doesStay;          // 유지시간
         
+
+        
+
+
         public bool _isRandom;
         public bool _hasTarget;         // 사거리, 시작점, 방향 결정
 
@@ -26,9 +34,6 @@ namespace SV
 
         public bool _doesMultihit;
 
-        public bool _hasCool;
-        public bool _doesMove;
-        public bool _doesStay;
         #endregion
 
         #region Property
@@ -133,8 +138,8 @@ namespace SV
             // 기본 투사체
             //ActivateSkill(_skList[0], size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);
 
-            AcquireNew(pj: false);
-            ActivateSkill(_skList[0]);
+            AcquireNew(pj: false, mv: false);
+            SetAndActivate(_skList[0]);
         }
 
         public void AcquireNew(bool hasC = true, bool pj = true, bool mv = true, bool hasT = true,
@@ -151,7 +156,7 @@ namespace SV
             UIManager.I._lvUp.SetIndex(_skList);
         }
 
-        public void ActivateSkill(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
+        public void SetAndActivate(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
         {
             ps._dmg = dmg;
             ps._cool = cool;

@@ -24,15 +24,16 @@ namespace SV
 
         public virtual void Init(PlayerSkill ps)
         {
-            _rgd = GetComponent<Rigidbody2D>();
-            _ps = ps;
-            _player = Player.I;
-            _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            if(_rgd == null)
+                _rgd = GetComponent<Rigidbody2D>();
+            if(_sprite == null)
+                _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            if(_player == null)
+                _player = Player.I;
 
-            transform.position = ps._startPos;
+            _ps = ps;
 
             transform.localScale *= _ps._size;
-
             if (_ps._index.Equals(1))
             {
                 _sprite.color = new Color(255, 255, 255);
@@ -41,39 +42,51 @@ namespace SV
             {
                 _sprite.color = new Color(255, 255, 255);
             }
+
+            Active();
         }
-
-        public void Projectile()
+        void Active()
         {
-            gameObject.SetActive(true);
-            _rgd.AddForce(_ps._targerPos * _ps._speed * Time.fixedDeltaTime * TimeCor);
-            _rgd.velocity = Vector2.zero;
+            if (_ps._isProjectile)
+            {
+                transform.position = _player.transform.position;
+                gameObject.SetActive(true);
+                _rgd.AddForce(_ps._targetPos * _ps._speed * Time.fixedDeltaTime * TimeCor);
+                _rgd.velocity = Vector2.zero;
+            }
+            else
+            {
+                if (_ps._isRandom)
+                    transform.position = _player.transform.position;
+                else
+                    transform.position = _player.transform.position;
 
+                gameObject.SetActive(true);
+            }
             Invoke("EndUse", _ps._maintain);
         }
 
-        void FixedUpdate()
-        {
-
-        }
         void OnTriggerEnter2D(Collider2D col)
         {
             Enemy e = col.GetComponent<Enemy>();
             if (e != null)
             {
-                if (_ps._doesMultihit == true)
+                if (_ps._isProjectile == true)
                 {
-                    e.OnSkill(_ps);
+                    e.Damaged(_ps._dmg);
+                    _pierceCount++;
+                    if (_pierceCount >= _ps._pierce)
+                        EndUse();
                 }
                 else
                 {
-                    e.Damaged(_ps._dmg);
-
-                    if(_ps._isProjectile == true)
+                    if (_ps._doesStay)
                     {
-                        _pierceCount++;
-                        if (_pierceCount >= _ps._pierce)
-                            EndUse();
+                        e.OnSkill(_ps);
+                    }
+                    else
+                    {
+                        e.Damaged(_ps._dmg);
                     }
                 }
             }

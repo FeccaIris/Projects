@@ -80,11 +80,13 @@ namespace SV
 
             if (_lv == 10)
             {
-                UIManager.I.AcquireThird();
+                //UIManager.I.AcquireThird();
+                UIManager.I.LevelUP();
             }
             else if (_lv == 5)
             {
-                UIManager.I.AcquireSecond();
+                //UIManager.I.AcquireSecond();
+                UIManager.I.LevelUP();
             }
             else
             {

@@ -467,22 +467,21 @@ MonoBehaviour:
     _level: 0
     _dmg: 0
     _size: 0
+    _hasCool: 0
     _isProjectile: 0
     _isRandom: 0
+    _doesStay: 0
+    _doesMove: 0
     _hasTarget: 0
     _isMultiple: 0
     _doesMultihit: 0
-    _hasCool: 0
-    _doesMove: 0
-    _doesStay: 0
-    _startPos: {x: 0, y: 0, z: 0}
-    _targerPos: {x: 0, y: 0, z: 0}
+    _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
-    _speed: 0
+    _ea: 0
     _pierce: 0
+    _speed: 0
     _reach: 0
     _maintain: 0
-    _ea: 0
     _interval: 0
   _cat: 0
 --- !u!114 &66964833
@@ -2562,22 +2561,21 @@ MonoBehaviour:
     _level: 0
     _dmg: 0
     _size: 0
+    _hasCool: 0
     _isProjectile: 0
     _isRandom: 0
+    _doesStay: 0
+    _doesMove: 0
     _hasTarget: 0
     _isMultiple: 0
     _doesMultihit: 0
-    _hasCool: 0
-    _doesMove: 0
-    _doesStay: 0
-    _startPos: {x: 0, y: 0, z: 0}
-    _targerPos: {x: 0, y: 0, z: 0}
+    _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
-    _speed: 0
+    _ea: 0
     _pierce: 0
+    _speed: 0
     _reach: 0
     _maintain: 0
-    _ea: 0
     _interval: 0
   _cat: 0
 --- !u!222 &350428657
@@ -5447,22 +5445,21 @@ MonoBehaviour:
     _level: 0
     _dmg: 0
     _size: 0
+    _hasCool: 0
     _isProjectile: 0
     _isRandom: 0
+    _doesStay: 0
+    _doesMove: 0
     _hasTarget: 0
     _isMultiple: 0
     _doesMultihit: 0
-    _hasCool: 0
-    _doesMove: 0
-    _doesStay: 0
-    _startPos: {x: 0, y: 0, z: 0}
-    _targerPos: {x: 0, y: 0, z: 0}
+    _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
-    _speed: 0
+    _ea: 0
     _pierce: 0
+    _speed: 0
     _reach: 0
     _maintain: 0
-    _ea: 0
     _interval: 0
   _cat: 0
 --- !u!222 &892396939
@@ -6341,22 +6338,21 @@ MonoBehaviour:
     _level: 0
     _dmg: 0
     _size: 0
+    _hasCool: 0
     _isProjectile: 0
     _isRandom: 0
+    _doesStay: 0
+    _doesMove: 0
     _hasTarget: 0
     _isMultiple: 0
     _doesMultihit: 0
-    _hasCool: 0
-    _doesMove: 0
-    _doesStay: 0
-    _startPos: {x: 0, y: 0, z: 0}
-    _targerPos: {x: 0, y: 0, z: 0}
+    _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
-    _speed: 0
+    _ea: 0
     _pierce: 0
+    _speed: 0
     _reach: 0
     _maintain: 0
-    _ea: 0
     _interval: 0
   _cat: 0
 --- !u!114 &983865944
@@ -6485,22 +6481,21 @@ MonoBehaviour:
     _level: 0
     _dmg: 0
     _size: 0
+    _hasCool: 0
     _isProjectile: 0
     _isRandom: 0
+    _doesStay: 0
+    _doesMove: 0
     _hasTarget: 0
     _isMultiple: 0
     _doesMultihit: 0
-    _hasCool: 0
-    _doesMove: 0
-    _doesStay: 0
-    _startPos: {x: 0, y: 0, z: 0}
-    _targerPos: {x: 0, y: 0, z: 0}
+    _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
-    _speed: 0
+    _ea: 0
     _pierce: 0
+    _speed: 0
     _reach: 0
     _maintain: 0
-    _ea: 0
     _interval: 0
 --- !u!222 &1007304165
 CanvasRenderer:
@@ -8399,7 +8394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1464792111
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9225,22 +9220,21 @@ MonoBehaviour:
     _level: 0
     _dmg: 0
     _size: 0
+    _hasCool: 0
     _isProjectile: 0
     _isRandom: 0
+    _doesStay: 0
+    _doesMove: 0
     _hasTarget: 0
     _isMultiple: 0
     _doesMultihit: 0
-    _hasCool: 0
-    _doesMove: 0
-    _doesStay: 0
-    _startPos: {x: 0, y: 0, z: 0}
-    _targerPos: {x: 0, y: 0, z: 0}
+    _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
-    _speed: 0
+    _ea: 0
     _pierce: 0
+    _speed: 0
     _reach: 0
     _maintain: 0
-    _ea: 0
     _interval: 0
   _cat: 0
 --- !u!222 &1594651006
@@ -10300,22 +10294,21 @@ MonoBehaviour:
     _level: 0
     _dmg: 0
     _size: 0
+    _hasCool: 0
     _isProjectile: 0
     _isRandom: 0
+    _doesStay: 0
+    _doesMove: 0
     _hasTarget: 0
     _isMultiple: 0
     _doesMultihit: 0
-    _hasCool: 0
-    _doesMove: 0
-    _doesStay: 0
-    _startPos: {x: 0, y: 0, z: 0}
-    _targerPos: {x: 0, y: 0, z: 0}
+    _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
-    _speed: 0
+    _ea: 0
     _pierce: 0
+    _speed: 0
     _reach: 0
     _maintain: 0
-    _ea: 0
     _interval: 0
   _cat: 0
 --- !u!222 &1847869426
@@ -11073,22 +11066,21 @@ MonoBehaviour:
     _level: 0
     _dmg: 0
     _size: 0
+    _hasCool: 0
     _isProjectile: 0
     _isRandom: 0
+    _doesStay: 0
+    _doesMove: 0
     _hasTarget: 0
     _isMultiple: 0
     _doesMultihit: 0
-    _hasCool: 0
-    _doesMove: 0
-    _doesStay: 0
-    _startPos: {x: 0, y: 0, z: 0}
-    _targerPos: {x: 0, y: 0, z: 0}
+    _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
-    _speed: 0
+    _ea: 0
     _pierce: 0
+    _speed: 0
     _reach: 0
     _maintain: 0
-    _ea: 0
     _interval: 0
   _cat: 0
 --- !u!114 &1999220184

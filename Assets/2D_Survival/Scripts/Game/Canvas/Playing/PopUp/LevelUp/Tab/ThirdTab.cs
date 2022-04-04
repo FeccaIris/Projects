@@ -15,6 +15,7 @@ namespace SV
         SPEED,
         PIERCE,
         INTERVAL,
+
     }
 
     public class ThirdTab : LevelUpPU
@@ -44,23 +45,19 @@ namespace SV
         public void ReadyForRF(PlayerSkill ps)
         {
             _ps = ps;
-            List<Category> cat = new List<Category> { Category.COOL, Category.EA, Category.DAMAGE};
+            List<Category> cat = new List<Category> { Category.COOL, Category.DAMAGE, Category.INTERVAL };
 
             if(_ps != null)
             {
-                if (_ps._hasTarget == true)
-                {
-                    cat.Add(Category.REACH);
-                }
                 if (_ps._isProjectile == true)
                 {
-                    if(_ps._index != 1)
-                        cat.Add(Category.PIERCE);
+                    cat.Add(Category.PIERCE);
                     cat.Add(Category.SPEED);
+                    cat.Add(Category.EA);
                 }
                 else
                 {
-                    cat.Add(Category.INTERVAL);
+                    cat.Add(Category.MAINTAIN);
                 }
             }
 

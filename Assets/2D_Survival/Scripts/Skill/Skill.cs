@@ -13,6 +13,7 @@ namespace SV
         PlayerSkill _ps;
         Player _player;
         SpriteRenderer _sprite;
+        public Collider2D _col;
 
         int _pierceCount = 0;
 
@@ -30,6 +31,8 @@ namespace SV
                 _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
             if(_player == null)
                 _player = Player.I;
+            if (_col == null)
+                _col = GetComponent<Collider2D>();
 
             _ps = ps;
 
@@ -57,15 +60,38 @@ namespace SV
             else
             {
                 if (_ps._isRandom)
-                    transform.position = _player.transform.position;
+                    transform.position = _player.transform.position;    //임시
                 else
                     transform.position = _player.transform.position;
 
                 gameObject.SetActive(true);
+                _col.enabled = true;
+                StartCoroutine(TurnCollider());
             }
             Invoke("EndUse", _ps._maintain);
         }
 
+        IEnumerator TurnCollider()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(_ps._interval);
+                _col.enabled = false;
+                yield return new WaitForSeconds(_ps._interval);
+                _col.enabled = true;
+            }
+        }
+
+        void FixedUpdate()
+        {
+            if (!_ps._isProjectile)
+            {
+                if (_ps._isRandom)
+                    transform.position = _player.transform.position;    //임시
+                else
+                    transform.position = _player.transform.position;
+            }
+        }
         void OnTriggerEnter2D(Collider2D col)
         {
             Enemy e = col.GetComponent<Enemy>();
@@ -80,25 +106,7 @@ namespace SV
                 }
                 else
                 {
-                    if (_ps._doesStay)
-                    {
-                        e.OnSkill(_ps);
-                    }
-                    else
-                    {
-                        e.Damaged(_ps._dmg);
-                    }
-                }
-            }
-        }
-        void OnTriggerExit2D(Collider2D col)
-        {
-            Enemy e = col.GetComponent<Enemy>();
-            if (e != null)
-            {
-                if (_ps._doesMultihit == true)
-                {
-                    e.ExitSkill();
+                    e.Damaged(_ps._dmg);
                 }
             }
         }

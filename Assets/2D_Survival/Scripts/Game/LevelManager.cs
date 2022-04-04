@@ -78,14 +78,9 @@ namespace SV
             int exceed = _exp - _expNeed;
             Time.timeScale = 0;
 
-            if (_lv == 10)
+            if (_lv / 5 == 0)
             {
-                //UIManager.I.AcquireThird();
-                UIManager.I.LevelUP();
-            }
-            else if (_lv == 5)
-            {
-                //UIManager.I.AcquireSecond();
+                // 공격력 강화
                 UIManager.I.LevelUP();
             }
             else

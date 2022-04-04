@@ -30,7 +30,7 @@ namespace SV
             base.Init(owner);
         }
 
-        public void SetButtons(List<PlayerSkill> list)
+        public void SetButtons(List<PlayerSkill> list)  // 습득 스킬 버튼 활성화
         {
             if (list.Count > _buttons.Count) return;
 
@@ -50,6 +50,26 @@ namespace SV
             {
                 Text t = b.transform.Find("Image").Find("Level").GetComponent<Text>();
                 t.text = $"Lv.{b._ps._level}";
+            }
+        }
+
+        public void Test()
+        {
+            int selectN;
+            selectN = Random.Range(0, 3);
+
+            if (SkillManager.I._skList.Count < 1)
+                return;
+            foreach(PlayerSkill k in SkillManager.I._skList)
+            {
+                if(k._index == selectN)
+                {
+                    // 노멀
+                }
+                else
+                {
+                    // 리스크/강화 x2
+                }
             }
         }
     }

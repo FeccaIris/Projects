@@ -28,10 +28,7 @@ namespace SV
         
 
 
-        public bool _doesMove;
-        public bool _hasTarget;         // 사거리, 시작점, 방향 결정
-        public bool _isMultiple;
-        public bool _doesMultihit;
+
         #endregion
 
         #region Property
@@ -53,11 +50,20 @@ namespace SV
         {
             _level++;
             UIManager.I.UpdateIconLevel(_index, _level);
+
+
+
+
+
+
             switch (cat)
             {
                 case Category.DAMAGE:
                     {
-                        _dmg += 1;
+                        if (_isProjectile)
+                            _dmg += 2;
+                        else
+                            _dmg += 1;
                         break;
                     }
                 case Category.COOL:
@@ -72,7 +78,10 @@ namespace SV
                     }
                 case Category.MAINTAIN:
                     {
-                        _maintain *= 1.2f;
+                        if (_doesStay != true)
+                            _doesStay = true;
+
+                        _maintain *= 1.5f;
                         break;
                     }
                 case Category.PIERCE:
@@ -82,7 +91,7 @@ namespace SV
                     }
                 case Category.SPEED:
                     {
-                        _speed *= 1.2f;
+                        _speed *= 1.5f;
                         break;
                     }
                 case Category.REACH:
@@ -90,24 +99,25 @@ namespace SV
                         _reach *= 1.5f;
                         break;
                     }
+                case Category.INTERVAL:
+                    {
+                        _interval *= 0.9f;
+                        break;
+                    }
                 default:
                     break;
             }
         }
 
-        public PlayerSkill(bool hasC, bool pj, bool mv, bool hasT, bool stay, bool mt, bool mtH, bool rdP)
+        public PlayerSkill(bool hasC, bool pj, bool stay, bool rdP)
         {
             _player = Player.I;
-
             _index = SkillManager.I._skList.Count;
 
             _hasCool = hasC;
             _isProjectile = pj;
-            _doesMove = mv;
-            _hasTarget = hasT;
+
             _doesStay = stay;
-            _isMultiple = mt;
-            _doesMultihit = mtH;
             _isRandom = rdP;
         }
     }
@@ -121,7 +131,6 @@ namespace SV
         Player _player;
 
         public List<PlayerSkill> _skList;
-
 
         private void Awake()
         {
@@ -137,14 +146,12 @@ namespace SV
             // 기본 투사체
 
             AcquireNew(pj: false, stay: false);
-            SetAndActivate(_skList[0], size: 20.0f, mntn: 0.2f);
+            SetAndActivate(_skList[0], size: 20.0f, mntn: 0.5f, cool: 3.0f, interval: 0.2f);
         }
 
-        public void AcquireNew(bool hasC = true, bool pj = true, bool mv = true, bool hasT = true,
-            bool stay = true, bool mt = true, bool mtH = false, bool rdP = false)
+        public void AcquireNew(bool hasC = true, bool pj = true, bool stay = true, bool rdP = false)
         {
-            PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, mv: mv, hasT: hasT,
-                                             stay: stay, mt: mt, mtH: mtH, rdP: rdP);
+            PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, stay: stay, rdP: rdP);
 
             _skList.Add(ps);
 

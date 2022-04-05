@@ -5,19 +5,6 @@ using UnityEngine.UI;
 
 namespace SV
 {
-    public enum Category
-    {
-        DAMAGE,
-        COOL,
-        EA,
-        MAINTAIN,
-        REACH,
-        SPEED,
-        PIERCE,
-        INTERVAL,
-
-    }
-
     public class ThirdTab : LevelUpPU
     {
         public PlayerSkill _ps;

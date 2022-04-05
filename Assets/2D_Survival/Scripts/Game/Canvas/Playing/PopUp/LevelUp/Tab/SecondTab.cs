@@ -5,43 +5,48 @@ using UnityEngine.UI;
 
 namespace SV
 {
+    public enum Category
+    {
+        DAMAGE,
+        COOL,
+        EA,
+        MAINTAIN,
+        REACH,
+        SPEED,
+        PIERCE,
+        INTERVAL,
+    }
 
     public class SecondTab : LevelUpPU
     {
-        List<Button_LevelUp> _buttons;
+        public List<Button_LevelUp> _buttons;
 
         public override void Init(LevelUp owner)
         {
             Button_LevelUp[] arr = transform.Find("Buttons").GetComponentsInChildren<Button_LevelUp>();
             _buttons = new List<Button_LevelUp>(arr);
 
-            foreach(Button_LevelUp b in _buttons)
+            for(int i = 0; i < _buttons.Count; i++)
             {
+                Button_LevelUp b = _buttons[i];
+                b._index = i;
+                Debug.Log($"{b}{b._index}");
                 b.onClick.AddListener(delegate ()
                 {
-                    if(b._ps != null)
-                        _owner.ReadyForRF(b._ps);
-
-                    _owner.OnOff(_owner._thirdTab, this);
+                    _owner.CloseAll();
                 });
-
-                b.gameObject.SetActive(false);
             }
+
             base.Init(owner);
         }
 
-        public void SetButtons(List<PlayerSkill> list)  // 습득 스킬 버튼 활성화
+        public void SetButtons()  
         {
-            if (list.Count > _buttons.Count) return;
+            Test();
 
-            for(int i = 0; i < list.Count; i++)
-            {
-                _buttons[i]._ps = list[i];
 
-                UpdateButtonLevel();
 
-                _buttons[i].gameObject.SetActive(true);
-            }
+            gameObject.SetActive(true);
         }
 
         public void UpdateButtonLevel()
@@ -53,7 +58,7 @@ namespace SV
             }
         }
 
-        public void Test()
+        public void Test()      // 강화 항목 무작위 선택, 버튼에 할당
         {
             int selectN;
             selectN = Random.Range(0, 3);
@@ -71,6 +76,8 @@ namespace SV
                     // 리스크/강화 x2
                 }
             }
+
+            
         }
     }
 }

@@ -51,11 +51,6 @@ namespace SV
             _level++;
             UIManager.I.UpdateIconLevel(_index, _level);
 
-
-
-
-
-
             switch (cat)
             {
                 case Category.DAMAGE:
@@ -141,21 +136,20 @@ namespace SV
             _player = Player.I;
             _skList = new List<PlayerSkill>();
 
-            //AcquireNew();
-            //SetAndActivate(_skList[0], size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);
-            // 기본 투사체
-
+            AcquireNew();   // 기본 투사체
+            SetAndActivate(_skList[0], size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);
+            
             AcquireNew(pj: false, stay: false);
-            SetAndActivate(_skList[0], size: 20.0f, mntn: 0.5f, cool: 3.0f, interval: 0.2f);
+            SetAndActivate(_skList[1], size: 20.0f, mntn: 0.5f, cool: 3.0f, interval: 0.2f);
+
+            AcquireNew();
+            SetAndActivate(_skList[2], size: 3.0f, mntn: 3.0f, spd: 50.0f, interval: 0.1f, pierce: 3);
         }
 
         public void AcquireNew(bool hasC = true, bool pj = true, bool stay = true, bool rdP = false)
         {
             PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, stay: stay, rdP: rdP);
-
             _skList.Add(ps);
-
-            UIManager.I._lvUp.SetIndex(_skList);
         }
 
         public void SetAndActivate(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
@@ -170,6 +164,7 @@ namespace SV
             ps._interval = interval;
             ps._size = size;
 
+            UIManager.I._lvUp.SetIndex(ps);
             Activate(ps);
         }
 

@@ -31,7 +31,8 @@ namespace SV
         public void LevelUP()
         {
             OffAll();
-            _secondTab.gameObject.SetActive(true);
+            _secondTab.SetButtons();
+
             gameObject.SetActive(true);
         }
 
@@ -42,9 +43,9 @@ namespace SV
             gameObject.SetActive(true);
         }
 
-        public void SetIndex(List<PlayerSkill> list)
+        public void SetIndex(PlayerSkill ps)
         {
-            _secondTab.SetButtons(list);
+            _secondTab._buttons[ps._index]._ps = ps;
         }
 
         public void ReadyForRF(PlayerSkill ps)

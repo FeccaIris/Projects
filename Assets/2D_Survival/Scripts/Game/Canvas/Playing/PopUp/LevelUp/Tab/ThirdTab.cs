@@ -21,7 +21,7 @@ namespace SV
                 b.onClick.AddListener(delegate ()
                 {
                     _ps.SkillReinforce(b._cat);
-                    _owner._secondTab.UpdateButtonLevel();
+                    //_owner._secondTab.UpdateButtonLevel();
 
                     _owner.CloseAll();
                 });

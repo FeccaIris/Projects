@@ -15,6 +15,7 @@ namespace SV
         SPEED,
         PIERCE,
         INTERVAL,
+        SIZE,
     }
 
     public class SecondTab : LevelUpPU
@@ -33,6 +34,8 @@ namespace SV
                 Debug.Log($"{b}{b._index}");
                 b.onClick.AddListener(delegate ()
                 {
+                    b._ps.SkillReinforce(b._cat);
+
                     _owner.CloseAll();
                 });
             }
@@ -40,13 +43,16 @@ namespace SV
             base.Init(owner);
         }
 
-        public void SetButtons()  
+        public void SetButton(PlayerSkill ps)  
         {
-            Test();
-
-
-
-            gameObject.SetActive(true);
+            foreach(Button_LevelUp b in _buttons)
+            {
+                if(ps._index == b._index)
+                {
+                    b._ps = ps;
+                    break;
+                }
+            }
         }
 
         public void UpdateButtonLevel()
@@ -58,115 +64,55 @@ namespace SV
             }
         }
 
-        public void Test()      // 강화 항목 무작위 선택, 버튼에 할당
+        public void ReadyReinforce()      // 강화 항목 무작위 선택, 버튼에 할당
         {
-            int selectN;
-            selectN = Random.Range(0, 3);
+            int normal;
+            normal = Random.Range(0, 3);
 
-            if (SkillManager.I._skList.Count < 1)
-                return;
-            foreach(PlayerSkill k in SkillManager.I._skList)
+            foreach(Button_LevelUp b in _buttons)
             {
-                if(k._index == selectN)
+                if(b._index == normal)
                 {
-                    // 노멀
+                    Test2(b, true);
                 }
                 else
                 {
-                    // 리스크/강화 x2
+                    Test2(b);
                 }
             }
 
-            
+            gameObject.SetActive(true);
         }
-        public void Test2(PlayerSkill ps)
+        public void Test2(Button_LevelUp b, bool normal = false)
         {
-            List<Category> cat = new List<Category> { Category.COOL, Category.DAMAGE, Category.INTERVAL };
+            PlayerSkill ps = b._ps;
 
-            if (ps != null)
+            List<Category> cats = new List<Category> { Category.DAMAGE, Category.SIZE };
+
+            if (ps._hasCool)
             {
-                if (ps._isProjectile == true)
-                {
-                    cat.Add(Category.PIERCE);
-                    cat.Add(Category.SPEED);
-                    cat.Add(Category.EA);
-                }
-                else
-                {
-                    cat.Add(Category.MAINTAIN);
-                }
+                cats.Add(Category.COOL);
             }
-
-            int r1 = Random.Range(0, cat.Count);
-            int r2, r3;
-
-            while (true)
+            if (ps._isProjectile)
             {
-                r2 = Random.Range(0, cat.Count);
-                if (r1 != r2) break;
-            }
-            while (true)
-            {
-                r3 = Random.Range(0, cat.Count);
-                if (r3 != r2 && r3 != r1) break;
-            }
-
-            Category c1, c2, c3;
-            c1 = cat[r1];
-            c2 = cat[r2];
-            c3 = cat[r3];
-            List<Category> list = new List<Category> { c1, c2, c3 };
-
-            for (int i = 0; i < _buttons.Count; i++)
-            {
-                _buttons[i]._cat = list[i];
-
-                Text t = _buttons[i].transform.Find("Text").GetComponent<Text>();
-                //t.text = list[i].ToString();
-                switch (list[i])
+                cats.Add(Category.PIERCE);
+                cats.Add(Category.SPEED);
+                cats.Add(Category.EA);
+                if (ps._ea > 1)
                 {
-                    case Category.DAMAGE:
-                        {
-                            t.text = "공격력 증가";
-                            break;
-                        }
-                    case Category.COOL:
-                        {
-                            t.text = "쿨타임 감소";
-                            break;
-                        }
-                    case Category.EA:
-                        {
-                            t.text = "개수 증가";
-                            break;
-                        }
-                    case Category.INTERVAL:
-                        {
-                            t.text = "피해간격 감소";
-                            break;
-                        }
-                    case Category.MAINTAIN:
-                        {
-                            t.text = "유지시간 증가";
-                            break;
-                        }
-                    case Category.PIERCE:
-                        {
-                            t.text = "관통력 증가";
-                            break;
-                        }
-                    case Category.REACH:
-                        {
-                            t.text = "사거리 증가";
-                            break;
-                        }
-                    case Category.SPEED:
-                        {
-                            t.text = "속도 증가";
-                            break;
-                        }
+                    cats.Add(Category.INTERVAL);
                 }
             }
+            else
+            {
+                cats.Add(Category.MAINTAIN);
+                if (ps._doesStay)
+                {
+                    cats.Add(Category.INTERVAL);
+                }
+            }
+
+            //ps.SkillReinforce(cat);
         }
     }
 }

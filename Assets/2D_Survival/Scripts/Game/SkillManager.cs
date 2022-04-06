@@ -99,6 +99,11 @@ namespace SV
                         _interval *= 0.9f;
                         break;
                     }
+                case Category.SIZE:
+                    {
+                        _size *= 1.33f;
+                        break;
+                    }
                 default:
                     break;
             }
@@ -150,6 +155,8 @@ namespace SV
         {
             PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, stay: stay, rdP: rdP);
             _skList.Add(ps);
+
+            UIManager.I._lvUp._secondTab.SetButton(ps);
         }
 
         public void SetAndActivate(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)

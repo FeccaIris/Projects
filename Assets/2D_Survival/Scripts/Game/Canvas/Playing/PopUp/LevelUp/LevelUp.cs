@@ -31,8 +31,7 @@ namespace SV
         public void LevelUP()
         {
             OffAll();
-            _secondTab.SetButtons();
-
+            _secondTab.ReadyReinforce();
             gameObject.SetActive(true);
         }
 

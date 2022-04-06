@@ -461,6 +461,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  _index: 0
   _ps:
     _player: {fileID: 0}
     _index: 0
@@ -471,10 +472,6 @@ MonoBehaviour:
     _isProjectile: 0
     _isRandom: 0
     _doesStay: 0
-    _doesMove: 0
-    _hasTarget: 0
-    _isMultiple: 0
-    _doesMultihit: 0
     _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
     _ea: 0
@@ -1409,6 +1406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _owner: {fileID: 0}
+  _buttons: []
 --- !u!1 &208582995
 GameObject:
   m_ObjectHideFlags: 0
@@ -2555,6 +2553,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  _index: 0
   _ps:
     _player: {fileID: 0}
     _index: 0
@@ -2565,10 +2564,6 @@ MonoBehaviour:
     _isProjectile: 0
     _isRandom: 0
     _doesStay: 0
-    _doesMove: 0
-    _hasTarget: 0
-    _isMultiple: 0
-    _doesMultihit: 0
     _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
     _ea: 0
@@ -5439,6 +5434,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  _index: 0
   _ps:
     _player: {fileID: 0}
     _index: 0
@@ -5449,10 +5445,6 @@ MonoBehaviour:
     _isProjectile: 0
     _isRandom: 0
     _doesStay: 0
-    _doesMove: 0
-    _hasTarget: 0
-    _isMultiple: 0
-    _doesMultihit: 0
     _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
     _ea: 0
@@ -6332,6 +6324,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  _index: 0
   _ps:
     _player: {fileID: 0}
     _index: 0
@@ -6342,10 +6335,6 @@ MonoBehaviour:
     _isProjectile: 0
     _isRandom: 0
     _doesStay: 0
-    _doesMove: 0
-    _hasTarget: 0
-    _isMultiple: 0
-    _doesMultihit: 0
     _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
     _ea: 0
@@ -6485,10 +6474,6 @@ MonoBehaviour:
     _isProjectile: 0
     _isRandom: 0
     _doesStay: 0
-    _doesMove: 0
-    _hasTarget: 0
-    _isMultiple: 0
-    _doesMultihit: 0
     _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
     _ea: 0
@@ -9214,6 +9199,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  _index: 0
   _ps:
     _player: {fileID: 0}
     _index: 0
@@ -9224,10 +9210,6 @@ MonoBehaviour:
     _isProjectile: 0
     _isRandom: 0
     _doesStay: 0
-    _doesMove: 0
-    _hasTarget: 0
-    _isMultiple: 0
-    _doesMultihit: 0
     _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
     _ea: 0
@@ -10288,6 +10270,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  _index: 0
   _ps:
     _player: {fileID: 0}
     _index: 0
@@ -10298,10 +10281,6 @@ MonoBehaviour:
     _isProjectile: 0
     _isRandom: 0
     _doesStay: 0
-    _doesMove: 0
-    _hasTarget: 0
-    _isMultiple: 0
-    _doesMultihit: 0
     _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
     _ea: 0
@@ -11060,6 +11039,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  _index: 0
   _ps:
     _player: {fileID: 0}
     _index: 0
@@ -11070,10 +11050,6 @@ MonoBehaviour:
     _isProjectile: 0
     _isRandom: 0
     _doesStay: 0
-    _doesMove: 0
-    _hasTarget: 0
-    _isMultiple: 0
-    _doesMultihit: 0
     _targetPos: {x: 0, y: 0, z: 0}
     _cool: 0
     _ea: 0

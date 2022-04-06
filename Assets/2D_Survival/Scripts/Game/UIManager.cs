@@ -118,6 +118,7 @@ namespace SV
         public void UpdateIconLevel(int id, int level)
         {
             _lvList[id].text = $"Lv.{level}";
+            _lvUp._secondTab.UpdateButtonLevel();
         }
     }
 }

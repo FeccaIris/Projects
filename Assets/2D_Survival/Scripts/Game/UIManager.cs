@@ -51,8 +51,8 @@ namespace SV
             _icon_2 = play.Find("UI").Find("2").gameObject;
             _icon_3 = play.Find("UI").Find("3").gameObject;
 
-            _icon_2.SetActive(false);
-            _icon_3.SetActive(false);
+            //_icon_2.SetActive(false);
+            //_icon_3.SetActive(false);
 
             _lv_1 = _icon_1.transform.Find("Text").GetComponent<Text>();
             _lv_2 = _icon_2.transform.Find("Text").GetComponent<Text>();
@@ -115,10 +115,10 @@ namespace SV
             SkillManager.I.SetAndActivate(SkillManager.I._skList[2], ea: 70, dmg: 10, interval: 0.05f, spd: 250.0f, size: 1.5f, cool: 4.0f);
         }
         */
-        public void UpdateIconLevel(int id, int level)
+        public void UpdateIconLevel(PlayerSkill ps)
         {
-            _lvList[id].text = $"Lv.{level}";
-            _lvUp._secondTab.UpdateButtonLevel();
+            _lvList[ps._index].text = $"Lv.{ps._level}";
+            _lvUp._secondTab.UpdateButtonLevel(ps);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace SV
         public void SkillReinforce(Category cat)
         {
             _level++;
-            UIManager.I.UpdateIconLevel(_index, _level);
+            UIManager.I.UpdateIconLevel(this);
 
             switch (cat)
             {

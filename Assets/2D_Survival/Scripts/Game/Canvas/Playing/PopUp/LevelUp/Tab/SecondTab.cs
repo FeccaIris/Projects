@@ -31,7 +31,8 @@ namespace SV
             {
                 Button_LevelUp b = _buttons[i];
                 b._index = i;
-                Debug.Log($"{b}{b._index}");
+                b.Init();
+
                 b.onClick.AddListener(delegate ()
                 {
                     b._ps.SkillReinforce(b._cat);
@@ -55,12 +56,12 @@ namespace SV
             }
         }
 
-        public void UpdateButtonLevel()
+        public void UpdateButtonLevel(PlayerSkill ps)
         {
             foreach(Button_LevelUp b in _buttons)
             {
-                Text t = b.transform.Find("Image").Find("Level").GetComponent<Text>();
-                t.text = $"Lv.{b._ps._level}";
+                if(b._ps == ps)
+                    b._lv.text = $"Lv.{b._ps._level}";
             }
         }
 
@@ -73,17 +74,17 @@ namespace SV
             {
                 if(b._index == normal)
                 {
-                    Test2(b, true);
+                    FixCategory(b, true);
                 }
                 else
                 {
-                    Test2(b);
+                    FixCategory(b);
                 }
             }
 
             gameObject.SetActive(true);
         }
-        public void Test2(Button_LevelUp b, bool normal = false)
+        public void FixCategory(Button_LevelUp b, bool normal = false)  // foreach 3회 호출
         {
             PlayerSkill ps = b._ps;
 
@@ -112,7 +113,56 @@ namespace SV
                 }
             }
 
-            //ps.SkillReinforce(cat);
+            int random = Random.Range(0, cats.Count);
+            b._cat = cats[random];
+
+            switch (cats[random])
+            {
+                case Category.DAMAGE:
+                    {
+                        b._txt.text = "공격력 증가";
+                        break;
+                    }
+                case Category.SIZE:
+                    {
+                        b._txt.text = "크기 증가";
+                        break;
+                    }
+                case Category.COOL:
+                    {
+                        b._txt.text = "쿨타임 감소";
+                        break;
+                    }
+                case Category.PIERCE:
+                    {
+                        b._txt.text = "관통 횟수 증가";
+                        break;
+                    }
+                case Category.SPEED:
+                    {
+                        b._txt.text = "속도 증가";
+                        break;
+                    }
+                case Category.EA:
+                    {
+                        b._txt.text = "개수 증가";
+                        break;
+                    }
+                case Category.INTERVAL:
+                    {
+                        b._txt.text = "발동 간격 감소";
+                        break;
+                    }
+                case Category.MAINTAIN:
+                    {
+                        b._txt.text = "지속시간 증가";
+                        break;
+                    }
+                default:
+                    {
+                        break;
+                    }
+            }
         }
     }
 }

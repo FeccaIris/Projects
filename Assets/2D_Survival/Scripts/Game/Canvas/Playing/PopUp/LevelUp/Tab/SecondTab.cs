@@ -107,10 +107,7 @@ namespace SV
             else
             {
                 cats.Add(Category.MAINTAIN);
-                if (ps._doesStay)
-                {
-                    cats.Add(Category.INTERVAL);
-                }
+                cats.Add(Category.INTERVAL);
             }
 
             int random = Random.Range(0, cats.Count);

@@ -73,9 +73,6 @@ namespace SV
                     }
                 case Category.MAINTAIN:
                     {
-                        if (_doesStay != true)
-                            _doesStay = true;
-
                         _maintain *= 1.5f;
                         break;
                     }
@@ -109,7 +106,7 @@ namespace SV
             }
         }
 
-        public PlayerSkill(bool hasC, bool pj, bool stay, bool rdP)
+        public PlayerSkill(bool hasC, bool pj, bool rdP)
         {
             _player = Player.I;
             _index = SkillManager.I._skList.Count;
@@ -117,7 +114,6 @@ namespace SV
             _hasCool = hasC;
             _isProjectile = pj;
 
-            _doesStay = stay;
             _isRandom = rdP;
         }
     }
@@ -144,7 +140,7 @@ namespace SV
             AcquireNew();   // 기본 투사체
             SetAndActivate(_skList[0], size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);
             
-            AcquireNew(pj: false, stay: false);
+            AcquireNew(pj: false);
             SetAndActivate(_skList[1], size: 20.0f, mntn: 0.5f, cool: 3.0f, interval: 0.2f);
 
             AcquireNew();
@@ -153,7 +149,7 @@ namespace SV
 
         public void AcquireNew(bool hasC = true, bool pj = true, bool stay = true, bool rdP = false)
         {
-            PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, stay: stay, rdP: rdP);
+            PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, rdP: rdP);
             _skList.Add(ps);
 
             UIManager.I._lvUp._secondTab.SetButton(ps);

@@ -25,26 +25,42 @@ namespace SV
 
         public virtual void Init(PlayerSkill ps)
         {
-            if(_rgd == null)
+            if (_rgd == null)
                 _rgd = GetComponent<Rigidbody2D>();
-            if(_sprite == null)
+            if (_sprite == null)
                 _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            if(_player == null)
+            if (_player == null)
                 _player = Player.I;
             if (_col == null)
                 _col = GetComponent<Collider2D>();
 
             _ps = ps;
+            if (!_ps._isProjectile)
+            {
+                _sprite.color = new Color(_sprite.color.r, _sprite.color.g, _sprite.color.b, 100);
+            }
 
+            switch (_ps._index)
+            {
+                case 0:
+                    {
+                        _sprite.color = Color.blue;
+                        break;
+                    }
+                case 1:
+                    {
+                        _sprite.color = Color.red;
+                        break;
+                    }
+                case 2:
+                    {
+                        _sprite.color = Color.green;
+                        break;
+                    }
+                default:
+                    break;
+            }
             transform.localScale *= _ps._size;
-            if (_ps._index.Equals(1))
-            {
-                _sprite.color = new Color(255, 255, 255);
-            }
-            else if (_ps._index.Equals(2))
-            {
-                _sprite.color = new Color(255, 255, 255);
-            }
 
             Active();
         }

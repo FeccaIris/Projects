@@ -48,7 +48,12 @@ namespace SV
                 _hpTemp -= 2;
             else if (_size < 1.0f)
                 _hpTemp -= 1;
-            _hp = _hpTemp;
+
+            if (this is Walker)
+                _hp = _hpTemp;
+            else if (this is Charger)
+                _hp = 1;
+
             // 크기 무작위 설정
             //_exp += (int)_hpTemp / 10;
 
@@ -56,7 +61,7 @@ namespace SV
         }
         protected virtual void FixedUpdate()
         {
-            if (GameManager.I._playing == true)
+            if (GameManager.I._isPlaying == true)
             {
                 if (_player != null)
                 {

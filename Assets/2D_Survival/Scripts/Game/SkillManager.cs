@@ -9,6 +9,18 @@ namespace SV
     public class PlayerSkill
     {
         public Player _player;
+        public Dictionary<Category, int> _categoryLevels = new Dictionary<Category, int>
+        {
+            {Category.DAMAGE, 1 },
+            {Category.COOL, 1 },
+            {Category.EA, 1 },
+            {Category.INTERVAL, 1 },
+            {Category.MAINTAIN, 1 },
+            {Category.PIERCE, 1 },
+            {Category.REACH, 1 },
+            {Category.SIZE, 1 },
+            {Category.SPEED, 1 },
+        };
 
         public int _index;
         public int _level = 1;
@@ -16,19 +28,13 @@ namespace SV
         public int _dmg = 1;
         public float _size = 1.0f;
 
-        #region Boolean
-        public bool _hasCool;           // 쿨타임
-        
+        #region Boolean  
         public bool _isProjectile;      // 관통횟수, 발사개수 1개 이상일 시 공격속도
         
         public bool _isRandom;          // 무작위 목표 여부
-        public bool _doesStay;          // Area :: 유지시간, 공격속도
         
 
         
-
-
-
         #endregion
 
         #region Property
@@ -50,6 +56,7 @@ namespace SV
         {
             _level++;
             UIManager.I.UpdateIconLevel(this);
+            _categoryLevels[cat]++;
 
             switch (cat)
             {
@@ -111,9 +118,7 @@ namespace SV
             _player = Player.I;
             _index = SkillManager.I._skList.Count;
 
-            _hasCool = hasC;
             _isProjectile = pj;
-
             _isRandom = rdP;
         }
     }
@@ -183,7 +188,7 @@ namespace SV
         {
             // 코루틴 추가 생성 => 스킬 발동과 동시에 쿨타임 발생
 
-            while (GameManager.I._playing == true)
+            while (GameManager.I._isPlaying == true)
             {
                 Vector3 rPos = Vector3.zero;
 
@@ -236,7 +241,7 @@ namespace SV
         }
         IEnumerator Area(PlayerSkill ps)
         {
-            while(GameManager.I._playing == true)
+            while(GameManager.I._isPlaying == true)
             {
                 GameObject go = GameManager.I.GetPoolObject(GameManager.I._skill);
 

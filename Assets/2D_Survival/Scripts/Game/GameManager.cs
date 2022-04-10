@@ -12,7 +12,6 @@ namespace SV
     public class GameManager : MonoBehaviour
     {
         public static GameManager I;
-
         
         public Queue<GameObject> _poolSkill = new Queue<GameObject>();
         public Queue<GameObject> _poolWalker = new Queue<GameObject>();
@@ -24,7 +23,7 @@ namespace SV
 
         public List<Enemy> _enemies;
 
-        public bool _playing = true;
+        public bool _isPlaying = false;
 
         float _spawnRange = 60.0f;
         float _walkerCool = 3.0f;
@@ -63,10 +62,12 @@ namespace SV
 
             StartCoroutine(SpawnWalker());
             StartCoroutine(SpawnCharger());
+
+            _isPlaying = true;
         }
         private void FixedUpdate()
         {
-            if (_playing)
+            if (_isPlaying)
             {
                 _gameTime += Time.fixedDeltaTime * Time.timeScale;
                 _elapsed += Time.fixedDeltaTime * Time.timeScale;
@@ -97,12 +98,12 @@ namespace SV
 
         public void GameOver()
         {
-            _playing = false;
+            _isPlaying = false;
             UIManager.I.GameOver();
         }
         public void GameClear()
         {
-            _playing = false;
+            _isPlaying = false;
             UIManager.I.GameOver(true);
         }
 
@@ -194,7 +195,7 @@ namespace SV
 
         IEnumerator SpawnWalker()
         {
-            while (_playing == true)
+            while (_isPlaying == true)
             {
                 if (_enemies.Count >= _maxEnemies)
                     yield return new WaitUntil(() => _enemies.Count < _maxEnemies);
@@ -243,7 +244,7 @@ namespace SV
         }
         IEnumerator SpawnCharger()
         {
-            while (_playing == true)
+            while (_isPlaying == true)
             {
                 yield return new WaitUntil(() => _gameTime >= 20.0f);
 

@@ -10,6 +10,7 @@ namespace SV
     {
         public static UIManager I;
 
+        SelectSkill _selectSkill;
         public GameObject _playing;
         public GameOver _gameOver;
 
@@ -28,7 +29,6 @@ namespace SV
 
         public LevelUp _lvUp;
 
-
         void Awake()
         {
             I = this;
@@ -36,9 +36,13 @@ namespace SV
 
         public void Init()
         {
+            _selectSkill = transform.Find("SelectSkill").GetComponent<SelectSkill>();
             _playing = transform.Find("Playing").gameObject;
             _gameOver = transform.Find("GameOver").GetComponent<GameOver>();
 
+            _selectSkill.Init();
+            if(_playing.activeSelf != true)
+                _playing.SetActive(true);
             _gameOver.Init();
 
             Transform play = transform.Find("Playing");
@@ -50,9 +54,6 @@ namespace SV
             _icon_1 = play.Find("UI").Find("1").gameObject;
             _icon_2 = play.Find("UI").Find("2").gameObject;
             _icon_3 = play.Find("UI").Find("3").gameObject;
-
-            //_icon_2.SetActive(false);
-            //_icon_3.SetActive(false);
 
             _lv_1 = _icon_1.transform.Find("Text").GetComponent<Text>();
             _lv_2 = _icon_2.transform.Find("Text").GetComponent<Text>();
@@ -75,7 +76,7 @@ namespace SV
 
         public void FixedUpdate()
         {
-            if (GameManager.I._playing)
+            if (GameManager.I._isPlaying)
             {
                 float time = GameManager.I._gameTime;
                 TimeSpan t = new TimeSpan(0, 0, (int)time);
@@ -97,28 +98,10 @@ namespace SV
         {
             _lvUp.LevelUP();
         }
-        /*
-        public void AcquireSecond()
-        {
-            // 정면
-            _icon_2.SetActive(true);
-            _lvUp.AcquireNew(2);    // UI
-            SkillManager.I.AcquireNew();
-            SkillManager.I.SetAndActivate(SkillManager.I._skList[1], ea: 7, rch: 20.0f, cool: 2.0f, dmg: 1, interval: 0.1f, size: 5, pierce: 500, spd: 150.0f);
-        }
-        public void AcquireThird()
-        {
-            // 무작위
-            _icon_3.SetActive(true);
-            _lvUp.AcquireNew(3);
-            SkillManager.I.AcquireNew();
-            SkillManager.I.SetAndActivate(SkillManager.I._skList[2], ea: 70, dmg: 10, interval: 0.05f, spd: 250.0f, size: 1.5f, cool: 4.0f);
-        }
-        */
+
         public void UpdateIconLevel(PlayerSkill ps)
         {
             _lvList[ps._index].text = $"Lv.{ps._level}";
-            _lvUp._secondTab.UpdateButtonLevel(ps);
         }
     }
 }

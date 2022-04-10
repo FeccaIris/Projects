@@ -32,7 +32,7 @@ namespace SV
 
             if (h != 0 || v != 0)
             {
-                if (GameManager.I._playing == true)
+                if (GameManager.I._isPlaying == true)
                 {
                     //Move(h, v);
                     _direction = new Vector3(h, v, 0).normalized;
@@ -45,7 +45,7 @@ namespace SV
                 //_direction *= _moveSpeed * Time.timeScale;
             }
 
-            if (GameManager.I._playing == true)
+            if (GameManager.I._isPlaying == true)
             {
                 _look = _direction;
                 _direction *= _moveSpeed * Time.timeScale;

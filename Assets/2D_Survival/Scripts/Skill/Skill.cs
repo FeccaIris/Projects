@@ -44,17 +44,17 @@ namespace SV
             {
                 case 0:
                     {
-                        _sprite.color = Color.blue;
+                        _sprite.color = Color.red;
                         break;
                     }
                 case 1:
                     {
-                        _sprite.color = Color.red;
+                        _sprite.color = Color.green;
                         break;
                     }
                 case 2:
                     {
-                        _sprite.color = Color.green;
+                        _sprite.color = Color.blue;
                         break;
                     }
                 default:

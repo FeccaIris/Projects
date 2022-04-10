@@ -56,15 +56,6 @@ namespace SV
             }
         }
 
-        public void UpdateButtonLevel(PlayerSkill ps)
-        {
-            foreach(Button_LevelUp b in _buttons)
-            {
-                if(b._ps == ps)
-                    b._lv.text = $"Lv.{b._ps._level}";
-            }
-        }
-
         public void ReadyReinforce()      // 강화 항목 무작위 선택, 버튼에 할당
         {
             int normal;
@@ -88,12 +79,8 @@ namespace SV
         {
             PlayerSkill ps = b._ps;
 
-            List<Category> cats = new List<Category> { Category.DAMAGE, Category.SIZE };
+            List<Category> cats = new List<Category> { Category.COOL, Category.DAMAGE, Category.SIZE };
 
-            if (ps._hasCool)
-            {
-                cats.Add(Category.COOL);
-            }
             if (ps._isProjectile)
             {
                 cats.Add(Category.PIERCE);
@@ -112,6 +99,7 @@ namespace SV
 
             int random = Random.Range(0, cats.Count);
             b._cat = cats[random];
+            b._lv.text = $"Lv. {ps._categoryLevels[cats[random]].ToString()}";
 
             switch (cats[random])
             {
@@ -132,7 +120,7 @@ namespace SV
                     }
                 case Category.PIERCE:
                     {
-                        b._txt.text = "관통 횟수 증가";
+                        b._txt.text = "관통횟수 증가";
                         break;
                     }
                 case Category.SPEED:
@@ -147,7 +135,7 @@ namespace SV
                     }
                 case Category.INTERVAL:
                     {
-                        b._txt.text = "발동 간격 감소";
+                        b._txt.text = "발동간격 감소";
                         break;
                     }
                 case Category.MAINTAIN:

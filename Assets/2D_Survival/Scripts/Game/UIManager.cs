@@ -41,8 +41,8 @@ namespace SV
             _gameOver = transform.Find("GameOver").GetComponent<GameOver>();
 
             _selectSkill.Init();
-            if(_playing.activeSelf != true)
-                _playing.SetActive(true);
+            if(_playing.activeSelf == true)
+                _playing.SetActive(false);
             _gameOver.Init();
 
             Transform play = transform.Find("Playing");
@@ -73,7 +73,15 @@ namespace SV
             
             _lvUp.Init();
         }
+        public void GameStart()
+        {
+            if(_selectSkill.gameObject.activeSelf == true)
+                _selectSkill.gameObject.SetActive(false);
+            if (_gameOver.gameObject.activeSelf == true)
+                _gameOver.gameObject.SetActive(false);
 
+            _playing.SetActive(true);
+        }
         public void FixedUpdate()
         {
             if (GameManager.I._isPlaying)

@@ -51,19 +51,25 @@ namespace SV
             _walker = Resources.Load("Walker") as GameObject;
             _charger = Resources.Load("Charger") as GameObject;
 
-            CreatePoolObject(_walker, 50);
+            CreatePoolObject(_walker, 500);
             CreatePoolObject(_skill, 100);
-            CreatePoolObject(_charger, 50);
+            CreatePoolObject(_charger, 500);
 
             UIManager.I.Init();
             SkillManager.I.Init();
             LevelManager.I.Init();
             Player.I.Init();
-
+        }
+        public void GameStart()
+        {
+            _isPlaying = true;
+            /// 스폰 시작
             StartCoroutine(SpawnWalker());
             StartCoroutine(SpawnCharger());
 
-            _isPlaying = true;
+            UIManager.I.GameStart();
+            /// 임시 => 추후 인트로에서 선택하여 스킬 습득하는 방식으로 변경
+            SkillManager.I.GameStart();
         }
         private void FixedUpdate()
         {
@@ -176,17 +182,20 @@ namespace SV
         {
             Queue<GameObject> pool = null;
 
-            if (pf.name.Equals("Skill"))
+            if (pf.tag.Equals("Attack"))
             {
                 pool = _poolSkill;
             }
-            else if (pf.name.Equals("Walker"))
+            else if (pf.tag.Equals("Enemy"))
             {
-                pool = _poolWalker;
-            }
-            else if (pf.name.Equals("Charger"))
-            {
-                pool = _poolCharger;
+                Enemy e = pf.GetComponent<Enemy>();
+                if (e != null)
+                {
+                    if (e is Walker)
+                        pool = _poolWalker;
+                    else if (e is Charger)
+                        pool = _poolCharger;
+                }
             }
 
             if (pool != null)

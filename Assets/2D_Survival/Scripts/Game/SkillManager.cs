@@ -141,17 +141,18 @@ namespace SV
         {
             _player = Player.I;
             _skList = new List<PlayerSkill>();
-
+        }
+        public void GameStart()
+        {
             AcquireNew();   // 기본 투사체
             SetAndActivate(_skList[0], size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);
-            
+
             AcquireNew(pj: false);
             SetAndActivate(_skList[1], size: 20.0f, mntn: 0.5f, cool: 3.0f, interval: 0.2f);
 
             AcquireNew();
             SetAndActivate(_skList[2], size: 3.0f, mntn: 3.0f, spd: 50.0f, interval: 0.1f, pierce: 3);
         }
-
         public void AcquireNew(bool hasC = true, bool pj = true, bool stay = true, bool rdP = false)
         {
             PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, rdP: rdP);
@@ -186,57 +187,60 @@ namespace SV
         
         IEnumerator Projectile(PlayerSkill ps)
         {
-            // 코루틴 추가 생성 => 스킬 발동과 동시에 쿨타임 발생
-
-            while (GameManager.I._isPlaying == true)
+            while (true)
             {
-                Vector3 rPos = Vector3.zero;
-
-                int ea = ps._ea;
-                for (int i = 0; i < ea; i++)
+                if (GameManager.I._isPlaying == true)
                 {
-                    GameObject go = GameManager.I.GetPoolObject(GameManager.I._skill);
+                    Vector3 rPos = Vector3.zero;
 
-                    if (ps._isRandom)
+                    int ea = ps._ea;
+                    for (int i = 0; i < ea; i++)
                     {
-                        while (true)
-                        {
-                            float x = Random.Range(-1, 1.1f);
-                            float y = Random.Range(-1, 1.1f);
-                            Vector3 pos = new Vector3(x, y, 0);
-                            pos = pos.normalized;
+                        GameObject go = GameManager.I.GetPoolObject(GameManager.I._skill);
 
-                            if (rPos != pos)
+                        if (ps._isRandom)
+                        {
+                            while (true)
                             {
-                                rPos = pos;
-                                break;
+                                float x = Random.Range(-1, 1.1f);
+                                float y = Random.Range(-1, 1.1f);
+                                Vector3 pos = new Vector3(x, y, 0);
+                                pos = pos.normalized;
+
+                                if (rPos != pos)
+                                {
+                                    rPos = pos;
+                                    break;
+                                }
+                                yield return null;
                             }
-                            yield return null;
-                        }
 
-                        ps._targetPos = rPos;
-                    }
-                    else
-                    {
-                        if (_player._target == null)
-                            yield return new WaitUntil(() => _player._target != null);
+                            ps._targetPos = rPos;
+                        }
                         else
-                            yield return new WaitUntil(() => ps._reach >= _player._distance);
-
-                        if (_player._target != null)
                         {
-                            Vector3 dir = _player._target.position - transform.position;
-                            ps._targetPos = dir.normalized;
+                            if (_player._target == null)
+                                yield return new WaitUntil(() => _player._target != null);
+                            else
+                                yield return new WaitUntil(() => ps._reach >= _player._distance);
+
+                            if (_player._target != null)
+                            {
+                                Vector3 dir = _player._target.position - transform.position;
+                                ps._targetPos = dir.normalized;
+                            }
                         }
+
+                        Skill k = go.GetComponent<Skill>();
+                        k.Init(ps);
+
+                        yield return new WaitForSeconds(ps._interval);
                     }
 
-                    Skill k = go.GetComponent<Skill>();
-                    k.Init(ps);
-
-                    yield return new WaitForSeconds(ps._interval);
+                    yield return new WaitForSeconds(ps._cool);
                 }
 
-                yield return new WaitForSeconds(ps._cool);
+                yield return null;
             }
         }
         IEnumerator Area(PlayerSkill ps)

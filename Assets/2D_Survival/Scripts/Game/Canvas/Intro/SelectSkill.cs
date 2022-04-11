@@ -7,11 +7,18 @@ namespace SV
 {
     public class SelectSkill : MonoBehaviour
     {
-        Button _start;
+        List<Button> _buttons = new List<Button>();
 
         public void Init()
         {
-            gameObject.SetActive(false); //temp
+            _buttons.AddRange(transform.Find("Buttons").GetComponentsInChildren<Button>());
+            foreach(Button b in _buttons)
+            {
+                b.onClick.AddListener(delegate ()
+                {
+                    GameManager.I.GameStart();
+                });
+            }
         }
     }
 }

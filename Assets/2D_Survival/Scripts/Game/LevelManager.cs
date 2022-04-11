@@ -10,7 +10,7 @@ namespace SV
         public static LevelManager I;
 
         public Expbar _expB;
-
+        public bool TEST = true;
         [SerializeField] int _lv = 1;
         [SerializeField] int _exp;
         [SerializeField] int _expNeed;
@@ -75,6 +75,8 @@ namespace SV
         }
         void LevelUp()
         {
+            if (TEST == false) return;
+
             int exceed = _exp - _expNeed;
             Time.timeScale = 0;
 

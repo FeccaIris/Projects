@@ -37,6 +37,9 @@ namespace SV
             Sequence1();
         }
 
+        /// <summary>
+        /// 투사체 여부 결정
+        /// </summary>
         public void Sequence1()
         {
             int p = Random.Range(0, 2);
@@ -55,6 +58,13 @@ namespace SV
                 default: break;
             }
 
+            Sequence2();
+        }
+        /// <summary>
+        /// 유형 설정
+        /// </summary>
+        public void Sequence2()
+        {
             int r = Random.Range(0, 3);
             switch (r)
             {
@@ -76,8 +86,14 @@ namespace SV
                 default: break;
             }
 
+            Sequence3();
+        }
+        /// <summary>
+        /// 속도, 관통, 유지, 개수, 크기, 데미지, 간격 설정
+        /// </summary>
+        public void Sequence3()
+        {
 
         }
-
     }
 }

@@ -113,13 +113,13 @@ namespace SV
             }
         }
 
-        public PlayerSkill(bool hasC, bool pj, bool rdP)
+        public PlayerSkill(bool pj, bool rd)
         {
             _player = Player.I;
             _index = SkillManager.I._skList.Count;
 
             _isProjectile = pj;
-            _isRandom = rdP;
+            _isRandom = rd;
         }
     }
 
@@ -153,9 +153,9 @@ namespace SV
             AcquireNew();
             SetAndActivate(_skList[2], size: 3.0f, mntn: 3.0f, spd: 50.0f, interval: 0.1f, pierce: 3);
         }
-        public void AcquireNew(bool hasC = true, bool pj = true, bool stay = true, bool rdP = false)
+        public void AcquireNew(bool pj = true, bool rd = false)
         {
-            PlayerSkill ps = new PlayerSkill(hasC: hasC, pj: pj, rdP: rdP);
+            PlayerSkill ps = new PlayerSkill(pj: pj, rd: rd);
             _skList.Add(ps);
 
             UIManager.I._lvUp._secondTab.SetButton(ps);

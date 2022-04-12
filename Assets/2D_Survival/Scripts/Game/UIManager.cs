@@ -77,6 +77,7 @@ namespace SV
         {
             if(_selectSkill.gameObject.activeSelf == true)
                 _selectSkill.gameObject.SetActive(false);
+
             if (_gameOver.gameObject.activeSelf == true)
                 _gameOver.gameObject.SetActive(false);
 

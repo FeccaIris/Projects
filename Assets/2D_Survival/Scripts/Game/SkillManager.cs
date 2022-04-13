@@ -32,6 +32,7 @@ namespace SV
         public bool _isProjectile;      // 관통횟수, 발사개수 1개 이상일 시 공격속도
         
         public bool _isRandom;          // 무작위 목표 여부
+        public bool _isStatic;
         
 
         
@@ -113,13 +114,14 @@ namespace SV
             }
         }
 
-        public PlayerSkill(bool pj, bool rd)
+        public PlayerSkill(bool pj, bool rd, bool st)
         {
             _player = Player.I;
             _index = SkillManager.I._skList.Count;
 
             _isProjectile = pj;
             _isRandom = rd;
+            _isStatic = st;
         }
     }
 
@@ -150,12 +152,12 @@ namespace SV
             AcquireNew(pj: false);
             SetAndActivate(_skList[1], size: 20.0f, mntn: 0.5f, cool: 3.0f, interval: 0.2f);
 
-            AcquireNew();
+            AcquireNew(rd: true);
             SetAndActivate(_skList[2], size: 3.0f, mntn: 3.0f, spd: 50.0f, interval: 0.1f, pierce: 3);
         }
-        public void AcquireNew(bool pj = true, bool rd = false)
+        public void AcquireNew(bool pj = true, bool rd = false, bool st = false)
         {
-            PlayerSkill ps = new PlayerSkill(pj: pj, rd: rd);
+            PlayerSkill ps = new PlayerSkill(pj: pj, rd: rd, st: st);
             _skList.Add(ps);
 
             UIManager.I._lvUp._secondTab.SetButton(ps);

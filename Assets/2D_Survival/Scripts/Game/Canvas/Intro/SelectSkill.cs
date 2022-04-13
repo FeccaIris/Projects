@@ -16,6 +16,8 @@ namespace SV
             _buttons.AddRange(transform.Find("Buttons").GetComponentsInChildren<Button_SelectSkill>());
             foreach(Button_SelectSkill b in _buttons)
             {
+                b.Init();
+
                 b.onClick.AddListener(delegate ()
                 {
                     _startCount++;

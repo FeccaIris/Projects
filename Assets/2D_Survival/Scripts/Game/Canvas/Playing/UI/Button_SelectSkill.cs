@@ -34,14 +34,20 @@ namespace SV
             _t1 = transform.Find("Text1").GetComponent<Text>();
             _t2 = transform.Find("Text2").GetComponent<Text>();
 
-            Sequence1();
+            onClick.AddListener(delegate ()
+            {
+                Debug.Log("delegate");
+                Sequence1();
+            });
         }
 
         /// <summary>
-        /// 투사체 여부 결정
+        /// 스킬 유형 결정
         /// </summary>
         public void Sequence1()
         {
+            Debug.Log("1");
+            /// 투사체 여부
             int p = Random.Range(0, 2);
             switch (p)
             {
@@ -58,13 +64,7 @@ namespace SV
                 default: break;
             }
 
-            Sequence2();
-        }
-        /// <summary>
-        /// 유형 설정
-        /// </summary>
-        public void Sequence2()
-        {
+            /// 추적, 무작위, 고정
             int r = Random.Range(0, 3);
             switch (r)
             {
@@ -84,6 +84,63 @@ namespace SV
                         break;
                     }
                 default: break;
+            }
+
+            Sequence2(_isProj, _prop);
+        }
+        /// <summary>
+        /// 유형별 능력치 설정
+        /// </summary>
+        public void Sequence2(bool proj, Property prop)
+        {
+            Debug.Log("2");
+            if (proj == true)
+            {
+                switch (prop)
+                {
+                    case Property.Target:
+                        {
+                            Debug.Log("?");
+                            SkillManager.I.AcquireNew();
+                            break;
+                        }
+                    case Property.Random:
+                        {
+                            Debug.Log("?");
+                            SkillManager.I.AcquireNew(rd: true);
+                            break;
+                        }
+                    case Property.Static:
+                        {
+                            Debug.Log("?");
+                            SkillManager.I.AcquireNew(st: true);
+                            break;
+                        }
+                }
+            }
+            else
+            {
+                switch (prop)
+                {
+                    case Property.Target:
+                        {
+                            Debug.Log("?");
+                            SkillManager.I.AcquireNew();
+                            break;
+                        }
+                    case Property.Random:
+                        {
+                            Debug.Log("?");
+                            SkillManager.I.AcquireNew(rd: true);
+                            break;
+                        }
+                    case Property.Static:
+                        {
+                            Debug.Log("?");
+                            SkillManager.I.AcquireNew(st: true);
+                            break;
+                        }
+                }
             }
 
             Sequence3();

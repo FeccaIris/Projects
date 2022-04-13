@@ -146,21 +146,20 @@ namespace SV
         }
         public void GameStart()
         {
-            AcquireNew();   // 기본 투사체
-            SetAndActivate(_skList[0], size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);
+            AcquireNew(size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);   // 기본 투사체
 
-            AcquireNew(pj: false);
-            SetAndActivate(_skList[1], size: 20.0f, mntn: 0.5f, cool: 3.0f, interval: 0.2f);
+            AcquireNew(pj: false, size: 20.0f, mntn: 0.5f, cool: 3.0f, interval: 0.2f);
 
-            AcquireNew(rd: true);
-            SetAndActivate(_skList[2], size: 3.0f, mntn: 3.0f, spd: 50.0f, interval: 0.1f, pierce: 3);
+            AcquireNew(rd: true, size: 3.0f, mntn: 3.0f, spd: 50.0f, interval: 0.1f, pierce: 3);
         }
-        public void AcquireNew(bool pj = true, bool rd = false, bool st = false)
+        public void AcquireNew(bool pj = true, bool rd = false, bool st = false, int dmg = 1, float cool = 1.0f, int ea = 1, float mntn = 2.0f, float rch = 15.0f, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
         {
             PlayerSkill ps = new PlayerSkill(pj: pj, rd: rd, st: st);
             _skList.Add(ps);
 
             UIManager.I._lvUp._secondTab.SetButton(ps);
+
+            SetAndActivate(ps, dmg: dmg, cool: cool, ea: ea, mntn: mntn,  rch: rch, spd: spd, pierce: pierce, interval: interval, size: size);
         }
 
         public void SetAndActivate(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)

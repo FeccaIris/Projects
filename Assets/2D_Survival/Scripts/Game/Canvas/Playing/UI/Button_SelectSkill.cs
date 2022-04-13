@@ -36,7 +36,6 @@ namespace SV
 
             onClick.AddListener(delegate ()
             {
-                Debug.Log("delegate");
                 Sequence1();
             });
         }
@@ -46,7 +45,6 @@ namespace SV
         /// </summary>
         public void Sequence1()
         {
-            Debug.Log("1");
             /// 투사체 여부
             int p = Random.Range(0, 2);
             switch (p)
@@ -93,26 +91,22 @@ namespace SV
         /// </summary>
         public void Sequence2(bool proj, Property prop)
         {
-            Debug.Log("2");
             if (proj == true)
             {
                 switch (prop)
                 {
                     case Property.Target:
                         {
-                            Debug.Log("?");
                             SkillManager.I.AcquireNew();
                             break;
                         }
                     case Property.Random:
                         {
-                            Debug.Log("?");
                             SkillManager.I.AcquireNew(rd: true);
                             break;
                         }
                     case Property.Static:
                         {
-                            Debug.Log("?");
                             SkillManager.I.AcquireNew(st: true);
                             break;
                         }
@@ -124,19 +118,16 @@ namespace SV
                 {
                     case Property.Target:
                         {
-                            Debug.Log("?");
                             SkillManager.I.AcquireNew();
                             break;
                         }
                     case Property.Random:
                         {
-                            Debug.Log("?");
                             SkillManager.I.AcquireNew(rd: true);
                             break;
                         }
                     case Property.Static:
                         {
-                            Debug.Log("?");
                             SkillManager.I.AcquireNew(st: true);
                             break;
                         }

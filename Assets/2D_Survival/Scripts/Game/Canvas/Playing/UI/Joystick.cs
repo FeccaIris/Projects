@@ -13,10 +13,14 @@ namespace SV
         Image _joystickImg;
         Vector3 _inputVector;
 
+        bool _isTouched = false;
+
         void Start()
         {
-            _bgImg = GetComponent<Image>();
-            _joystickImg = transform.GetChild(0).GetComponent<Image>();
+            _bgImg = transform.Find("Bg").GetComponent<Image>();
+            _joystickImg = _bgImg.transform.Find("Stick").GetComponent<Image>();
+
+            Show(false);
         }
 
         public float GetHorzontal()
@@ -32,6 +36,11 @@ namespace SV
             return _inputVector;
         }
 
+        void Show(bool show = true)
+        {
+            _bgImg.gameObject.SetActive(show);
+        }
+
         public virtual void OnDrag(PointerEventData ped)
         {
             RectTransform bg = _bgImg.rectTransform;
@@ -39,6 +48,7 @@ namespace SV
             Vector2 pedPos = ped.position;
             Vector2 pos;
 
+            /// bg의 위치, ped의 위치 비교
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(bg, pedPos, cam, out pos))
             {
                 pos.x = pos.x / _bgImg.rectTransform.sizeDelta.x * 2;
@@ -56,10 +66,16 @@ namespace SV
         }
         public virtual void OnPointerDown(PointerEventData ped)
         {
+            Show();
+
+            _bgImg.transform.position = ped.position;
+
             OnDrag(ped);
         }
         public virtual void OnPointerUp(PointerEventData ped)
         {
+            Show(false);
+
             _inputVector = Vector3.zero;
             _joystickImg.rectTransform.anchoredPosition = Vector3.zero;
         }

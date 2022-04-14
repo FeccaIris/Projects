@@ -34,16 +34,48 @@ namespace SV
             _t1 = transform.Find("Text1").GetComponent<Text>();
             _t2 = transform.Find("Text2").GetComponent<Text>();
 
+            _name.text = "";
+
+            FixSkillType();
+
             onClick.AddListener(delegate ()
             {
-                Sequence1();
+                SetSkill(_isProj, _prop);
             });
+        }
+
+        public void ChangeImage(int id)
+        {
+            switch (id)
+            {
+                case 0:
+                    {
+                        ShowImage(sq: true);
+                        break;
+                    }
+                case 1:
+                    {
+                        ShowImage(d: true);
+                        break;
+                    }
+                case 2:
+                    {
+                        ShowImage(c: true);
+                        break;
+                    }
+            }
+        }
+        void ShowImage(bool sq = false, bool d = false, bool c = false)
+        {
+            _square.gameObject.SetActive(sq);
+            _diamond.gameObject.SetActive(d);
+            _circle.gameObject.SetActive(c);
         }
 
         /// <summary>
         /// 스킬 유형 결정
         /// </summary>
-        public void Sequence1()
+        public void FixSkillType()
         {
             /// 투사체 여부
             int p = Random.Range(0, 2);
@@ -84,64 +116,87 @@ namespace SV
                 default: break;
             }
 
-            Sequence2(_isProj, _prop);
-        }
-        /// <summary>
-        /// 유형별 능력치 설정
-        /// </summary>
-        public void Sequence2(bool proj, Property prop)
-        {
-            if (proj == true)
+            if(_isProj! == true)
             {
-                switch (prop)
-                {
-                    case Property.Target:
-                        {
-                            SkillManager.I.AcquireNew();
-                            break;
-                        }
-                    case Property.Random:
-                        {
-                            SkillManager.I.AcquireNew(rd: true);
-                            break;
-                        }
-                    case Property.Static:
-                        {
-                            SkillManager.I.AcquireNew(st: true);
-                            break;
-                        }
-                }
+                _t1.text = "투사체";
             }
             else
             {
-                switch (prop)
-                {
-                    case Property.Target:
-                        {
-                            SkillManager.I.AcquireNew();
-                            break;
-                        }
-                    case Property.Random:
-                        {
-                            SkillManager.I.AcquireNew(rd: true);
-                            break;
-                        }
-                    case Property.Static:
-                        {
-                            SkillManager.I.AcquireNew(st: true);
-                            break;
-                        }
-                }
+                _t1.text = "영역형";
             }
 
-            Sequence3();
+            switch (_prop)
+            {
+                case Property.Target:
+                    {
+                        _t2.text = "적 지정";
+                        break;
+                    }
+                case Property.Random:
+                    {
+                        _t2.text = "무작위";
+                        break;
+                    }
+                case Property.Static:
+                    {
+                        _t2.text = "고정";
+                        break;
+                    }
+            }
         }
-        /// <summary>
-        /// 속도, 관통, 유지, 개수, 크기, 데미지, 간격 설정
-        /// </summary>
-        public void Sequence3()
-        {
 
+        /// <summary>
+        /// 스킬 생성
+        /// </summary>
+        public void SetSkill(bool proj, Property prop)
+        {
+            PlayerSkill ps = null;
+
+            switch (prop)
+            {
+                case Property.Target:
+                    {
+                        ps = SkillManager.I.AcquireNew(pj: proj);
+
+                        if(ps._isProjectile == true)
+                        {
+                            ps.SetSkill(dmg: 3, spd: 45);
+                        }
+                        else
+                        {
+                            ps.SetSkill(size: 10, cool: 3, interval: 0.5f, ea: 2, mt: 0.5f, rch: 25);
+                        }
+                        break;
+                    }
+                case Property.Random:
+                    {
+                        ps = SkillManager.I.AcquireNew(pj: proj, rd: true);
+
+                        if (ps._isProjectile == true)
+                        {
+                            ps.SetSkill(dmg: 10, cool: 1, size: 2, ea: 10, spd: 50);
+                        }
+                        else
+                        {
+                            ps.SetSkill(dmg: 3, size: 30, cool: 2, interval: 0.1f);
+                        }
+                        break;
+                    }
+                case Property.Static:
+                    {
+                        ps = SkillManager.I.AcquireNew(pj: proj, st: true);
+
+                        if (ps._isProjectile == true)
+                        {
+                            ps.SetSkill(dmg: 3, spd: 45, ea: 3, size: 6);
+                        }
+                        else
+                        {
+                            ps.SetSkill(size: 15, cool: 2, interval: 0.33f);
+                        }
+                        break;
+                    }
+            }
         }
     }
 }

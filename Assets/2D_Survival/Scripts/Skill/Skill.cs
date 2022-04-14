@@ -35,31 +35,28 @@ namespace SV
                 _col = GetComponent<Collider2D>();
 
             _ps = ps;
-            if (!_ps._isProjectile)
-            {
-                _sprite.color = new Color(_sprite.color.r, _sprite.color.g, _sprite.color.b, 100);
-            }
 
             switch (_ps._index)
             {
                 case 0:
                     {
-                        _sprite.color = Color.red;
+                        _sprite.color = new Color(1, 0, 0, 0.5f);
                         break;
                     }
                 case 1:
                     {
-                        _sprite.color = Color.green;
+                        _sprite.color = new Color(0, 1, 0, 0.5f);
                         break;
                     }
                 case 2:
                     {
-                        _sprite.color = Color.blue;
+                        _sprite.color = new Color(0, 0, 1, 0.5f);
                         break;
                     }
                 default:
                     break;
             }
+            transform.localScale = Vector3.one;
             transform.localScale *= _ps._size;
 
             Active();
@@ -70,16 +67,12 @@ namespace SV
             {
                 transform.position = _player.transform.position;
                 gameObject.SetActive(true);
-                _rgd.AddForce(_ps._targetPos * _ps._speed * Time.fixedDeltaTime * TimeCor);
-                _rgd.velocity = Vector2.zero;
+                _rgd.velocity = _ps._targetPos * _ps._speed;
+
             }
             else
             {
-                if (_ps._isRandom)
-                    transform.position = _player.transform.position;    //임시
-                else
-                    transform.position = _player.transform.position;
-
+                transform.position = _ps._targetPos;
                 gameObject.SetActive(true);
                 _col.enabled = true;
                 StartCoroutine(TurnCollider());
@@ -102,9 +95,7 @@ namespace SV
         {
             if (!_ps._isProjectile)
             {
-                if (_ps._isRandom)
-                    transform.position = _player.transform.position;    //임시
-                else
+                if (_ps._isStatic == true)
                     transform.position = _player.transform.position;
             }
         }

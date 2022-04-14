@@ -68,8 +68,7 @@ namespace SV
             StartCoroutine(SpawnCharger());
 
             UIManager.I.GameStart();
-            /// 임시 => 추후 인트로에서 선택하여 스킬 습득하는 방식으로 변경
-            //SkillManager.I.GameStart();
+            SkillManager.I.GameStart();
         }
         private void FixedUpdate()
         {

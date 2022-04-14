@@ -24,6 +24,8 @@ namespace SV
         }
         public virtual void Init(float delta = 0)
         {
+            _sprite.color = Color.black;
+
             _hpTemp = _hpMax;
             _hpTemp += delta;
             // 체력 보정

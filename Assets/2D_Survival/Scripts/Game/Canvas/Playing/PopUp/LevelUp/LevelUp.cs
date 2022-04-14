@@ -7,7 +7,7 @@ namespace SV
     public class LevelUp : MonoBehaviour
     {
         public FirstTab _fistTab;
-        public SecondTab _secondTab;
+        public ReinforceTab _reinforceTab;
         public ThirdTab _thirdTab;
         public NewSkillTab _newTab;
 
@@ -16,12 +16,12 @@ namespace SV
         public void Init()
         {
             _fistTab = transform.Find("FirstTab").GetComponent<FirstTab>();
-            _secondTab = transform.Find("SecondTab").GetComponent<SecondTab>();
+            _reinforceTab = transform.Find("ReinforceTab").GetComponent<ReinforceTab>();
             _thirdTab = transform.Find("ThirdTab").GetComponent<ThirdTab>();
             _newTab = transform.Find("NewSkillTab").GetComponent<NewSkillTab>();
 
             _fistTab.Init(this);
-            _secondTab.Init(this);
+            _reinforceTab.Init(this);
             _thirdTab.Init(this);
             _newTab.Init(this);
 
@@ -31,7 +31,7 @@ namespace SV
         public void LevelUP()
         {
             OffAll();
-            _secondTab.ReadyReinforce();
+            _reinforceTab.ReadyReinforce();
             gameObject.SetActive(true);
         }
 
@@ -44,7 +44,7 @@ namespace SV
 
         public void SetIndex(PlayerSkill ps)
         {
-            _secondTab._buttons[ps._index]._ps = ps;
+            _reinforceTab._buttons[ps._index]._ps = ps;
         }
 
         public void ReadyForRF(PlayerSkill ps)

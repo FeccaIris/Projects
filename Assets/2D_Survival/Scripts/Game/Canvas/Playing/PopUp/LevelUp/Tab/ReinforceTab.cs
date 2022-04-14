@@ -18,7 +18,7 @@ namespace SV
         SIZE,
     }
 
-    public class SecondTab : LevelUpPU
+    public class ReinforceTab : LevelUpPU
     {
         public List<Button_LevelUp> _buttons;
 
@@ -88,7 +88,7 @@ namespace SV
                 cats.Add(Category.EA);
                 if (ps._ea > 1)
                 {
-                    cats.Add(Category.INTERVAL);
+                    //cats.Add(Category.INTERVAL);
                 }
             }
             else

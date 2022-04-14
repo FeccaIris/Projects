@@ -22,7 +22,7 @@ namespace SV
                         {
                             b.onClick.AddListener(delegate ()
                             {
-                                _owner.OnOff(_owner._secondTab, this);
+                                _owner.OnOff(_owner._reinforceTab, this);
                             });
 
                             break;

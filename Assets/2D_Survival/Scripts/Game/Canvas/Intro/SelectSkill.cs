@@ -21,6 +21,8 @@ namespace SV
                 b.onClick.AddListener(delegate ()
                 {
                     _startCount++;
+                    RefreshButtons();
+
                     if(_startCount >= 3)
                         GameManager.I.GameStart();
                     b.gameObject.SetActive(false);
@@ -28,6 +30,15 @@ namespace SV
             }
 
             gameObject.SetActive(true);
+        }
+
+        public void RefreshButtons()
+        {
+            foreach(Button_SelectSkill b in _buttons)
+            {
+                b.ChangeImage(_startCount);
+                b.FixSkillType();
+            }
         }
     }
 }

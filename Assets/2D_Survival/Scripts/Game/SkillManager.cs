@@ -1,5 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Security.Cryptography;
+
 using UnityEngine;
 
 namespace SV
@@ -45,7 +48,7 @@ namespace SV
         public int _ea = 1;
 
         public int _pierce = 1;
-        public float _speed = 100.0f;
+        public float _speed = 25;
         
         public float _reach = 20.0f;
         
@@ -53,20 +56,29 @@ namespace SV
         public float _interval = 1.0f;
         #endregion
 
+        public void SetSkill(int dmg = 1, int ea = 1, int pierce = 1, float cool = 0.7f, float mt = 1, float rch = 15, float spd = 25, float interval = 0.7f, float size = 1)
+        {
+            _dmg = dmg;
+            _cool = cool;
+            _ea = ea;
+            _maintain = mt;
+            _reach = rch;
+            _speed = spd;
+            _pierce = pierce;
+            _interval = interval;
+            _size = size;
+        }
         public void SkillReinforce(Category cat)
         {
             _level++;
             UIManager.I.UpdateIconLevel(this);
-            _categoryLevels[cat]++;
+            _categoryLevels[cat]++;             // 스킬 항목 별 레벨 증가
 
             switch (cat)
             {
                 case Category.DAMAGE:
                     {
-                        if (_isProjectile)
-                            _dmg += 2;
-                        else
-                            _dmg += 1;
+                        _dmg += 1;
                         break;
                     }
                 case Category.COOL:
@@ -81,7 +93,7 @@ namespace SV
                     }
                 case Category.MAINTAIN:
                     {
-                        _maintain *= 1.5f;
+                        _maintain *= 1.1f;
                         break;
                     }
                 case Category.PIERCE:
@@ -91,12 +103,12 @@ namespace SV
                     }
                 case Category.SPEED:
                     {
-                        _speed *= 1.5f;
+                        _speed *= 1.1f;
                         break;
                     }
                 case Category.REACH:
                     {
-                        _reach *= 1.5f;
+                        _reach *= 1.1f;
                         break;
                     }
                 case Category.INTERVAL:
@@ -106,7 +118,7 @@ namespace SV
                     }
                 case Category.SIZE:
                     {
-                        _size *= 1.33f;
+                        _size *= 1.1f;
                         break;
                     }
                 default:
@@ -129,8 +141,6 @@ namespace SV
     {
         public static SkillManager I;
 
-        public const float TimeCor = 100_000.0f;
-
         Player _player;
 
         public List<PlayerSkill> _skList;
@@ -146,23 +156,29 @@ namespace SV
         }
         public void GameStart()
         {
-            AcquireNew(size: 1.0f, mntn: 3.0f, spd: 100.0f, interval: 0.1f);   // 기본 투사체
-
-            AcquireNew(pj: false, size: 20.0f, mntn: 0.5f, cool: 3.0f, interval: 0.2f);
-
-            AcquireNew(rd: true, size: 3.0f, mntn: 3.0f, spd: 50.0f, interval: 0.1f, pierce: 3);
+            StartCoroutine(_GameStart());
         }
-        public void AcquireNew(bool pj = true, bool rd = false, bool st = false, int dmg = 1, float cool = 1.0f, int ea = 1, float mntn = 2.0f, float rch = 15.0f, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
+        IEnumerator _GameStart()
+        {
+            foreach (PlayerSkill k in _skList)
+            {
+                Activate(k);
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
+        public PlayerSkill AcquireNew(bool pj = true, bool rd = false, bool st = false, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2.0f, float rch = 15.0f, float spd = 25, int pierce = 1, float interval = 1, float size = 1.0f)
         {
             PlayerSkill ps = new PlayerSkill(pj: pj, rd: rd, st: st);
             _skList.Add(ps);
 
-            UIManager.I._lvUp._secondTab.SetButton(ps);
+            UIManager.I._lvUp._reinforceTab.SetButton(ps);
 
-            SetAndActivate(ps, dmg: dmg, cool: cool, ea: ea, mntn: mntn,  rch: rch, spd: spd, pierce: pierce, interval: interval, size: size);
+            SetSkill(ps, dmg: dmg, cool: cool, ea: ea, mntn: mntn,  rch: rch, spd: spd, pierce: pierce, interval: interval, size: size);
+
+            return ps;
         }
 
-        public void SetAndActivate(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 100, int pierce = 1, float interval = 1, float size = 1.0f)
+        public void SetSkill(PlayerSkill ps, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2, float rch = 15, float spd = 25, int pierce = 1, float interval = 1, float size = 1.0f)
         {
             ps._dmg = dmg;
             ps._cool = cool;
@@ -175,7 +191,7 @@ namespace SV
             ps._size = size;
 
             UIManager.I._lvUp.SetIndex(ps);
-            Activate(ps);
+            //Activate(ps);
         }
 
         public void Activate(PlayerSkill ps)
@@ -194,8 +210,7 @@ namespace SV
                 {
                     Vector3 rPos = Vector3.zero;
 
-                    int ea = ps._ea;
-                    for (int i = 0; i < ea; i++)
+                    for (int i = 0; i < ps._ea; i++)
                     {
                         GameObject go = GameManager.I.GetPoolObject(GameManager.I._skill);
 
@@ -203,12 +218,12 @@ namespace SV
                         {
                             while (true)
                             {
-                                float x = Random.Range(-1, 1.1f);
-                                float y = Random.Range(-1, 1.1f);
+                                float x = Random.Range(-0.9f, 1.1f);
+                                float y = Random.Range(-0.9f, 1.1f);
                                 Vector3 pos = new Vector3(x, y, 0);
                                 pos = pos.normalized;
 
-                                if (rPos != pos)
+                                if (rPos != pos && pos != Vector3.zero)
                                 {
                                     rPos = pos;
                                     break;
@@ -217,6 +232,10 @@ namespace SV
                             }
 
                             ps._targetPos = rPos;
+                        }
+                        else if (ps._isStatic)
+                        {
+                            ps._targetPos = _player._spriteObj.transform.up;
                         }
                         else
                         {
@@ -235,7 +254,7 @@ namespace SV
                         Skill k = go.GetComponent<Skill>();
                         k.Init(ps);
 
-                        yield return new WaitForSeconds(ps._interval);
+                        yield return new WaitForSeconds(0.2f);
                     }
 
                     yield return new WaitForSeconds(ps._cool);
@@ -246,15 +265,47 @@ namespace SV
         }
         IEnumerator Area(PlayerSkill ps)
         {
-            while(GameManager.I._isPlaying == true)
+            while (true)
             {
-                GameObject go = GameManager.I.GetPoolObject(GameManager.I._skill);
+                if (GameManager.I._isPlaying == true)
+                {
+                    GameObject go = GameManager.I.GetPoolObject(GameManager.I._skill);
 
-                Skill k = go.GetComponent<Skill>();
-                k.Init(ps);
+                    if(ps._isRandom == true)
+                    {
+                        float f = Random.Range(15, 30);
 
+                        Vector2 r = Random.insideUnitCircle;
+                        r = r.normalized;
 
-                yield return new WaitForSeconds(ps._cool);
+                        r *= f;
+
+                        Vector2 pos = _player.transform.position;
+                        pos += r;
+
+                        ps._targetPos = pos;
+                    }
+                    else if(ps._isStatic == true)
+                    {
+                        ps._targetPos = _player.transform.position;
+                    }
+                    else
+                    {
+                        if (_player._target == null)
+                            yield return new WaitUntil(() => _player._target != null);
+                        else
+                            yield return new WaitUntil(() => ps._reach >= _player._distance);
+
+                        ps._targetPos = _player._target.position;
+                    }
+
+                    Skill k = go.GetComponent<Skill>();
+                    k.Init(ps);
+
+                    yield return new WaitForSeconds(ps._cool);
+                }
+
+                yield return null;
             }
         }
     }

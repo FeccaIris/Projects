@@ -46,14 +46,18 @@ namespace SV
             _gameOver.Init();
 
             Transform play = transform.Find("Playing");
+            Transform ui = play.Find("UI").Find("UI");
 
-            _hpB = play.Find("UI").Find("Hpbar").GetComponent<Hpbar>();
+            if (play.Find("PopUp").gameObject?.activeSelf == false)
+                play.Find("PopUp").gameObject.SetActive(true);
 
-            _expB = play.Find("UI").Find("Expbar").GetComponent<Expbar>();
-            _gameTime = play.Find("UI").Find("GameTime").GetComponent<Text>();
-            _icon_1 = play.Find("UI").Find("1").gameObject;
-            _icon_2 = play.Find("UI").Find("2").gameObject;
-            _icon_3 = play.Find("UI").Find("3").gameObject;
+            _hpB = ui.Find("Hpbar").GetComponent<Hpbar>();
+
+            _expB = ui.Find("Expbar").GetComponent<Expbar>();
+            _gameTime = ui.Find("GameTime").GetComponent<Text>();
+            _icon_1 = ui.Find("1").gameObject;
+            _icon_2 = ui.Find("2").gameObject;
+            _icon_3 = ui.Find("3").gameObject;
 
             _lv_1 = _icon_1.transform.Find("Text").GetComponent<Text>();
             _lv_2 = _icon_2.transform.Find("Text").GetComponent<Text>();

@@ -35,6 +35,7 @@ namespace SV
                 _col = GetComponent<Collider2D>();
 
             _ps = ps;
+            _pierceCount = 0;
 
             switch (_ps._index)
             {
@@ -70,9 +71,25 @@ namespace SV
                 _rgd.velocity = _ps._targetPos * _ps._speed;
 
             }
-            else
+            else // area
             {
-                transform.position = _ps._targetPos;
+                if (_ps._isStatic != true && _ps._isRandom != true)
+                {
+                    if (_player._target != null)
+                    {
+                        Vector3 pos = _player._target.position;
+                        transform.position = pos;
+                    }
+                    else
+                    {
+                        EndUse();
+                    }
+                }
+                else
+                {
+                    transform.position = _ps._targetPos;
+                }
+
                 gameObject.SetActive(true);
                 _col.enabled = true;
                 StartCoroutine(TurnCollider());

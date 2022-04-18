@@ -129,7 +129,7 @@ namespace SV
             {
                 case Property.Target:
                     {
-                        _t2.text = "적 지정";
+                        _t2.text = "추적";
                         break;
                     }
                 case Property.Random:
@@ -160,11 +160,11 @@ namespace SV
 
                         if(ps._isProjectile == true)
                         {
-                            ps.SetSkill(dmg: 3, spd: 45);
+                            ps.SetSkill(dmg: 6, spd: 45, cool: 0.33f, interval: 0.2f, size: 1.2f, mt:3, rch: 30);
                         }
                         else
                         {
-                            ps.SetSkill(size: 10, cool: 3, interval: 0.5f, ea: 2, mt: 0.5f, rch: 25);
+                            ps.SetSkill(dmg: 20, size: 20, cool: 1, interval: 2f,  mt: 0.3f, rch: 26);
                         }
                         break;
                     }
@@ -174,11 +174,11 @@ namespace SV
 
                         if (ps._isProjectile == true)
                         {
-                            ps.SetSkill(dmg: 10, cool: 1, size: 2, ea: 10, spd: 50);
+                            ps.SetSkill(dmg: 15, cool: 0.7f, size: 5, ea: 10, spd: 50, pierce: 500, mt: 3, interval: 0.2f);
                         }
                         else
                         {
-                            ps.SetSkill(dmg: 3, size: 30, cool: 2, interval: 0.1f);
+                            ps.SetSkill(dmg: 2, size: 30, cool: 1.5f, interval: 0.1f);
                         }
                         break;
                     }
@@ -188,11 +188,11 @@ namespace SV
 
                         if (ps._isProjectile == true)
                         {
-                            ps.SetSkill(dmg: 3, spd: 45, ea: 3, size: 6);
+                            ps.SetSkill(dmg: 6, spd: 45, ea: 3, size: 10, pierce: 3, cool: 0.7f, interval: 0.2f, mt: 3);
                         }
                         else
                         {
-                            ps.SetSkill(size: 15, cool: 2, interval: 0.33f);
+                            ps.SetSkill(size: 15, cool: 1, interval: 0.2f, mt: 0.6f);
                         }
                         break;
                     }

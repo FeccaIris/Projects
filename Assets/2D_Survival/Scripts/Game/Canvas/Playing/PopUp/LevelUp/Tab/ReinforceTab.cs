@@ -83,18 +83,23 @@ namespace SV
 
             if (ps._isProjectile)
             {
-                cats.Add(Category.PIERCE);
+                if(ps._isRandom != true)
+                    cats.Add(Category.PIERCE);
+
                 cats.Add(Category.SPEED);
                 cats.Add(Category.EA);
                 if (ps._ea > 1)
                 {
-                    //cats.Add(Category.INTERVAL);
+                    cats.Add(Category.INTERVAL);
                 }
             }
             else
             {
-                cats.Add(Category.MAINTAIN);
-                cats.Add(Category.INTERVAL);
+                if (ps._isRandom == true || ps._isStatic == true)
+                {
+                    cats.Add(Category.MAINTAIN);
+                    cats.Add(Category.INTERVAL);
+                }
             }
 
             int random = Random.Range(0, cats.Count);

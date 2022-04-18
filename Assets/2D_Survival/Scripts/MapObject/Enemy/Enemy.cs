@@ -18,12 +18,17 @@ namespace SV
 
         protected override void Start()
         {
-            _rgd = GetComponent<Rigidbody2D>();
-            _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
-            Init();
+            //_rgd = GetComponent<Rigidbody2D>();
+            //_sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+            //Init();
         }
         public virtual void Init(float delta = 0)
         {
+            if (_rgd == null)
+                _rgd = GetComponent<Rigidbody2D>();
+            if (_sprite == null)
+                _sprite = transform.Find("Sprite").GetComponent<SpriteRenderer>();
+
             _sprite.color = Color.black;
 
             _hpTemp = _hpMax;

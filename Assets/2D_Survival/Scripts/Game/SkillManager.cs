@@ -78,7 +78,10 @@ namespace SV
             {
                 case Category.DAMAGE:
                     {
-                        _dmg += 1;
+                        if (_isProjectile == true)
+                            _dmg += 3;
+                        else
+                            _dmg += 1;
                         break;
                     }
                 case Category.COOL:
@@ -88,7 +91,7 @@ namespace SV
                     }
                 case Category.EA:
                     {
-                        _ea += 1;
+                        _ea += 2;
                         break;
                     }
                 case Category.MAINTAIN:
@@ -241,8 +244,7 @@ namespace SV
                         {
                             if (_player._target == null)
                                 yield return new WaitUntil(() => _player._target != null);
-                            else
-                                yield return new WaitUntil(() => ps._reach >= _player._distance);
+                            yield return new WaitUntil(() => ps._reach >= _player._distance);
 
                             if (_player._target != null)
                             {
@@ -254,7 +256,7 @@ namespace SV
                         Skill k = go.GetComponent<Skill>();
                         k.Init(ps);
 
-                        yield return new WaitForSeconds(0.2f);
+                        yield return new WaitForSeconds(ps._interval / ps._ea);
                     }
 
                     yield return new WaitForSeconds(ps._cool);
@@ -293,8 +295,8 @@ namespace SV
                     {
                         if (_player._target == null)
                             yield return new WaitUntil(() => _player._target != null);
-                        else
-                            yield return new WaitUntil(() => ps._reach >= _player._distance);
+
+                        yield return new WaitUntil(() => ps._reach >= _player._distance);
 
                         ps._targetPos = _player._target.position;
                     }

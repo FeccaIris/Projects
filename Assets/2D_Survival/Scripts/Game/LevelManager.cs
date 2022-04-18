@@ -19,7 +19,7 @@ namespace SV
 
         public AnimationCurve _curve;
         int _lvMax = 200;
-        int _expMax = 100000;
+        int _expMax = 200000;
 
         void Awake()
         {
@@ -82,7 +82,13 @@ namespace SV
 
             if (_lv / 5 == 0)
             {
-                // 공격력 강화
+                foreach(PlayerSkill k in SkillManager.I._skList)
+                {
+                    if (k._isProjectile == true)
+                        k._dmg += 3;
+                    else
+                        k._dmg += 1;
+                }
                 UIManager.I.LevelUP();
             }
             else

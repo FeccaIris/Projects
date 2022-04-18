@@ -105,6 +105,7 @@ namespace SV
         {
             _isPlaying = false;
             UIManager.I.GameOver();
+            StopAllCoroutines();
         }
         public void GameClear()
         {

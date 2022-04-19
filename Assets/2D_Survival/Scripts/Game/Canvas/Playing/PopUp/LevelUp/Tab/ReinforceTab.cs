@@ -36,7 +36,6 @@ namespace SV
                 b.onClick.AddListener(delegate ()
                 {
                     b._ps.SkillReinforce(b._cat);
-
                     _owner.CloseAll();
                 });
             }
@@ -55,30 +54,22 @@ namespace SV
                 }
             }
         }
-
         public void ReadyReinforce()      // 강화 항목 무작위 선택, 버튼에 할당
         {
-            int normal;
-            normal = Random.Range(0, 3);
-
             foreach(Button_LevelUp b in _buttons)
             {
-                if(b._index == normal)
-                {
-                    FixCategory(b, true);
-                }
-                else
-                {
-                    FixCategory(b);
-                }
+                FixCategory(b);
             }
 
             gameObject.SetActive(true);
         }
-        public void FixCategory(Button_LevelUp b, bool normal = false)  // foreach 3회 호출
+
+        // 강화탭 버튼 업데이트
+        public void FixCategory(Button_LevelUp b)  // foreach 3회 호출
         {
             PlayerSkill ps = b._ps;
 
+            List<KeyValuePair<Category, int>> list = new List<KeyValuePair<Category, int>>(ps._catLevels);
             List<Category> cats = new List<Category> { Category.COOL, Category.DAMAGE, Category.SIZE };
 
             if (ps._isProjectile)
@@ -102,56 +93,75 @@ namespace SV
                 }
             }
 
-            int random = Random.Range(0, cats.Count);
-            b._cat = cats[random];
-            b._lv.text = $"Lv. {ps._categoryLevels[cats[random]].ToString()}";
-
-            switch (cats[random])
+            foreach (KeyValuePair<Category, int> kv in list)
             {
-                case Category.DAMAGE:
-                    {
-                        b._txt.text = "공격력 증가";
-                        break;
-                    }
-                case Category.SIZE:
-                    {
-                        b._txt.text = "크기 증가";
-                        break;
-                    }
-                case Category.COOL:
-                    {
-                        b._txt.text = "쿨타임 감소";
-                        break;
-                    }
-                case Category.PIERCE:
-                    {
-                        b._txt.text = "관통횟수 증가";
-                        break;
-                    }
-                case Category.SPEED:
-                    {
-                        b._txt.text = "속도 증가";
-                        break;
-                    }
-                case Category.EA:
-                    {
-                        b._txt.text = "개수 증가";
-                        break;
-                    }
-                case Category.INTERVAL:
-                    {
-                        b._txt.text = "발동간격 감소";
-                        break;
-                    }
-                case Category.MAINTAIN:
-                    {
-                        b._txt.text = "지속시간 증가";
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
+                if(kv.Value > 3)
+                {
+                    cats.Remove(kv.Key);
+                }
+            }
+
+            /// 랜덤 항목 선택
+            int random = 0;
+            if (cats.Count > 0)
+            {
+                random = Random.Range(0, cats.Count);
+                b._cat = cats[random];
+                b._lv.text = $"Lv. {ps._catLevels[cats[random]].ToString()}";
+
+                switch (cats[random])
+                {
+                    case Category.DAMAGE:
+                        {
+                            b._txt.text = "공격력 증가";
+                            break;
+                        }
+                    case Category.SIZE:
+                        {
+                            b._txt.text = "크기 증가";
+                            break;
+                        }
+                    case Category.COOL:
+                        {
+                            b._txt.text = "쿨타임 감소";
+                            break;
+                        }
+                    case Category.PIERCE:
+                        {
+                            b._txt.text = "관통횟수 증가";
+                            break;
+                        }
+                    case Category.SPEED:
+                        {
+                            b._txt.text = "속도 증가";
+                            break;
+                        }
+                    case Category.EA:
+                        {
+                            b._txt.text = "개수 증가";
+                            break;
+                        }
+                    case Category.INTERVAL:
+                        {
+                            b._txt.text = "발동간격 감소";
+                            break;
+                        }
+                    case Category.MAINTAIN:
+                        {
+                            b._txt.text = "지속시간 증가";
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+            }
+            else
+            {
+                b.interactable = false;
+                b._txt.text = "Master";
+                b._lv.text = $"";
             }
         }
     }

@@ -116,5 +116,10 @@ namespace SV
         {
             _lvList[ps._index].text = $"Lv.{ps._level}";
         }
+
+        public void EndLevelUp()
+        {
+            _expB.gameObject.SetActive(false);
+        }
     }
 }

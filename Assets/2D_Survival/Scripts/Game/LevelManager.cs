@@ -10,7 +10,6 @@ namespace SV
         public static LevelManager I;
 
         public Expbar _expB;
-        public bool TEST = true;
         [SerializeField] int _lv = 1;
         [SerializeField] int _exp;
         [SerializeField] int _expNeed;
@@ -34,29 +33,10 @@ namespace SV
             _lv = 1;
             _exp = 0;
         }
-
         public void UpdateExpbar()
         {
             _expNeed = Calc(_lv);
             _expB._fill.fillAmount = (float)_exp / _expNeed;
-        }
-
-        public void GetExp(int exp)
-        {
-            _exp += exp;
-            UpdateExpbar();
-
-            CheckLevelUp();
-        }
-        public void CheckLevelUp()
-        {
-            if (_exp >= _expNeed)
-            {
-                LevelUp();
-
-                UpdateExpbar();
-            }
-            else return;
         }
         int Calc(int lv)
         {
@@ -73,10 +53,29 @@ namespace SV
 
             return need;
         }
+        public void GetExp(int exp)
+        {
+            if (SkillManager.I._master == true)
+                return;
+
+            _exp += exp;
+            UpdateExpbar();
+            CheckLevelUp();
+        }
+        public void CheckLevelUp()
+        {
+            if (SkillManager.I._master == true)
+                return;
+
+            if (_exp >= _expNeed)
+            {
+                LevelUp();
+                UpdateExpbar();
+            }
+            else return;
+        }
         void LevelUp()
         {
-            if (TEST == false) return;
-
             int exceed = _exp - _expNeed;
             Time.timeScale = 0;
 

@@ -111,6 +111,7 @@ namespace SV
         {
             _isPlaying = false;
             UIManager.I.GameOver(true);
+            StopAllCoroutines();
         }
 
         public void CreatePoolObject(GameObject pf, int ea)

@@ -12,7 +12,7 @@ namespace SV
     public class PlayerSkill
     {
         public Player _player;
-        public Dictionary<Category, int> _categoryLevels = new Dictionary<Category, int>
+        public Dictionary<Category, int> _catLevels = new Dictionary<Category, int>
         {
             {Category.DAMAGE, 1 },
             {Category.COOL, 1 },
@@ -27,6 +27,7 @@ namespace SV
 
         public int _index;
         public int _level = 1;
+        public bool _mastered = false;
 
         public int _dmg = 1;
         public float _size = 1.0f;
@@ -72,61 +73,104 @@ namespace SV
         {
             _level++;
             UIManager.I.UpdateIconLevel(this);
-            _categoryLevels[cat]++;             // 스킬 항목 별 레벨 증가
+            _catLevels[cat]++;             // 스킬 항목 별 레벨 증가
 
             switch (cat)
             {
                 case Category.DAMAGE:
                     {
                         if (_isProjectile == true)
-                            _dmg += 3;
+                            _dmg += 10;
                         else
-                            _dmg += 1;
+                            _dmg += 5;
                         break;
                     }
                 case Category.COOL:
                     {
-                        _cool *= 0.9f;
+                        _cool *= 0.75f;
                         break;
                     }
                 case Category.EA:
                     {
-                        _ea += 2;
+                        if (_isRandom || _isStatic)
+                            _ea += 5;
+                        else
+                            _ea += 2;
                         break;
                     }
                 case Category.MAINTAIN:
                     {
-                        _maintain *= 1.1f;
+                        _maintain *= 1.25f;
                         break;
                     }
                 case Category.PIERCE:
                     {
-                        _pierce += 1;
+                        _pierce += 2;
                         break;
                     }
                 case Category.SPEED:
                     {
-                        _speed *= 1.1f;
+                        _speed *= 1.25f;
                         break;
                     }
                 case Category.REACH:
                     {
-                        _reach *= 1.1f;
+                        _reach *= 1.25f;
                         break;
                     }
                 case Category.INTERVAL:
                     {
-                        _interval *= 0.9f;
+                        _interval *= 0.75f;
                         break;
                     }
                 case Category.SIZE:
                     {
-                        _size *= 1.1f;
+                        _size *= 1.25f;
                         break;
                     }
                 default:
                     break;
             }
+
+            CheckMastered();
+        }
+
+        void CheckMastered()
+        {
+            List<int> list = new List<int>
+            {
+                _catLevels[Category.DAMAGE],
+                _catLevels[Category.COOL],
+                _catLevels[Category.SIZE]
+            };
+            if (_isProjectile)
+            {
+                if (!_isRandom)
+                    list.Add(_catLevels[Category.PIERCE]);
+                if(_ea > 1)
+                    list.Add(_catLevels[Category.INTERVAL]);
+                list.Add(_catLevels[Category.SPEED]);
+                list.Add(_catLevels[Category.EA]);
+            }
+            else
+            {
+                if (_isRandom == true || _isStatic == true)
+                {
+                    list.Add(_catLevels[Category.MAINTAIN]);
+                    list.Add(_catLevels[Category.INTERVAL]);
+                }
+            }
+
+            foreach(int i in list)
+            {
+                if(i < 4)
+                {
+                    return;
+                }
+            }
+
+            _mastered = true;
+            SkillManager.I.CheckAllMastered();
         }
 
         public PlayerSkill(bool pj, bool rd, bool st)
@@ -146,6 +190,7 @@ namespace SV
 
         Player _player;
 
+        public bool _master = false;
         public List<PlayerSkill> _skList;
 
         private void Awake()
@@ -156,6 +201,26 @@ namespace SV
         {
             _player = Player.I;
             _skList = new List<PlayerSkill>();
+        }
+        public void CheckAllMastered()
+        {
+            int count = _skList.Count;
+            int check = 0;
+
+            foreach(PlayerSkill ps in _skList)
+            {
+                if(ps._mastered == true)
+                {
+                    check++;
+                }
+            }
+            if(check == count)
+            {
+                // 경험치 바 삭제 및 레벨업 호출 중단
+                Debug.Log("All Masetered");
+                _master = true;
+                UIManager.I.EndLevelUp();
+            }
         }
         public void GameStart()
         {

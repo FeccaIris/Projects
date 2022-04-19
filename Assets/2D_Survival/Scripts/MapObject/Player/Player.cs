@@ -54,6 +54,22 @@ namespace SV
             if(_target != null)
                 _distance = Vector3.Distance(transform.position, _target.position);
         }
+        public void ChangeTarget()
+        {
+            List<Enemy> list = GameManager.I._enemies;
+
+            if (list.Count > 0)
+            {
+                list.Sort(CompareDistance);
+
+                if (list[0] != null)
+                    _target = list[0].transform;
+            }
+            else
+            {
+                _target = null;
+            }
+        }
         private void OnCollisionStay2D(Collision2D col)
         {
             if (col.gameObject.tag.Equals("Enemy"))
@@ -92,22 +108,6 @@ namespace SV
             _hpB._fill.fillAmount = (float)_hp / _hpMax;
         }
 
-        public void ChangeTarget()
-        {
-            List<Enemy> list = new List<Enemy>(GameManager.I._enemies);
-
-            if (list.Count > 0)
-            {
-                list.Sort(CompareDistance);
-
-                if(list[0] != null)
-                    _target = list[0].transform;
-            }
-            else
-            {
-                _target = null;
-            }
-        }
         public int CompareDistance(Enemy a, Enemy b)
         {
             if (a != null && b != null)

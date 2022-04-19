@@ -28,6 +28,7 @@ namespace SV
             gameObject.SetActive(false);
         }
 
+        // 강화 준비 및 레벨업 ui 활성화
         public void LevelUP()
         {
             OffAll();
@@ -73,6 +74,7 @@ namespace SV
 
             Time.timeScale = 1;
             Player.I.ImmuneFor(1.0f);
+
             LevelManager.I.CheckLevelUp();
         }
     }

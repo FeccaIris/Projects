@@ -148,7 +148,7 @@ namespace SV
         /// <summary>
         /// 스킬 생성
         /// </summary>
-        public void SetSkill(bool proj, Property prop)
+        public void SetSkill(bool isProj, Property prop)
         {
             PlayerSkill ps = null;
 
@@ -156,7 +156,7 @@ namespace SV
             {
                 case Property.Target:
                     {
-                        ps = SkillManager.I.AcquireNew(pj: proj);
+                        ps = SkillManager.I.AcquireNew(pj: isProj);
 
                         if(ps._isProjectile == true)
                         {
@@ -170,7 +170,7 @@ namespace SV
                     }
                 case Property.Random:
                     {
-                        ps = SkillManager.I.AcquireNew(pj: proj, rd: true);
+                        ps = SkillManager.I.AcquireNew(pj: isProj, rd: true);
 
                         if (ps._isProjectile == true)
                         {
@@ -184,7 +184,7 @@ namespace SV
                     }
                 case Property.Static:
                     {
-                        ps = SkillManager.I.AcquireNew(pj: proj, st: true);
+                        ps = SkillManager.I.AcquireNew(pj: isProj, st: true);
 
                         if (ps._isProjectile == true)
                         {

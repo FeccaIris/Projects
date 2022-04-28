@@ -1,0 +1,661 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Event_2_Game</name>
+    <events>
+        <variable comment="Add an asteroid on screen" constant="0" name="Add_asteroids" sid="7477203578054346" static="0" type="number">1</variable>
+        <variable constant="0" name="Life" sid="7089608045920896" static="0" type="number">5</variable>
+        <variable constant="0" name="Score" sid="855301259628042" static="0" type="number">0</variable>
+        <event-group description="" sid="2816534365271674" title="System">
+            <sub-events>
+                <comment>When you start the game we destroy objects on the screen, we ensure that &quot;TXT_Result&quot; has nothing written on it and finally, before proceeding with the Subevents, we disable the &quot;obj_player&quot; collisions.</comment>
+                <event-block sid="5762945731920911">
+                    <conditions>
+                        <condition id="-2" name="On start of layout" sid="8360747554070709" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Destroy" sid="8461656382222131" type="obj_bullet" />
+                        <action id="-9" name="Destroy" sid="5224073056905222" type="obj_asteroid" />
+                        <action id="0" name="Set text" sid="951274721698006" type="TXT_Result">
+                            <param id="0" name="Text">&quot;&quot;</param>
+                        </action>
+                        <action id="11" name="Set collisions enabled" sid="688883207025504" type="obj_player">
+                            <param id="0" name="Collisions">0</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <comment>We repeat X (number given by the variable &quot;Add_asteroids&quot;) times the following actions: &#x0A;- Create an object in the X and Y random position using the screen size.&#x0A;- Change the angle of the asteroid to a random number.</comment>
+                        <event-block sid="5408004545783534">
+                            <conditions>
+                                <condition id="-12" name="Repeat" sid="3935109228303844" type="System">
+                                    <param id="0" name="Count">Add_asteroids</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-3" name="Create object" sid="4494797124837249" type="System">
+                                    <param id="0" name="Object to create">obj_asteroid</param>
+                                    <param id="1" name="Layer">&quot;Game&quot;</param>
+                                    <param id="2" name="X">int(random(0, WindowWidth + 1))</param>
+                                    <param id="3" name="Y">int(random(0, WindowHeight + 1))</param>
+                                </action>
+                                <action id="-8" name="Set angle" sid="9824505568813126" type="obj_asteroid">
+                                    <param id="0" name="Angle">int(random(0, 361))</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>If an asteroid is created within the shield, is destroyed and recreated another.</comment>
+                        <event-block sid="8164619283926889">
+                            <conditions>
+                                <condition id="1" name="Is overlapping another object" sid="8488419848770598" type="obj_asteroid">
+                                    <param id="0" name="Object">obj_shield</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-9" name="Destroy" sid="655109472456784" type="obj_asteroid" />
+                                <action id="-3" name="Create object" sid="2961938999061756" type="System">
+                                    <param id="0" name="Object to create">obj_asteroid</param>
+                                    <param id="1" name="Layer">&quot;Game&quot;</param>
+                                    <param id="2" name="X">int(random(0, WindowWidth + 1))</param>
+                                    <param id="3" name="Y">int(random(0, WindowHeight + 1))</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>If the group &quot;ControlsTouch&quot; is active, make visible the layer containing the buttons</comment>
+                        <event-block sid="1885768878864372">
+                            <conditions>
+                                <condition id="-15" name="Is group active" sid="2928195300239152" type="System">
+                                    <param id="0" name="Group name">&quot;ControlsTouch&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-4" name="Set layer visible" sid="3042807363040437" type="System">
+                                    <param id="0" name="Layer">&quot;Controls&quot;</param>
+                                    <param id="1" name="Visibility">1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="1228082628693414">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="1383198616929016" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="-4" name="Set layer visible" sid="4270387993840522" type="System">
+                                    <param id="0" name="Layer">&quot;Controls&quot;</param>
+                                    <param id="1" name="Visibility">0</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>We activate the &quot;obj_player&quot; collision again.</comment>
+                        <event-block sid="5621123521563842">
+                            <conditions />
+                            <actions>
+                                <action id="11" name="Set collisions enabled" sid="7304674487216388" type="obj_player">
+                                    <param id="0" name="Collisions">1</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <comment>When there is no &quot;obj_asteroid&quot; screen, we reproduce a sound, show a text with &quot;TXT_Result&quot; and add 1 to the &quot;Add_asteroids&quot; variable.</comment>
+                <event-block sid="9290457346206401">
+                    <conditions>
+                        <condition id="-8" name="Compare two values" sid="4416190037370559" type="System">
+                            <param id="0" name="First value">obj_asteroid.Count</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Second value">0</param>
+                        </condition>
+                        <condition id="-4" name="Trigger once while true" sid="3484614455891627" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Play" sid="7457512987288038" type="Audio">
+                            <param id="0" name="Audio file">win</param>
+                            <param id="2" name="Loop">0</param>
+                            <param id="3" name="Volume">0</param>
+                            <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                        </action>
+                        <action id="0" name="Set text" sid="9991057890097713" type="TXT_Result">
+                            <param id="0" name="Text">&quot;You win&quot; &amp; newline &amp; &quot;Press &apos;R&apos; to go to the next level&quot;</param>
+                        </action>
+                        <action id="-10" name="Add to" sid="3992131195845489" type="System">
+                            <param id="0" name="Variable">Add_asteroids</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>When &quot;Life&quot; reaches 0, we reproduce a sound, disable the &quot;obj_player&quot; collision (so that it moves without injury and cannot shoot), &quot;TXT_Result&quot; shows the score and we restart global variables.</comment>
+                <event-block sid="4405403463765447">
+                    <conditions>
+                        <condition id="-14" name="Compare variable" sid="9866780944010967" type="System">
+                            <param id="0" name="Variable">Life</param>
+                            <param id="1" name="Comparison">3</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Play" sid="8658581448344498" type="Audio">
+                            <param id="0" name="Audio file">lose</param>
+                            <param id="2" name="Loop">0</param>
+                            <param id="3" name="Volume">0</param>
+                            <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                        </action>
+                        <action id="11" name="Set collisions enabled" sid="8699139282667726" type="obj_player">
+                            <param id="0" name="Collisions">0</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <comment>Just compare if a group is active or not to change the text &quot;TXT_Result&quot;</comment>
+                        <event-block sid="5764095411343075">
+                            <conditions>
+                                <condition id="-15" name="Is group active" sid="4222233439981385" type="System">
+                                    <param id="0" name="Group name">&quot;ControlsPC&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Set text" sid="9900687115449276" type="TXT_Result">
+                                    <param id="0" name="Text">&quot;Game Over&quot; &amp; newline &amp; &quot;Your score: &quot; &amp; Score &amp; newline &amp; &quot;Press &apos;R&apos; to restart&quot;</param>
+                                </action>
+                                <action id="-21" name="Reset global variables" sid="6607852378939013" type="System" />
+                            </actions>
+                        </event-block>
+                        <event-block sid="1450768099251506">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="1273501824425203" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Set text" sid="4666479436483633" type="TXT_Result">
+                                    <param id="0" name="Text">&quot;Game Over&quot; &amp; newline &amp; &quot;Your score: &quot; &amp; Score &amp; newline &amp; &quot;Tap to restart&quot;</param>
+                                </action>
+                                <action id="-21" name="Reset global variables" sid="6228865499787177" type="System" />
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <comment>In every moment we show life and the score with their respective TXT.</comment>
+                <event-block sid="4558437859905619">
+                    <conditions>
+                        <condition id="-1" name="Every tick" sid="8460367236192856" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Set text" sid="148894101090138" type="TXT_Life">
+                            <param id="0" name="Text">&quot;Life: &quot; &amp; Life</param>
+                        </action>
+                        <action id="0" name="Set text" sid="9224379909339685" type="TXT_Score">
+                            <param id="0" name="Text">Score &amp; &quot; :Score&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>Pressing R or on tap, we restart the layout (verifying that &quot;TXT_Result&quot; contains some text).</comment>
+                <event-block any="1" sid="1298753738116636">
+                    <conditions>
+                        <condition id="0" name="On key pressed" sid="9331354146832483" type="Keyboard">
+                            <param id="0" name="Key">82 (R)</param>
+                        </condition>
+                        <condition id="14" name="On tap" sid="7922257370082767" type="Touch" />
+                    </conditions>
+                    <actions />
+                    <sub-events>
+                        <event-block sid="2124679875260388">
+                            <conditions>
+                                <condition id="0" inverted="1" name="Compare text" sid="1942152819051465" type="TXT_Result">
+                                    <param id="0" name="Text to compare">&quot;&quot;</param>
+                                    <param id="1" name="Case sensitivity">0</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-26" name="Restart layout" sid="7139704134200449" type="System" />
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+            </sub-events>
+        </event-group>
+        <event-group description="" sid="7164146573749557" title="ControlsPC">
+            <sub-events>
+                <comment>We turn 2 degrees to the left.</comment>
+                <event-block sid="7903787343970735">
+                    <conditions>
+                        <condition id="2" name="Key is down" sid="9404186698209713" type="Keyboard">
+                            <param id="0" name="Key">65 (A)</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-18" name="Rotate clockwise" sid="3627585918416798" type="obj_player">
+                            <param id="0" name="Degrees">-2</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>We turn 2 degrees to the right.</comment>
+                <event-block sid="9076019727710877">
+                    <conditions>
+                        <condition id="2" name="Key is down" sid="2735783590359256" type="Keyboard">
+                            <param id="0" name="Key">68 (D)</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-18" name="Rotate clockwise" sid="9007163595906633" type="obj_player">
+                            <param id="0" name="Degrees">2</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>Holding down the &quot;Up arrow&quot; key, the ship creates many &quot;obj_fire&quot; and moves to the back of the layer (so that it is below the ship). This object has disabled collisions (see properties) and has a fade behavior, allowing not lower the FPS.</comment>
+                <event-block sid="6144312091259552">
+                    <conditions>
+                        <condition id="2" name="Key is down" sid="7834581832747102" type="Keyboard">
+                            <param id="0" name="Key">87 (W)</param>
+                        </condition>
+                        <condition id="-14" name="Compare variable" sid="428148966347428" type="System">
+                            <param id="0" name="Variable">Life</param>
+                            <param id="1" name="Comparison">4</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Spawn another object" sid="3681070530086176" type="obj_player">
+                            <param id="0" name="Object">obj_fire</param>
+                            <param id="1" name="Layer">&quot;Game&quot;</param>
+                            <param id="2" name="Image point">0</param>
+                        </action>
+                        <action id="-25" name="Move to bottom" sid="147231246858252" type="obj_fire" />
+                    </actions>
+                    <sub-events>
+                        <comment>We move the ship if we are sure that we are not crossing the speed limit (250 in this case).</comment>
+                        <event-block sid="3287034406636734">
+                            <conditions>
+                                <condition behavior="CustomMovement" id="1" name="Compare speed" sid="4301997961082672" type="obj_player">
+                                    <param id="0" name="Which">0</param>
+                                    <param id="1" name="Comparison">3</param>
+                                    <param id="2" name="Speed">250</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action behavior="CustomMovement" id="4" name="Accelerate toward angle" sid="1658637206574511" type="obj_player">
+                                    <param id="0" name="Acceleration">100</param>
+                                    <param id="1" name="Angle">Self.Angle</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>If we pass on speed, we decrease the acceleration.</comment>
+                        <event-block sid="1275108679963003">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="9731607753997932" type="System" />
+                            </conditions>
+                            <actions>
+                                <action behavior="CustomMovement" id="3" name="Accelerate" sid="7741658205442217" type="obj_player">
+                                    <param id="0" name="Which">0</param>
+                                    <param id="1" name="Acceleration">-50</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>And if it’s not playing the tag &quot;fire&quot;, we reproduce an audio file.</comment>
+                        <event-block sid="5417036950454465">
+                            <conditions>
+                                <condition id="5" inverted="1" name="Is tag playing" sid="1695238779999903" type="Audio">
+                                    <param id="0" name="Tag">&quot;fire&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="25" name="Play at object" sid="8069699935306243" type="Audio">
+                                    <param id="0" name="Audio file">fire</param>
+                                    <param id="1" name="Loop">0</param>
+                                    <param id="2" name="Volume">-20</param>
+                                    <param id="3" name="Object">obj_player</param>
+                                    <param id="4" name="Inner angle">360</param>
+                                    <param id="5" name="Outer angle">360</param>
+                                    <param id="6" name="Outer gain">0</param>
+                                    <param id="7" name="Tag (optional)">&quot;fire&quot;</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <comment>If you are not using the previous key, stop playing the audio file.</comment>
+                <event-block sid="2149174271477614">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="979429139143887" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="6" name="Stop" sid="7178699767598042" type="Audio">
+                            <param id="0" name="Tag">&quot;fire&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>If we keep pressing &quot;Down arrow&quot;, we gradually decrease the speed.</comment>
+                <event-block sid="7333455716887817">
+                    <conditions>
+                        <condition id="2" name="Key is down" sid="4826236311439092" type="Keyboard">
+                            <param id="0" name="Key">83 (S)</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action behavior="CustomMovement" id="3" name="Accelerate" sid="1691926563383134" type="obj_player">
+                            <param id="0" name="Which">0</param>
+                            <param id="1" name="Acceleration">-50</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>By pressing the &quot;Z&quot; key, we create an &quot;obj_bullet&quot; and reproduce an audio file. We ensure that the ship’s collision is on. Otherwise, you cannot shoot while we are in “game over”.</comment>
+                <event-block sid="7556582462547531">
+                    <conditions>
+                        <condition id="0" name="On key pressed" sid="2166116420722839" type="Keyboard">
+                            <param id="0" name="Key">74 (J)</param>
+                        </condition>
+                        <condition id="11" name="Collisions enabled" sid="2688536827615681" type="obj_player" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Spawn another object" sid="417728382387334" type="obj_player">
+                            <param id="0" name="Object">obj_bullet</param>
+                            <param id="1" name="Layer">&quot;Game&quot;</param>
+                            <param id="2" name="Image point">0</param>
+                        </action>
+                        <action id="25" name="Play at object" sid="7802697826708772" type="Audio">
+                            <param id="0" name="Audio file">shoot</param>
+                            <param id="1" name="Loop">0</param>
+                            <param id="2" name="Volume">0</param>
+                            <param id="3" name="Object">obj_bullet</param>
+                            <param id="4" name="Inner angle">360</param>
+                            <param id="5" name="Outer angle">360</param>
+                            <param id="6" name="Outer gain">0</param>
+                            <param id="7" name="Tag (optional)">&quot;shoot&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>By pressing any key, we destroy &quot;obj_shield&quot; (so we start the game).</comment>
+                <event-block sid="3396242134828735">
+                    <conditions>
+                        <condition id="1" name="On any key pressed" sid="9229996422926705" type="Keyboard" />
+                        <condition id="-3" name="Is on-screen" sid="3939511577296386" type="obj_shield" />
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Destroy" sid="5232658411513182" type="obj_shield" />
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-group>
+        <event-group description="" inactive="1" sid="2057088378379861" title="ControlsTouch">
+            <sub-events>
+                <comment>We turn 2 degrees to the left.</comment>
+                <event-block sid="7903787343970735">
+                    <conditions>
+                        <condition id="4" name="Is touching object" sid="2642106008156249" type="Touch">
+                            <param id="0" name="Object">hud_turn_ship</param>
+                        </condition>
+                        <condition id="3" name="Compare frame" sid="6216136933118095" type="hud_turn_ship">
+                            <param id="0" name="Comparison">0</param>
+                            <param id="1" name="Number">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-18" name="Rotate clockwise" sid="3627585918416798" type="obj_player">
+                            <param id="0" name="Degrees">-2</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>We turn 2 degrees to the right.</comment>
+                <event-block sid="9076019727710877">
+                    <conditions>
+                        <condition id="4" name="Is touching object" sid="4154432601860572" type="Touch">
+                            <param id="0" name="Object">hud_turn_ship</param>
+                        </condition>
+                        <condition id="3" name="Compare frame" sid="5439238222687466" type="hud_turn_ship">
+                            <param id="0" name="Comparison">0</param>
+                            <param id="1" name="Number">1</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-18" name="Rotate clockwise" sid="9007163595906633" type="obj_player">
+                            <param id="0" name="Degrees">2</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>Is touching the &quot;hud_accelerate&quot; object, the ship creates many &quot;obj_fire&quot; and moves to the back of the layer (so that it is below the ship). This object has disabled collisions (see properties) and has a fade behavior, allowing not lower the FPS.</comment>
+                <event-block sid="6144312091259552">
+                    <conditions>
+                        <condition id="4" name="Is touching object" sid="2326074098060682" type="Touch">
+                            <param id="0" name="Object">hud_accelerate</param>
+                        </condition>
+                        <condition id="-14" name="Compare variable" sid="428148966347428" type="System">
+                            <param id="0" name="Variable">Life</param>
+                            <param id="1" name="Comparison">4</param>
+                            <param id="2" name="Value">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Spawn another object" sid="3681070530086176" type="obj_player">
+                            <param id="0" name="Object">obj_fire</param>
+                            <param id="1" name="Layer">&quot;Game&quot;</param>
+                            <param id="2" name="Image point">0</param>
+                        </action>
+                        <action id="-25" name="Move to bottom" sid="147231246858252" type="obj_fire" />
+                    </actions>
+                    <sub-events>
+                        <comment>We move the ship if we are sure that we are not crossing the speed limit (250 in this case).</comment>
+                        <event-block sid="3287034406636734">
+                            <conditions>
+                                <condition behavior="CustomMovement" id="1" name="Compare speed" sid="4301997961082672" type="obj_player">
+                                    <param id="0" name="Which">0</param>
+                                    <param id="1" name="Comparison">3</param>
+                                    <param id="2" name="Speed">250</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action behavior="CustomMovement" id="4" name="Accelerate toward angle" sid="1658637206574511" type="obj_player">
+                                    <param id="0" name="Acceleration">100</param>
+                                    <param id="1" name="Angle">Self.Angle</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>If we pass on speed, we decrease the acceleration.</comment>
+                        <event-block sid="1275108679963003">
+                            <conditions>
+                                <condition id="-22" name="Else" sid="9731607753997932" type="System" />
+                            </conditions>
+                            <actions>
+                                <action behavior="CustomMovement" id="3" name="Accelerate" sid="7741658205442217" type="obj_player">
+                                    <param id="0" name="Which">0</param>
+                                    <param id="1" name="Acceleration">-50</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>And if it’s not playing the tag &quot;fire&quot;, we reproduce an audio file.</comment>
+                        <event-block sid="5417036950454465">
+                            <conditions>
+                                <condition id="5" inverted="1" name="Is tag playing" sid="1695238779999903" type="Audio">
+                                    <param id="0" name="Tag">&quot;fire&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="25" name="Play at object" sid="8069699935306243" type="Audio">
+                                    <param id="0" name="Audio file">fire</param>
+                                    <param id="1" name="Loop">0</param>
+                                    <param id="2" name="Volume">-20</param>
+                                    <param id="3" name="Object">obj_player</param>
+                                    <param id="4" name="Inner angle">360</param>
+                                    <param id="5" name="Outer angle">360</param>
+                                    <param id="6" name="Outer gain">0</param>
+                                    <param id="7" name="Tag (optional)">&quot;fire&quot;</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <comment>If you are not using the previous key, stop playing the audio file.</comment>
+                <event-block sid="2149174271477614">
+                    <conditions>
+                        <condition id="-22" name="Else" sid="979429139143887" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="6" name="Stop" sid="7178699767598042" type="Audio">
+                            <param id="0" name="Tag">&quot;fire&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>If we keep pressing the &quot;hud_brake&quot;, we gradually decrease the speed.</comment>
+                <event-block sid="7333455716887817">
+                    <conditions>
+                        <condition id="4" name="Is touching object" sid="6403463839137234" type="Touch">
+                            <param id="0" name="Object">hud_brake</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action behavior="CustomMovement" id="3" name="Accelerate" sid="1691926563383134" type="obj_player">
+                            <param id="0" name="Which">0</param>
+                            <param id="1" name="Acceleration">-50</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>On touched the &quot;hud_shoot&quot; object, we create an &quot;obj_bullet&quot; and reproduce an audio file. We ensure that the ship’s collision is on. Otherwise, you cannot shoot while we are in “game over”.</comment>
+                <event-block sid="7556582462547531">
+                    <conditions>
+                        <condition id="3" name="On touched object" sid="1724241051689437" type="Touch">
+                            <param id="0" name="Object">hud_shoot</param>
+                        </condition>
+                        <condition id="11" name="Collisions enabled" sid="2688536827615681" type="obj_player" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Spawn another object" sid="417728382387334" type="obj_player">
+                            <param id="0" name="Object">obj_bullet</param>
+                            <param id="1" name="Layer">&quot;Game&quot;</param>
+                            <param id="2" name="Image point">0</param>
+                        </action>
+                        <action id="25" name="Play at object" sid="7802697826708772" type="Audio">
+                            <param id="0" name="Audio file">shoot</param>
+                            <param id="1" name="Loop">0</param>
+                            <param id="2" name="Volume">0</param>
+                            <param id="3" name="Object">obj_bullet</param>
+                            <param id="4" name="Inner angle">360</param>
+                            <param id="5" name="Outer angle">360</param>
+                            <param id="6" name="Outer gain">0</param>
+                            <param id="7" name="Tag (optional)">&quot;shoot&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>On any touch start, we destroy &quot;obj_shield&quot; (so we start the game).</comment>
+                <event-block sid="3396242134828735">
+                    <conditions>
+                        <condition id="0" name="On any touch start" sid="9999300675008233" type="Touch" />
+                        <condition id="-3" name="Is on-screen" sid="3783309772773447" type="obj_shield" />
+                    </conditions>
+                    <actions>
+                        <action id="-9" name="Destroy" sid="5232658411513182" type="obj_shield" />
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-group>
+        <event-group description="" sid="731655508346154" title="Others">
+            <sub-events>
+                <comment>When an &quot;obj_bullet&quot; is created, we waited 1 second and destroy the bullet.</comment>
+                <event-block sid="3720200250059784">
+                    <conditions>
+                        <condition id="-18" name="On created" sid="6575061052194801" type="obj_bullet" />
+                    </conditions>
+                    <actions>
+                        <action id="-16" name="Wait" sid="3780951490238813" type="System">
+                            <param id="0" name="Seconds">1</param>
+                        </action>
+                        <action id="-9" name="Destroy" sid="7387062698343725" type="obj_bullet" />
+                    </actions>
+                </event-block>
+                <comment>When a bullet collides with an asteroid, we reproduce a sound and add 10 to &quot;Score&quot;.</comment>
+                <event-block sid="274708523146795">
+                    <conditions>
+                        <condition id="0" name="On collision with another object" sid="7572361137731306" type="obj_bullet">
+                            <param id="0" name="Object">obj_asteroid</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="25" name="Play at object" sid="284994867441642" type="Audio">
+                            <param id="0" name="Audio file">boom</param>
+                            <param id="1" name="Loop">0</param>
+                            <param id="2" name="Volume">0</param>
+                            <param id="3" name="Object">obj_asteroid</param>
+                            <param id="4" name="Inner angle">360</param>
+                            <param id="5" name="Outer angle">360</param>
+                            <param id="6" name="Outer gain">0</param>
+                            <param id="7" name="Tag (optional)">&quot;&quot;</param>
+                        </action>
+                        <action id="-10" name="Add to" sid="4310530957721577" type="System">
+                            <param id="0" name="Variable">Score</param>
+                            <param id="1" name="Value">10</param>
+                        </action>
+                    </actions>
+                    <sub-events>
+                        <comment>If the animation’s frame is less than or equal to 2, we call a function (event 26) with the following parameters: &#x0A;Param 0: Asteroid’s frame number.&#x0A;Param 1: Asteroid’s position in X. &#x0A;Param 2: Asteroid’s position in Y.</comment>
+                        <event-block sid="1905367155420246">
+                            <conditions>
+                                <condition id="3" name="Compare frame" sid="2088656928345537" type="obj_asteroid">
+                                    <param id="0" name="Comparison">3</param>
+                                    <param id="1" name="Number">2</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="0" name="Call function" sid="9962221578181367" type="Function">
+                                    <param id="0" name="Name">&quot;Meteorito&quot;</param>
+                                    <param id="1" name="Parameter {n}">int(obj_asteroid.AnimationFrame){###}obj_asteroid.X{###}obj_asteroid.Y</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>Destroy the asteroid and the bullet.</comment>
+                        <event-block sid="9183119026930385">
+                            <conditions />
+                            <actions>
+                                <action id="-9" name="Destroy" sid="9071876194452052" type="obj_asteroid" />
+                                <action id="-9" name="Destroy" sid="6346429494286829" type="obj_bullet" />
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-block>
+                <comment>When the function is called, we repeat 2 times the following actions: &#x0A;- Create an object in the X (Param 1) and Y (Param 2) position.&#x0A;- Change the frame to the number stored in the Param 0 and we add it 1.&#x0A;- Change the asteroid’s angle to a random number.</comment>
+                <event-block sid="6566167920169396">
+                    <conditions>
+                        <condition id="0" name="On function" sid="2374525024923037" type="Function">
+                            <param id="0" name="Name">&quot;Meteorito&quot;</param>
+                        </condition>
+                        <condition id="-12" name="Repeat" sid="7874885903620954" type="System">
+                            <param id="0" name="Count">2</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-3" name="Create object" sid="2983477169319951" type="System">
+                            <param id="0" name="Object to create">obj_asteroid</param>
+                            <param id="1" name="Layer">&quot;Game&quot;</param>
+                            <param id="2" name="X">Function.Param(1)</param>
+                            <param id="3" name="Y">Function.Param(2)</param>
+                        </action>
+                        <action id="5" name="Set frame" sid="2462763978167883" type="obj_asteroid">
+                            <param id="0" name="Frame number">Function.Param(0) + 1</param>
+                        </action>
+                        <action id="-8" name="Set angle" sid="3919043944162545" type="obj_asteroid">
+                            <param id="0" name="Angle">int(random(0, 361))</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>When the ship collides with an asteroid and it is not blinking, we subtract one life, we make the ship blinks for 1 second and reproduce sound.</comment>
+                <event-block sid="4312527794144089">
+                    <conditions>
+                        <condition id="0" name="On collision with another object" sid="1148903366348698" type="obj_player">
+                            <param id="0" name="Object">obj_asteroid</param>
+                        </condition>
+                        <condition behavior="Flash" id="0" inverted="1" name="Is flashing" sid="1268594102677919" type="obj_player" />
+                    </conditions>
+                    <actions>
+                        <action id="-11" name="Subtract from" sid="5356878077209577" type="System">
+                            <param id="0" name="Variable">Life</param>
+                            <param id="1" name="Value">1</param>
+                        </action>
+                        <action behavior="Flash" id="0" name="Flash" sid="3077790995044452" type="obj_player">
+                            <param id="0" name="&apos;On&apos; time">0.1</param>
+                            <param id="1" name="&apos;Off&apos; time">0.1</param>
+                            <param id="2" name="Duration">1</param>
+                        </action>
+                        <action id="0" name="Play" sid="2105611131273123" type="Audio">
+                            <param id="0" name="Audio file">hurt</param>
+                            <param id="2" name="Loop">0</param>
+                            <param id="3" name="Volume">0</param>
+                            <param id="1" name="Tag (optional)">&quot;&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-group>
+    </events>
+</c2eventsheet>

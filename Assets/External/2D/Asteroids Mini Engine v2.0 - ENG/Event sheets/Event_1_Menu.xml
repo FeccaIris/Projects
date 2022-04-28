@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Event_1_Menu</name>
+    <events>
+        <comment>The &quot;Background&quot; layer is global.&#x0A;&#x0A;When we start the game, it repeats 10 times the following actions: &#x0A;- Create an object in the X and Y position using the screen size.&#x0A;- Randomly chose the number of frame (each frame has a different size)&#x0A;- We change the asteroid’s angle to a random number.</comment>
+        <event-block sid="6243843269812607">
+            <conditions>
+                <condition id="-2" name="On start of layout" sid="9787661334417718" type="System" />
+                <condition id="-12" name="Repeat" sid="7832385443434632" type="System">
+                    <param id="0" name="Count">10</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-3" name="Create object" sid="4385288954635655" type="System">
+                    <param id="0" name="Object to create">obj_asteroid</param>
+                    <param id="1" name="Layer">&quot;AsteroidsMenu&quot;</param>
+                    <param id="2" name="X">int(random(0, WindowWidth + 1))</param>
+                    <param id="3" name="Y">int(random(0, WindowHeight + 1))</param>
+                </action>
+                <action id="5" name="Set frame" sid="8491501340766577" type="obj_asteroid">
+                    <param id="0" name="Frame number">choose(0,1,2,3)</param>
+                </action>
+                <action id="-8" name="Set angle" sid="869156957915701" type="obj_asteroid">
+                    <param id="0" name="Angle">int(random(0, 361))</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>We press &quot;J&quot; to start the game.</comment>
+        <event-block sid="9963226321070904">
+            <conditions>
+                <condition id="0" name="On key pressed" sid="5833592017753659" type="Keyboard">
+                    <param id="0" name="Key">74 (J)</param>
+                </condition>
+                <condition id="-15" name="Is group active" sid="5152913288782255" type="System">
+                    <param id="0" name="Group name">&quot;ControlsPC&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-2" name="Go to layout" sid="497957336647073" type="System">
+                    <param id="0" name="Layout">Game</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>Clicking on the button to check what is write in the &quot;NextLay&quot; variable.</comment>
+        <event-block sid="8362980148308658">
+            <conditions>
+                <condition id="17" name="On tap object" sid="6891848944365197" type="Touch">
+                    <param id="0" name="Object">obj_bluebutton</param>
+                </condition>
+            </conditions>
+            <actions />
+            <sub-events>
+                <comment>If says &quot;Mobile&quot;, activate the group &quot;ControlsTouch&quot;, turn off the &quot;ControlsPC&quot; group and change the text of &quot;TXT_Result&quot;.</comment>
+                <event-block sid="2268071895322745">
+                    <conditions>
+                        <condition id="-7" name="Compare instance variable" sid="8879076261685522" type="obj_bluebutton">
+                            <param id="0" name="Instance variable">NextLay</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">&quot;Mobile&quot;</param>
+                        </condition>
+                        <condition id="0" name="Compare text" sid="6427762882708749" type="TXT_Result">
+                            <param id="0" name="Text to compare">&quot;Press &apos;J&apos; to continue&quot;</param>
+                            <param id="1" name="Case sensitivity">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-12" name="Set group active" sid="4174036621463691" type="System">
+                            <param id="0" name="Group name">&quot;ControlsTouch&quot;</param>
+                            <param id="1" name="State">1</param>
+                        </action>
+                        <action id="-12" name="Set group active" sid="4160308544909546" type="System">
+                            <param id="0" name="Group name">&quot;ControlsPC&quot;</param>
+                            <param id="1" name="State">0</param>
+                        </action>
+                        <action id="0" name="Set text" sid="3884904956863534" type="TXT_Result">
+                            <param id="0" name="Text">&quot;Tap to continue&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>The opposite of the previous event.</comment>
+                <event-block sid="6775883796916715">
+                    <conditions>
+                        <condition id="-7" name="Compare instance variable" sid="6854365043727725" type="obj_bluebutton">
+                            <param id="0" name="Instance variable">NextLay</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">&quot;PC&quot;</param>
+                        </condition>
+                        <condition id="0" name="Compare text" sid="1297129932927451" type="TXT_Result">
+                            <param id="0" name="Text to compare">&quot;Tap to continue&quot;</param>
+                            <param id="1" name="Case sensitivity">0</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-12" name="Set group active" sid="236766181551021" type="System">
+                            <param id="0" name="Group name">&quot;ControlsTouch&quot;</param>
+                            <param id="1" name="State">0</param>
+                        </action>
+                        <action id="-12" name="Set group active" sid="4004701802303721" type="System">
+                            <param id="0" name="Group name">&quot;ControlsPC&quot;</param>
+                            <param id="1" name="State">1</param>
+                        </action>
+                        <action id="0" name="Set text" sid="9042722080942134" type="TXT_Result">
+                            <param id="0" name="Text">&quot;Press &apos;J&apos; to continue&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>If &quot;Credits&quot; or &quot;TitleScreen&quot; go to the screen that we have stored in an internal variable of the button, called &quot;NextLay&quot;.</comment>
+                <event-block any="1" sid="6690722802755824">
+                    <conditions>
+                        <condition id="-7" name="Compare instance variable" sid="6740600942753892" type="obj_bluebutton">
+                            <param id="0" name="Instance variable">NextLay</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">&quot;Credits&quot;</param>
+                        </condition>
+                        <condition id="-7" name="Compare instance variable" sid="3337985495705239" type="obj_bluebutton">
+                            <param id="0" name="Instance variable">NextLay</param>
+                            <param id="1" name="Comparison">0</param>
+                            <param id="2" name="Value">&quot;TitleScreen&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-25" name="Go to layout (by name)" sid="2699336968437686" type="System">
+                            <param id="0" name="Layout">obj_bluebutton.NextLay</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-block>
+        <comment>On tap on the logos, a new tab will be opened in the browser with the web site stored in an internal variable of the logo, which is called &quot;website&quot;.</comment>
+        <event-block sid="7680374567320141">
+            <conditions>
+                <condition id="17" name="On tap object" sid="3649481896814048" type="Touch">
+                    <param id="0" name="Object">Logo_credits</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="8" name="Open URL in new window" sid="1948282287917091" type="Browser">
+                    <param id="0" name="URL">Logo_credits.website</param>
+                    <param id="1" name="Tag">Logo_credits.nameweb</param>
+                </action>
+            </actions>
+        </event-block>
+        <comment>Touching anywhere (but not buttons) and having the &quot;ControlsTouch&quot; group activated, let go to the game screen.</comment>
+        <event-block sid="957119327295538">
+            <conditions>
+                <condition id="14" name="On tap" sid="9253283659179798" type="Touch" />
+                <condition id="4" inverted="1" name="Is touching object" sid="4180403694632569" type="Touch">
+                    <param id="0" name="Object">obj_bluebutton</param>
+                </condition>
+                <condition id="-15" name="Is group active" sid="7487685507946576" type="System">
+                    <param id="0" name="Group name">&quot;ControlsTouch&quot;</param>
+                </condition>
+            </conditions>
+            <actions>
+                <action id="-2" name="Go to layout" sid="9568436892682835" type="System">
+                    <param id="0" name="Layout">Game</param>
+                </action>
+            </actions>
+        </event-block>
+    </events>
+</c2eventsheet>

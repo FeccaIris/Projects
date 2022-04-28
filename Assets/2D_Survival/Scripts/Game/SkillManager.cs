@@ -234,11 +234,66 @@ namespace SV
                 yield return new WaitForSeconds(0.1f);
             }
         }
+
+        public void ClearAll()
+        {
+            if (_skList.Count > 0)
+                _skList.Clear();
+        }
+
+        // 투사체>>영역 :: 추적>>무작위>>고정
+        public string AcquireRandom(int r = 0)
+        {
+            if (r >= 6) return "";
+
+            switch (r)
+            {
+                case 0:
+                    {
+                        AcquireNew(pj:true,dmg:3, spd:45,cool:0.33f,interval:0.2f,size:1.2f,mntn:3,rch:30);
+                        // 투사체 추적
+                        return "추적형 투사체";
+                    }
+                case 1:
+                    {
+                        AcquireNew(pj:false,dmg:10,cool:1,interval:2,size:10f,mntn:0.3f,rch: 26);
+                        // 영역 추적
+                        return "추적형 범위공격";
+                    }
+                case 2:
+                    {
+                        AcquireNew(pj:true,rd:true, dmg:8,cool:0.7f,size:5,ea:10,spd:50,pierce:500,mntn:3,interval:0.2f);
+                        // 투사체 무작위
+                        return "무작위 투사체";
+                    }
+                case 3:
+                    {
+                        AcquireNew(pj:false,rd:true,dmg:1,size:30,cool:1.5f,interval:0.1f);
+                        // 영역 무작위
+                        return "무작위 범위공격";
+                    }
+                case 4:
+                    {
+                        AcquireNew(pj:true,st:true,dmg:3,spd:45,ea:3,size:10,pierce:3,cool:0.7f,interval:0.5f,mntn:3);
+                        // 투사체 고정
+                        return "고정형 투사체";
+                    }
+                case 5:
+                    {
+                        AcquireNew(pj:false,st:true,size:15,cool:1,interval:0.2f,mntn:0.6f);
+                        // 영역 고정
+                        return "고정형 범위공격";
+                    }
+                default:
+                    return "";
+            }
+        }
         public PlayerSkill AcquireNew(bool pj = true, bool rd = false, bool st = false, int dmg = 1, float cool = 0.7f, int ea = 1, float mntn = 2.0f, float rch = 15.0f, float spd = 25, int pierce = 1, float interval = 1, float size = 1.0f)
         {
             PlayerSkill ps = new PlayerSkill(pj: pj, rd: rd, st: st);
             _skList.Add(ps);
 
+            // 강화 버튼에 스킬 배정
             UIManager.I._lvUp._reinforceTab.SetButton(ps);
 
             SetSkill(ps, dmg: dmg, cool: cool, ea: ea, mntn: mntn,  rch: rch, spd: spd, pierce: pierce, interval: interval, size: size);

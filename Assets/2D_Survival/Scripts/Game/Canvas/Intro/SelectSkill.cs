@@ -11,6 +11,9 @@ namespace SV
         Text _cTxt;
         int _count = 3;
 
+        public Sprite _pj;
+        public Sprite _area;
+
         public void Init()
         {
             _cTxt = transform.Find("Bg").Find("Count").GetComponent<Text>();

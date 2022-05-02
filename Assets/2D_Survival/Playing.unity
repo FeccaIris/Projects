@@ -9837,7 +9837,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1730453004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f78ecae92aaa6747acdb64262e03267, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -9872,15 +9872,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
-  _index: 0
-  _isProj: 0
-  _prop: 0
-  _square: {fileID: 0}
-  _circle: {fileID: 0}
-  _diamond: {fileID: 0}
-  _name: {fileID: 0}
-  _t1: {fileID: 0}
-  _t2: {fileID: 0}
 --- !u!114 &1730453008
 MonoBehaviour:
   m_ObjectHideFlags: 0

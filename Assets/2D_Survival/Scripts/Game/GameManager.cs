@@ -7,7 +7,7 @@ namespace SV
     public interface IPoolable
     {
         void EndUse();
-    }
+    } 
 
     public class GameManager : MonoBehaviour
     {

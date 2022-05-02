@@ -72,9 +72,6 @@ namespace SV
             _circle.gameObject.SetActive(c);
         }
 
-        /// <summary>
-        /// 스킬 유형 결정
-        /// </summary>
         public void FixSkillType()
         {
             /// 투사체 여부
@@ -145,9 +142,6 @@ namespace SV
             }
         }
 
-        /// <summary>
-        /// 스킬 생성
-        /// </summary>
         public void SetSkill(bool isProj, Property prop)
         {
             PlayerSkill ps = null;

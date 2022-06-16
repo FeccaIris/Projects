@@ -8,6 +8,8 @@ namespace ss
     {
         public static GameManager I;
         public Player _player;
+        public bool _playing = false;
+
 
         void Awake()
         {
@@ -20,6 +22,11 @@ namespace ss
             _player.Init();
 
             UIManager.I.Init();
+        }
+
+        public void Playing(bool playing = true)
+        {
+            _playing = playing;
         }
     }
 }

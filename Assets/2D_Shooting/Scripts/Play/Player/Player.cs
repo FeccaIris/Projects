@@ -23,6 +23,7 @@ namespace ss
 
         #endregion
 
+        #region Offset
         public Vector3 _offset_idle = new Vector3(1.275f, -0.4f, 0);
         public Vector3 _offset_move = new Vector3(2.334f, -0.901f, 0);
         public Vector3 _offset_shoot = new Vector3(1.362f, -0.618f, 0);
@@ -30,6 +31,7 @@ namespace ss
         public Vector3 _offset_melee_body = new Vector3(1.83f, 1.21f, 0);
 
         public bool _flip = false;
+        #endregion
 
         float _maxSpd = 800.0f;
 
@@ -120,6 +122,9 @@ namespace ss
                 }
             }
             #endregion
+
+            if (GameManager.I._playing == false)
+                return;
 
             if (Input.GetMouseButton(0))
             {

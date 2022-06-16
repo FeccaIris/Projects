@@ -52,6 +52,7 @@ namespace ss
         public void GameStart()
         {
             gameObject.SetActive(false);
+            GameManager.I.Playing(true);
         }
     }
 }

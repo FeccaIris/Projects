@@ -8,7 +8,8 @@ namespace ss
     {
         public static GameManager I;
         public Player _player;
-        public bool _playing = false;
+
+        public bool _isPlaying = false;
 
 
         void Awake()
@@ -26,7 +27,7 @@ namespace ss
 
         public void Playing(bool playing = true)
         {
-            _playing = playing;
+            _isPlaying = playing;
         }
     }
 }

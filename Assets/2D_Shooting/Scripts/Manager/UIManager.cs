@@ -19,8 +19,10 @@ namespace ss
         public void Init()
         {
             _lobby = transform.Find("Lobby").GetComponent<LobbyUI>();
+            if (_lobby.gameObject.activeSelf == false)
+                _lobby.gameObject.SetActive(true);
             _lobby.Init();
-
+            
             _play = transform.Find("Play").GetComponent<PlayUI>();
             _play.Init();
         }

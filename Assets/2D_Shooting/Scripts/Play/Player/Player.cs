@@ -15,6 +15,8 @@ namespace ss
 
         PlayerSprite _pSprite;
 
+        float _maxSpd = 800.0f;
+        
         #region Child
 
         public GameObject _sprite;
@@ -32,8 +34,6 @@ namespace ss
 
         public bool _flip = false;
         #endregion
-
-        float _maxSpd = 800.0f;
 
         void Awake()
         {
@@ -123,8 +123,11 @@ namespace ss
             }
             #endregion
 
-            if (GameManager.I._playing == false)
+            if (GameManager.I._isPlaying == false)
                 return;
+
+            Vector3 playerPos = transform.position;
+            _cam.transform.position = new Vector3(playerPos.x, playerPos.y, _cam.transform.position.z);
 
             if (Input.GetMouseButton(0))
             {

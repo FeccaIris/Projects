@@ -16,13 +16,17 @@ namespace ss
         PlayerSprite _pSprite;
 
         float _maxSpd = 800.0f;
-        
-        #region Child
 
+        #region DoubleClick
+        int _clickCount = 0;
+
+
+        #endregion
+
+        #region Child
         public GameObject _sprite;
         public SpriteRenderer _body_sp;
         public SpriteRenderer _sword_sp;
-
         #endregion
 
         #region Offset

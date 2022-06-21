@@ -35,30 +35,45 @@ namespace ss
                         {
                             b.onClick.AddListener(delegate ()
                             {
-                                _desc.text = "마우스로 방향을 정하고 왼쪽 클릭으로 가속합니다.";
-                                _detail.text = "대쉬 : 더블클릭 \n감속 : C";
+                                _desc.text = "마우스 방향을 향해 이동합니다.";
+                                _detail.text = "가속 : 왼쪽 클릭 / 감속 : C \n대쉬 : 더블 클릭";
                             });
                             break;
                         }
                     case "Shoot":
                         {
-
+                            b.onClick.AddListener(delegate ()
+                            {
+                                _desc.text = "마우스 방향을 향해 사격합니다.";
+                                _detail.text = "사격 : SpaceBar";
+                            });
                             break;
                         }
                     case "Melee":
                         {
-
+                            b.onClick.AddListener(delegate ()
+                            {
+                                _desc.text = "마우스 방향을 향해 공격합니다.";
+                                _detail.text = "근접 공격 : A";
+                            });
                             break;
                         }
                     case "Guard":
                         {
-
+                            b.onClick.AddListener(delegate ()
+                            {
+                                _desc.text = "마우스 방향의 공격을 막습니다.";
+                                _detail.text = "방어 : D";
+                            });
                             break;
                         }
                     case "Return":
                         {
                             b.onClick.AddListener(delegate ()
                             {
+                                _desc.text = "수행할 훈련을 선택하세요.";
+                                _detail.text = "";
+                                GameManager.I.PlayingNow(false);
                                 UIManager.I.BackToLobby();
                             });
                             break;

@@ -25,7 +25,7 @@ namespace ss
             UIManager.I.Init();
         }
 
-        public void Playing(bool playing = true)
+        public void PlayingNow(bool playing = true)
         {
             _isPlaying = playing;
         }

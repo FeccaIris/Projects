@@ -57,6 +57,8 @@ namespace ss
             _sword_sp = _sprite.transform.Find("Sword").GetComponent<SpriteRenderer>();
 
             _sword_sp.transform.localPosition = new Vector3(1.275f, -0.4f, 0);
+
+            _cam.transform.parent = transform;
         }
         void FixedUpdate()
         {
@@ -130,8 +132,8 @@ namespace ss
             if (GameManager.I._isPlaying == false)
                 return;
 
-            Vector3 playerPos = transform.position;
-            _cam.transform.position = new Vector3(playerPos.x, playerPos.y, _cam.transform.position.z);
+            //Vector3 playerPos = transform.position;
+            //_cam.transform.position = new Vector3(playerPos.x, playerPos.y, _cam.transform.position.z);
 
             if (Input.GetMouseButton(0))
             {

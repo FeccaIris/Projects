@@ -22,7 +22,7 @@ namespace ss
             _player = FindObjectOfType<Player>(); // 프리팹 로드로 추후 변경
             _player.Init();
 
-            UIManager.I.Init();
+            UIManager.I?.Init();
         }
 
         public void PlayingNow(bool playing = true)

@@ -74,7 +74,9 @@ namespace ss
                                 _desc.text = "수행할 훈련을 선택하세요.";
                                 _detail.text = "";
                                 GameManager.I.PlayingNow(false);
+                                GameManager.I._player.Stop();
                                 UIManager.I.BackToLobby();
+
                             });
                             break;
                         }

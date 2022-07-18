@@ -241,7 +241,6 @@ namespace SV
                 _skList.Clear();
         }
 
-        // 투사체>>영역 :: 추적>>무작위>>고정
         public string AcquireRandom(int r = 0)
         {
             if (r >= 6) return "";
@@ -250,37 +249,37 @@ namespace SV
             {
                 case 0:
                     {
-                        AcquireNew(pj:true,dmg:3, spd:45,cool:0.33f,interval:0.2f,size:1.2f,mntn:3,rch:30);
+                        AcquireNew(pj:true,dmg:3, spd:45,cool:0.33f,interval:0.2f,size:2.4f,mntn:3,rch:30);
                         // 투사체 추적
                         return "추적형 투사체";
                     }
                 case 1:
                     {
-                        AcquireNew(pj:false,dmg:10,cool:1,interval:2,size:10f,mntn:0.3f,rch: 26);
+                        AcquireNew(pj:false,dmg:5,cool:1,interval:2,size:10f,mntn:0.3f,rch: 26);
                         // 영역 추적
                         return "추적형 범위공격";
                     }
                 case 2:
                     {
-                        AcquireNew(pj:true,rd:true, dmg:8,cool:0.7f,size:5,ea:10,spd:50,pierce:500,mntn:3,interval:0.2f);
+                        AcquireNew(pj:true,rd:true, dmg:4,cool:0.7f,size:5,ea:10,spd:50,pierce:500,mntn:3,interval:0.2f);
                         // 투사체 무작위
                         return "무작위 투사체";
                     }
                 case 3:
                     {
-                        AcquireNew(pj:false,rd:true,dmg:1,size:30,cool:1.5f,interval:0.1f);
+                        AcquireNew(pj:false,rd:true,dmg:1,size:30,cool:1.5f,mntn:1.0f,interval:0.1f);
                         // 영역 무작위
                         return "무작위 범위공격";
                     }
                 case 4:
                     {
-                        AcquireNew(pj:true,st:true,dmg:3,spd:45,ea:3,size:10,pierce:3,cool:0.7f,interval:0.5f,mntn:3);
+                        AcquireNew(pj:true,st:true,dmg:2,spd:45,ea:3,size:5,pierce:3,cool:0.7f,interval:0.5f,mntn:3);
                         // 투사체 고정
                         return "고정형 투사체";
                     }
                 case 5:
                     {
-                        AcquireNew(pj:false,st:true,size:15,cool:1,interval:0.2f,mntn:0.6f);
+                        AcquireNew(pj:false,st:true,size:30,cool:1,interval:0.2f,mntn:0.6f);
                         // 영역 고정
                         return "고정형 범위공격";
                     }
@@ -313,6 +312,8 @@ namespace SV
             ps._interval = interval;
             ps._size = size;
 
+            ps._size *= 0.5f;
+
             UIManager.I._lvUp.SetIndex(ps);
             //Activate(ps);
         }
@@ -332,11 +333,9 @@ namespace SV
                 if (GameManager.I._isPlaying == true)
                 {
                     Vector3 rPos = Vector3.zero;
-
                     for (int i = 0; i < ps._ea; i++)
                     {
                         GameObject go = GameManager.I.GetPoolObject(GameManager.I._skill);
-
                         if (ps._isRandom)
                         {
                             while (true)
@@ -353,7 +352,6 @@ namespace SV
                                 }
                                 yield return null;
                             }
-
                             ps._targetPos = rPos;
                         }
                         else if (ps._isStatic)
@@ -365,23 +363,18 @@ namespace SV
                             if (_player._target == null)
                                 yield return new WaitUntil(() => _player._target != null);
                             yield return new WaitUntil(() => ps._reach >= _player._distance);
-
                             if (_player._target != null)
                             {
                                 Vector3 dir = _player._target.position - transform.position;
                                 ps._targetPos = dir.normalized;
                             }
                         }
-
                         Skill k = go.GetComponent<Skill>();
                         k.Init(ps);
-
                         yield return new WaitForSeconds(ps._interval / ps._ea);
                     }
-
                     yield return new WaitForSeconds(ps._cool);
                 }
-
                 yield return null;
             }
         }

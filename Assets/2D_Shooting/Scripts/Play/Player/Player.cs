@@ -168,5 +168,11 @@ namespace ss
                 _anim.SetBool("Melee", false);
             }
         }
+
+        public void Stop()
+        {
+            _anim.SetBool("Move", false);
+            _rgd.velocity *= 0;
+        }
     }
 }

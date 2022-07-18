@@ -13,8 +13,6 @@ namespace SV
         Image _joystickImg;
         Vector3 _inputVector;
 
-        bool _isTouched = false;
-
         void Start()
         {
             _bgImg = transform.Find("Bg").GetComponent<Image>();
@@ -23,14 +21,6 @@ namespace SV
             Show(false);
         }
 
-        public float GetHorzontal()
-        {
-            return _inputVector.x;
-        }
-        public float GetVertical()
-        {
-            return _inputVector.y;
-        }
         public Vector3 GetDirection()
         {
             return _inputVector;
@@ -41,7 +31,7 @@ namespace SV
             _bgImg.gameObject.SetActive(show);
         }
 
-        public virtual void OnDrag(PointerEventData ped)
+        public virtual void OnDrag(PointerEventData ped)    //IDragHandler
         {
             RectTransform bg = _bgImg.rectTransform;
             Camera cam = ped.pressEventCamera;
@@ -64,7 +54,7 @@ namespace SV
                 _joystickImg.rectTransform.anchoredPosition = new Vector3(x, y, 0);
             }
         }
-        public virtual void OnPointerDown(PointerEventData ped)
+        public virtual void OnPointerDown(PointerEventData ped)     //IPointerDownHandler
         {
             Show();
 
@@ -72,7 +62,7 @@ namespace SV
 
             OnDrag(ped);
         }
-        public virtual void OnPointerUp(PointerEventData ped)
+        public virtual void OnPointerUp(PointerEventData ped)       //IPointerUpHandler
         {
             Show(false);
 

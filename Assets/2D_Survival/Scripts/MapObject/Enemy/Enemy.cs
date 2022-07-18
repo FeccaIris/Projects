@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace SV
 {
-
     public class Enemy : Unit, IPoolable
     {
         public Transform _player;
@@ -84,12 +83,10 @@ namespace SV
                     EndUse();
             }
         }
-
         public override void Damaged(int dmg)
         {
             base.Damaged(dmg);
         }
-
         protected override void Die()
         {
             GameManager.I._kills++;
@@ -98,12 +95,10 @@ namespace SV
 
             EndUse();
         }
-
         public void OnSkill(PlayerSkill ps)
         {
             StartCoroutine(OnArea(ps));
         }
-
         IEnumerator OnArea(PlayerSkill ps)
         {
             while (true)
@@ -112,12 +107,12 @@ namespace SV
                 yield return new WaitForSeconds(ps._interval);
             }
         }
-
         public void ExitSkill()
         {
             StopAllCoroutines();
         }
 
+        //IPoolable
         public void EndUse()
         {
             if (this is Enemy)
@@ -135,7 +130,6 @@ namespace SV
                     }
                 }
             }
-
             gameObject.SetActive(false);
             GameManager.I.RefillPool(gameObject);
         }

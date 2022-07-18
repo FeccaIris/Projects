@@ -54,18 +54,19 @@ namespace SV
             CreatePoolObject(_walker, 500);
             CreatePoolObject(_skill, 100);
             CreatePoolObject(_charger, 500);
-
+            #region Init
             UIManager.I.Init();
             SkillManager.I.Init();
             LevelManager.I.Init();
             Player.I.Init();
+            #endregion
         }
         public void GameStart()
         {
             _isPlaying = true;
             /// 스폰 시작
-            StartCoroutine(SpawnWalker());
             StartCoroutine(SpawnCharger());
+            StartCoroutine(SpawnWalker());
 
             UIManager.I.GameStart();
             SkillManager.I.GameStart();
@@ -87,7 +88,7 @@ namespace SV
                 if (_elapsed2 >= 10.0f)
                 {
                     _elapsed2 = 0;
-                    _enemyHpDeltaT += 2;
+                    _enemyHpDeltaT += 6 ;
                 }
                 if (_elapsed3 >= 40.0f)
                 {
@@ -100,7 +101,6 @@ namespace SV
                 }
             }
         }
-
         public void GameOver()
         {
             _isPlaying = false;
@@ -113,7 +113,6 @@ namespace SV
             UIManager.I.GameOver(true);
             StopAllCoroutines();
         }
-
         public void CreatePoolObject(GameObject pf, int ea)
         {
             Queue<GameObject> pool = null;
@@ -134,7 +133,6 @@ namespace SV
                 pool = _poolCharger;
                 parent = transform.Find("Pool").Find("Enemies").Find("Charger");
             }
-
             for (int i = 0; i < ea; i++)
             {
                 GameObject go = Instantiate(pf);
@@ -166,7 +164,6 @@ namespace SV
             {
                 pool = _poolCharger;
             }
-
             if (pool != null)
             {
                 if(pool.Count <= 0)
@@ -174,7 +171,6 @@ namespace SV
                     CreatePoolObject(pf, 50);
                 }
             }
-
             go = pool.Dequeue();
 
             return go;
@@ -198,7 +194,6 @@ namespace SV
                         pool = _poolCharger;
                 }
             }
-
             if (pool != null)
                 pool.Enqueue(pf);
         }
